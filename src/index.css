@@ -1,153 +1,163 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
-All colors MUST be HSL.
-*/
+/* ============================================
+   CLINICVOICE AI DESIGN SYSTEM
+   Tamil-First Healthcare Platform
+   ============================================ */
 
-:root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(240 10% 3.9%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 10% 3.9%);
-  --primary: hsl(240 5.9% 10%);
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(240 4.8% 95.9%);
-  --secondary-foreground: hsl(240 5.9% 10%);
-  --muted: hsl(240 4.8% 95.9%);
-  --muted-foreground: hsl(240 3.8% 46.1%);
-  --accent: hsl(240 4.8% 95.9%);
-  --accent-foreground: hsl(240 5.9% 10%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 5.9% 90%);
-  --input: hsl(240 5.9% 90%);
-  --ring: hsl(240 5.9% 10%);
-  --radius: 0.5rem;
-  --sidebar-background: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
-
-  /* Shugar Design System Variables */
-  --context-card-border: hsla(0, 0%, 92%, 1);
-  --ds-red-800: oklch(58.19% 0.2482 25.15);
-  --ds-red-900: oklch(54.99% 0.232 25.29);
-  --ds-amber-800: oklch(77.21% 0.1991 64.28);
-  --ds-amber-850: hsl(33, 96%, 42%);
-  --ds-gray-100: hsla(0, 0%, 95%, 1);
-  --ds-gray-400: hsla(0, 0%, 92%, 1);
-  --ds-gray-700: hsla(0, 0%, 56%, 1);
-  --ds-gray-1000: hsla(0, 0%, 9%, 1);
-  --ds-gray-1000-h: hsl(0, 0%, 22%);
-  --ds-gray-alpha-200: hsla(0, 0%, 0%, 0.08);
-  --ds-gray-alpha-400: hsla(0, 0%, 0%, 0.08);
-  --ds-background-100: hsla(0, 0%, 100%, 1);
-  --ds-focus-color: var(--ring);
-  --ds-focus-ring: 0 0 0 2px var(--ds-background-100), 0 0 0 4px var(--ds-focus-color);
-  --ds-shadow-border: 0 0 0 1px rgba(0, 0, 0, 0.08);
-  --ds-shadow-small: 0px 2px 2px rgba(0, 0, 0, 0.04);
-  --ds-shadow-border-small: var(--ds-shadow-border), var(--ds-shadow-small);
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/plusjakartasans/v8/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yygg.woff2') format('woff2');
 }
 
-.dark {
-  --background: hsl(240 10% 3.9%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(240 10% 3.9%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(240 10% 3.9%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(240 5.9% 10%);
-  --secondary: hsl(240 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(240 3.7% 15.9%);
-  --muted-foreground: hsl(240 5% 64.9%);
-  --accent: hsl(240 3.7% 15.9%);
-  --accent-foreground: hsl(0 0% 98%);
-  --destructive: hsl(0 62.8% 30.6%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 3.7% 15.9%);
-  --input: hsl(240 3.7% 15.9%);
-  --ring: hsl(240 4.9% 83.9%);
-  --sidebar-background: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/spacemono/v12/i7dPIFZifjKcF5UAWdDRYE98RQ.woff2') format('woff2');
+}
 
-  /* Shugar Design System Variables - Dark Mode */
-  --context-card-border: hsla(0, 0%, 18%, 1);
-  --ds-red-800: oklch(58.01% 0.227 25.12);
-  --ds-red-900: oklch(69.96% 0.2136 22.03);
-  --ds-amber-800: oklch(77.21% 0.1991 64.28);
-  --ds-gray-100: hsla(0, 0%, 10%, 1);
-  --ds-gray-400: hsla(0, 0%, 18%, 1);
-  --ds-gray-700: hsla(0, 0%, 56%, 1);
-  --ds-gray-1000: hsla(0, 0%, 93%, 1);
-  --ds-gray-1000-h: hsl(0, 0%, 80%);
-  --ds-gray-alpha-200: hsla(0, 0%, 100%, 0.09);
-  --ds-gray-alpha-400: hsla(0, 0%, 100%, 0.14);
-  --ds-background-100: hsla(0,0%,4%, 1);
-  --ds-shadow-border: 0 0 0 1px rgba(255, 255, 255, 0.145);
-  --ds-shadow-small: 0px 1px 2px rgba(0, 0, 0, 0.16);
-  --ds-shadow-border-small: var(--ds-shadow-border), var(--ds-shadow-small);
+:root {
+  /* ClinicVoice Brand Colors - HSL Format */
+  --cv-primary: 174 82% 30%;
+  --cv-primary-light: 174 76% 40%;
+  --cv-primary-dark: 174 80% 25%;
+  
+  --cv-secondary: 24 95% 53%;
+  --cv-accent: 258 77% 65%;
+  --cv-blue: 217 91% 60%;
+  --cv-pink: 330 81% 60%;
+  
+  /* Dark Theme Base */
+  --cv-bg-dark: 222 47% 11%;
+  --cv-bg-card: 217 33% 17%;
+  --cv-bg-card-hover: 215 25% 27%;
+  --cv-bg-input: 220 30% 12%;
+  
+  /* Text Colors */
+  --cv-text-primary: 213 31% 96%;
+  --cv-text-secondary: 215 16% 62%;
+  --cv-text-muted: 215 16% 47%;
+  
+  /* Border */
+  --cv-border: 215 25% 27%;
+  
+  /* Status Colors */
+  --cv-success: 158 64% 52%;
+  --cv-warning: 43 96% 56%;
+  --cv-danger: 0 84% 60%;
+  --cv-gold: 38 92% 50%;
+
+  /* Semantic tokens mapped to ClinicVoice */
+  --background: var(--cv-bg-dark);
+  --foreground: var(--cv-text-primary);
+  --card: var(--cv-bg-card);
+  --card-foreground: var(--cv-text-primary);
+  --popover: var(--cv-bg-card);
+  --popover-foreground: var(--cv-text-primary);
+  --primary: var(--cv-primary);
+  --primary-foreground: 0 0% 100%;
+  --secondary: var(--cv-secondary);
+  --secondary-foreground: 0 0% 100%;
+  --muted: var(--cv-bg-card-hover);
+  --muted-foreground: var(--cv-text-muted);
+  --accent: var(--cv-accent);
+  --accent-foreground: 0 0% 100%;
+  --destructive: var(--cv-danger);
+  --destructive-foreground: 0 0% 100%;
+  --border: var(--cv-border);
+  --input: var(--cv-border);
+  --ring: var(--cv-primary);
+  --radius: 0.75rem;
+  
+  /* Sidebar */
+  --sidebar-background: 222 55% 7%;
+  --sidebar-foreground: var(--cv-text-secondary);
+  --sidebar-primary: var(--cv-primary);
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: var(--cv-bg-card);
+  --sidebar-accent-foreground: var(--cv-text-primary);
+  --sidebar-border: var(--cv-border);
+  --sidebar-ring: var(--cv-primary);
+  
+  /* Additional Design System Variables */
+  --cv-gradient-primary: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-primary-dark)));
+  --cv-gradient-accent: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-accent)));
+  --cv-gradient-secondary: linear-gradient(135deg, hsl(var(--cv-secondary)), hsl(var(--cv-danger)));
+  --cv-shadow-glow: 0 0 60px -15px hsl(var(--cv-primary) / 0.3);
+  --cv-shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+}
+
+/* Light mode override - ClinicVoice is dark-first but supports light */
+.light {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 98%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: var(--cv-primary);
+  --primary-foreground: 0 0% 100%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 222 47% 11%;
 }
 
 @theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-sidebar: var(--sidebar-background);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  /* Shugar Design System Colors */
-  --color-context-card-border: var(--context-card-border);
-  --color-red-800: var(--ds-red-800);
-  --color-red-900: var(--ds-red-900);
-  --color-amber-800: var(--ds-amber-800);
-  --color-amber-850: var(--ds-amber-850);
-  --color-gray-100: var(--ds-gray-100);
-  --color-gray-400: var(--ds-gray-400);
-  --color-gray-700: var(--ds-gray-700);
-  --color-gray-1000: var(--ds-gray-1000);
-  --color-gray-1000-h: var(--ds-gray-1000-h);
-  --color-gray-alpha-200: var(--ds-gray-alpha-200);
-  --color-gray-alpha-400: var(--ds-gray-alpha-400);
-  --color-background-100: var(--ds-background-100);
-  --shadow-focus-ring: var(--ds-focus-ring);
-  --shadow-border-small: var(--ds-shadow-border-small);
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+  
+  /* ClinicVoice specific colors */
+  --color-cv-primary: hsl(var(--cv-primary));
+  --color-cv-primary-light: hsl(var(--cv-primary-light));
+  --color-cv-primary-dark: hsl(var(--cv-primary-dark));
+  --color-cv-secondary: hsl(var(--cv-secondary));
+  --color-cv-accent: hsl(var(--cv-accent));
+  --color-cv-blue: hsl(var(--cv-blue));
+  --color-cv-pink: hsl(var(--cv-pink));
+  --color-cv-success: hsl(var(--cv-success));
+  --color-cv-warning: hsl(var(--cv-warning));
+  --color-cv-danger: hsl(var(--cv-danger));
+  --color-cv-gold: hsl(var(--cv-gold));
+  --color-cv-text-primary: hsl(var(--cv-text-primary));
+  --color-cv-text-secondary: hsl(var(--cv-text-secondary));
+  --color-cv-text-muted: hsl(var(--cv-text-muted));
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -155,24 +165,39 @@ All colors MUST be HSL.
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-voice-wave: voice-wave 1.5s ease-in-out infinite;
 }
 
 @keyframes accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-  }
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
 }
 
 @keyframes accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
-  }
-  to {
-    height: 0;
-  }
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--cv-secondary) / 0.4); }
+  50% { box-shadow: 0 0 0 15px hsl(var(--cv-secondary) / 0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes voice-wave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.5); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 @layer base {
@@ -180,8 +205,13 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "liga" 1, "calt" 1;
   }
 }
 
@@ -193,5 +223,37 @@ All colors MUST be HSL.
 
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+  
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-primary-dark)));
+  }
+  
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-accent)));
+  }
+  
+  .gradient-secondary {
+    background: linear-gradient(135deg, hsl(var(--cv-secondary)), hsl(var(--cv-danger)));
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--cv-text-primary)), hsl(var(--cv-primary-light)), hsl(var(--cv-text-primary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .glass {
+    background: hsl(var(--cv-bg-card) / 0.8);
+    backdrop-filter: blur(12px);
+  }
+  
+  .glow-primary {
+    box-shadow: 0 0 40px -10px hsl(var(--cv-primary) / 0.5);
+  }
+  
+  .glow-accent {
+    box-shadow: 0 0 40px -10px hsl(var(--cv-accent) / 0.5);
   }
 }
