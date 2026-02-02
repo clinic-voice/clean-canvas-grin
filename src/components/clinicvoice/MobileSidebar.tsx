@@ -1,7 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   LayoutDashboard,
   Calendar,
@@ -18,6 +19,7 @@ import {
   Phone,
   Stethoscope,
   Menu,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -92,9 +94,17 @@ function NavSection({ title, items, currentPath, onNavigate }: NavSectionProps) 
 export function MobileSidebar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut, user } = useAuth();
   const currentPath = location.pathname;
 
   const handleNavigate = () => setOpen(false);
+
+  const handleLogout = async () => {
+    await signOut();
+    setOpen(false);
+    navigate("/");
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -119,11 +129,34 @@ export function MobileSidebar() {
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto py-4 hide-scrollbar max-h-[calc(100vh-180px)]">
+        <div className="flex-1 overflow-y-auto py-4 hide-scrollbar max-h-[calc(100vh-280px)]">
           <NavSection title="Main" items={mainNavItems} currentPath={currentPath} onNavigate={handleNavigate} />
           <NavSection title="Clinical" items={clinicalNavItems} currentPath={currentPath} onNavigate={handleNavigate} />
           <NavSection title="Business" items={businessNavItems} currentPath={currentPath} onNavigate={handleNavigate} />
           <NavSection title="System" items={settingsNavItems} currentPath={currentPath} onNavigate={handleNavigate} />
+        </div>
+
+        {/* User & Logout */}
+        <div className="absolute bottom-[120px] left-0 right-0 p-4 border-t border-sidebar-border bg-sidebar">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-9 h-9 rounded-full bg-cv-primary/20 flex items-center justify-center">
+              <span className="text-sm font-bold text-cv-primary-light">
+                {user?.email?.charAt(0).toUpperCase() || "U"}
+              </span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-cv-text-primary truncate">
+                {user?.email || "User"}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 w-full px-3 py-2 text-sm text-cv-text-secondary hover:text-cv-danger hover:bg-cv-danger/10 rounded-lg transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
         </div>
 
         {/* Voice AI Status Widget */}

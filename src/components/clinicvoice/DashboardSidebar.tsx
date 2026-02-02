@@ -1,5 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   LayoutDashboard,
   Calendar,
@@ -15,6 +16,7 @@ import {
   HelpCircle,
   Phone,
   Stethoscope,
+  LogOut,
 } from "lucide-react";
 
 const mainNavItems = [
@@ -85,7 +87,14 @@ function NavSection({ title, items, currentPath }: NavSectionProps) {
 
 export function DashboardSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut, user } = useAuth();
   const currentPath = location.pathname;
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-[250px] bg-sidebar border-r border-sidebar-border flex flex-col">
@@ -108,6 +117,29 @@ export function DashboardSidebar() {
         <NavSection title="Clinical" items={clinicalNavItems} currentPath={currentPath} />
         <NavSection title="Business" items={businessNavItems} currentPath={currentPath} />
         <NavSection title="System" items={settingsNavItems} currentPath={currentPath} />
+      </div>
+
+      {/* User & Logout */}
+      <div className="p-4 border-t border-sidebar-border">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-9 h-9 rounded-full bg-cv-primary/20 flex items-center justify-center">
+            <span className="text-sm font-bold text-cv-primary-light">
+              {user?.email?.charAt(0).toUpperCase() || "U"}
+            </span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-medium text-cv-text-primary truncate">
+              {user?.email || "User"}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm text-cv-text-secondary hover:text-cv-danger hover:bg-cv-danger/10 rounded-lg transition-colors"
+        >
+          <LogOut className="w-4 h-4" />
+          Sign Out
+        </button>
       </div>
 
       {/* Voice AI Status Widget */}
