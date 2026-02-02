@@ -107,10 +107,10 @@ export default function LandingPage() {
             <a href="#pricing" className="text-sm text-cv-text-secondary hover:text-cv-text-primary transition-colors">Pricing</a>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/dashboard">
+            <Link to="/auth">
               <Button variant="ghost" size="sm">Login</Button>
             </Link>
-            <Link to="/dashboard">
+            <Link to="/auth">
               <Button className="gradient-primary text-white" size="sm">
                 Start Free Trial
               </Button>
@@ -149,7 +149,7 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-              <Link to="/dashboard">
+              <Link to="/auth">
                 <Button size="lg" className="gradient-primary text-white gap-2 px-8 py-6 text-lg">
                   Start Free Trial
                   <ArrowRight className="w-5 h-5" />
@@ -328,7 +328,7 @@ export default function LandingPage() {
             Join 500+ clinics across Tamil Nadu using ClinicVoice AI
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link to="/dashboard">
+            <Link to="/auth">
               <Button size="lg" className="gradient-primary text-white gap-2 px-8">
                 Start Free Trial
                 <ArrowRight className="w-5 h-5" />
