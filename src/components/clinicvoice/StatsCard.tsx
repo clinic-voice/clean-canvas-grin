@@ -29,31 +29,31 @@ const iconTextColors = {
 
 export function StatsCard({ title, value, change, icon: Icon, iconColor }: StatsCardProps) {
   return (
-    <div className="rounded-xl bg-card border border-border p-5 transition-all hover:shadow-lg hover:border-cv-primary/30">
-      <div className="flex items-start justify-between mb-3">
-        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", iconBgColors[iconColor])}>
-          <Icon className={cn("w-5 h-5", iconTextColors[iconColor])} />
+    <div className="rounded-xl bg-card border border-border p-3 md:p-5 transition-all hover:shadow-lg hover:border-cv-primary/30">
+      <div className="flex items-start justify-between mb-2 md:mb-3">
+        <div className={cn("w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center", iconBgColors[iconColor])}>
+          <Icon className={cn("w-4 h-4 md:w-5 md:h-5", iconTextColors[iconColor])} />
         </div>
         {change && (
           <div
             className={cn(
-              "flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold",
+              "flex items-center gap-1 px-1.5 md:px-2 py-0.5 md:py-1 rounded text-[10px] md:text-xs font-semibold",
               change.trend === "up"
                 ? "bg-cv-success/20 text-cv-success"
                 : "bg-cv-danger/20 text-cv-danger"
             )}
           >
             {change.trend === "up" ? (
-              <TrendingUp className="w-3 h-3" />
+              <TrendingUp className="w-2.5 h-2.5 md:w-3 md:h-3" />
             ) : (
-              <TrendingDown className="w-3 h-3" />
+              <TrendingDown className="w-2.5 h-2.5 md:w-3 md:h-3" />
             )}
             {change.value}
           </div>
         )}
       </div>
-      <p className="text-2xl font-extrabold text-cv-text-primary mb-1">{value}</p>
-      <p className="text-sm text-cv-text-muted">{title}</p>
+      <p className="text-lg md:text-2xl font-extrabold text-cv-text-primary mb-0.5 md:mb-1">{value}</p>
+      <p className="text-xs md:text-sm text-cv-text-muted">{title}</p>
     </div>
   );
 }

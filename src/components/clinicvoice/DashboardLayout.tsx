@@ -10,10 +10,15 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children, title, subtitle }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
-      <DashboardSidebar />
-      <main className="ml-[250px]">
+      {/* Desktop Sidebar - hidden on mobile */}
+      <div className="hidden lg:block">
+        <DashboardSidebar />
+      </div>
+      
+      {/* Main content - full width on mobile, offset on desktop */}
+      <main className="lg:ml-[250px]">
         <DashboardHeader title={title} subtitle={subtitle} />
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           {children}
         </div>
       </main>
