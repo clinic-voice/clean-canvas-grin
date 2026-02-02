@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap");
+
+@custom-variant dark (&:is(.dark *));
 
 /* ============================================
    CLINICVOICE AI DESIGN SYSTEM
@@ -27,26 +32,26 @@
   --cv-primary: 174 82% 30%;
   --cv-primary-light: 174 76% 40%;
   --cv-primary-dark: 174 80% 25%;
-  
+
   --cv-secondary: 24 95% 53%;
   --cv-accent: 258 77% 65%;
   --cv-blue: 217 91% 60%;
   --cv-pink: 330 81% 60%;
-  
+
   /* Dark Theme Base */
   --cv-bg-dark: 222 47% 11%;
   --cv-bg-card: 217 33% 17%;
   --cv-bg-card-hover: 215 25% 27%;
   --cv-bg-input: 220 30% 12%;
-  
+
   /* Text Colors */
   --cv-text-primary: 213 31% 96%;
   --cv-text-secondary: 215 16% 62%;
   --cv-text-muted: 215 16% 47%;
-  
+
   /* Border */
   --cv-border: 215 25% 27%;
-  
+
   /* Status Colors */
   --cv-success: 158 64% 52%;
   --cv-warning: 43 96% 56%;
@@ -54,43 +59,62 @@
   --cv-gold: 38 92% 50%;
 
   /* Semantic tokens mapped to ClinicVoice */
-  --background: var(--cv-bg-dark);
-  --foreground: var(--cv-text-primary);
-  --card: var(--cv-bg-card);
-  --card-foreground: var(--cv-text-primary);
-  --popover: var(--cv-bg-card);
-  --popover-foreground: var(--cv-text-primary);
-  --primary: var(--cv-primary);
-  --primary-foreground: 0 0% 100%;
-  --secondary: var(--cv-secondary);
-  --secondary-foreground: 0 0% 100%;
-  --muted: var(--cv-bg-card-hover);
-  --muted-foreground: var(--cv-text-muted);
-  --accent: var(--cv-accent);
-  --accent-foreground: 0 0% 100%;
-  --destructive: var(--cv-danger);
-  --destructive-foreground: 0 0% 100%;
-  --border: var(--cv-border);
-  --input: var(--cv-border);
-  --ring: var(--cv-primary);
+  --background: hsl(0 0% 96%);
+  --foreground: hsl(0 0% 9%);
+  --card: hsl(0 0% 98%);
+  --card-foreground: hsl(0 0% 9%);
+  --popover: hsl(0 0% 89%);
+  --popover-foreground: hsl(0 0% 9%);
+  --primary: hsl(20 90% 48%);
+  --primary-foreground: hsl(33 100% 96%);
+  --secondary: hsl(0 0% 32%);
+  --secondary-foreground: hsl(0 0% 98%);
+  --muted: hsl(0 0% 63%);
+  --muted-foreground: hsl(0 0% 9%);
+  --accent: hsl(47 100% 96%);
+  --accent-foreground: hsl(37 92% 50%);
+  --destructive: hsl(0 72% 50%);
+  --destructive-foreground: hsl(0 85% 97%);
+  --border: hsl(0 0% 83%);
+  --input: hsl(0 0% 83%);
+  --ring: hsl(20 90% 48%);
   --radius: 0.75rem;
-  
+
   /* Sidebar */
   --sidebar-background: 222 55% 7%;
-  --sidebar-foreground: var(--cv-text-secondary);
-  --sidebar-primary: var(--cv-primary);
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: var(--cv-bg-card);
-  --sidebar-accent-foreground: var(--cv-text-primary);
-  --sidebar-border: var(--cv-border);
-  --sidebar-ring: var(--cv-primary);
-  
+  --sidebar-foreground: hsl(0 0% 9%);
+  --sidebar-primary: hsl(20 90% 48%);
+  --sidebar-primary-foreground: hsl(33 100% 96%);
+  --sidebar-accent: hsl(0 0% 32%);
+  --sidebar-accent-foreground: hsl(0 0% 98%);
+  --sidebar-border: hsl(0 0% 83%);
+  --sidebar-ring: hsl(20 90% 48%);
+
   /* Additional Design System Variables */
   --cv-gradient-primary: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-primary-dark)));
   --cv-gradient-accent: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-accent)));
   --cv-gradient-secondary: linear-gradient(135deg, hsl(var(--cv-secondary)), hsl(var(--cv-danger)));
   --cv-shadow-glow: 0 0 60px -15px hsl(var(--cv-primary) / 0.3);
   --cv-shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+  --chart-1: hsl(27 95% 60%);
+  --chart-2: hsl(43 96% 56%);
+  --chart-3: hsl(47 95% 53%);
+  --chart-4: hsl(24 94% 53%);
+  --chart-5: hsl(0 0% 45%);
+  --sidebar: hsl(0 0% 98%);
+  --font-sans: 'Roboto', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-serif: 'Libre Caslon Text', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
 }
 
 /* Light mode override - ClinicVoice is dark-first but supports light */
@@ -114,7 +138,7 @@
 @theme {
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-mono: 'Space Mono', monospace;
-  
+
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-card: hsl(var(--card));
@@ -142,7 +166,7 @@
   --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
-  
+
   /* ClinicVoice specific colors */
   --color-cv-primary: hsl(var(--cv-primary));
   --color-cv-primary-light: hsl(var(--cv-primary-light));
@@ -224,36 +248,128 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  
+
   .gradient-primary {
     background: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-primary-dark)));
   }
-  
+
   .gradient-accent {
     background: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-accent)));
   }
-  
+
   .gradient-secondary {
     background: linear-gradient(135deg, hsl(var(--cv-secondary)), hsl(var(--cv-danger)));
   }
-  
+
   .gradient-text {
     background: linear-gradient(135deg, hsl(var(--cv-text-primary)), hsl(var(--cv-primary-light)), hsl(var(--cv-text-primary)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .glass {
     background: hsl(var(--cv-bg-card) / 0.8);
     backdrop-filter: blur(12px);
   }
-  
+
   .glow-primary {
     box-shadow: 0 0 40px -10px hsl(var(--cv-primary) / 0.5);
   }
-  
+
   .glow-accent {
     box-shadow: 0 0 40px -10px hsl(var(--cv-accent) / 0.5);
   }
+}
+
+.dark {
+  --background: hsl(0 0% 9%);
+  --foreground: hsl(0 0% 98%);
+  --card: hsl(0 0% 14%);
+  --card-foreground: hsl(0 0% 98%);
+  --popover: hsl(0 0% 25%);
+  --popover-foreground: hsl(0 0% 98%);
+  --primary: hsl(27 95% 60%);
+  --primary-foreground: hsl(12 81% 14%);
+  --secondary: hsl(0 0% 45%);
+  --secondary-foreground: hsl(0 0% 98%);
+  --muted: hsl(0 0% 45%);
+  --muted-foreground: hsl(0 0% 98%);
+  --accent: hsl(20 91% 14%);
+  --accent-foreground: hsl(43 96% 56%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(0 85% 97%);
+  --border: hsl(0 0% 32%);
+  --input: hsl(0 0% 32%);
+  --ring: hsl(27 95% 60%);
+  --chart-1: hsl(30 97% 72%);
+  --chart-2: hsl(45 96% 64%);
+  --chart-3: hsl(48 96% 76%);
+  --chart-4: hsl(27 95% 60%);
+  --chart-5: hsl(0 0% 45%);
+  --sidebar: hsl(0 0% 14%);
+  --sidebar-foreground: hsl(0 0% 98%);
+  --sidebar-primary: hsl(27 95% 60%);
+  --sidebar-primary-foreground: hsl(12 81% 14%);
+  --sidebar-accent: hsl(43 96% 56%);
+  --sidebar-accent-foreground: hsl(20 91% 14%);
+  --sidebar-border: hsl(0 0% 32%);
+  --sidebar-ring: hsl(27 95% 60%);
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+}
+
+@theme inline {
+  --color-background: var(----background);
+  --color-foreground: var(----foreground);
+  --color-card: var(----card);
+  --color-card-foreground: var(----card-foreground);
+  --color-popover: var(----popover);
+  --color-popover-foreground: var(----popover-foreground);
+  --color-primary: var(----primary);
+  --color-primary-foreground: var(----primary-foreground);
+  --color-secondary: var(----secondary);
+  --color-secondary-foreground: var(----secondary-foreground);
+  --color-muted: var(----muted);
+  --color-muted-foreground: var(----muted-foreground);
+  --color-accent: var(----accent);
+  --color-accent-foreground: var(----accent-foreground);
+  --color-destructive: var(----destructive);
+  --color-destructive-foreground: var(----destructive-foreground);
+  --color-border: var(----border);
+  --color-input: var(----input);
+  --color-ring: var(----ring);
+  --color-chart-1: var(----chart-1);
+  --color-chart-2: var(----chart-2);
+  --color-chart-3: var(----chart-3);
+  --color-chart-4: var(----chart-4);
+  --color-chart-5: var(----chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(----sidebar-foreground);
+  --color-sidebar-primary: var(----sidebar-primary);
+  --color-sidebar-primary-foreground: var(----sidebar-primary-foreground);
+  --color-sidebar-accent: var(----sidebar-accent);
+  --color-sidebar-accent-foreground: var(----sidebar-accent-foreground);
+  --color-sidebar-border: var(----sidebar-border);
+  --color-sidebar-ring: var(----sidebar-ring);
+  --font-sans: var(----font-sans);
+  --font-serif: var(----font-serif);
+  --font-mono: var(----font-mono);
+  --radius: var(----radius);
+  --shadow-2xs: var(----shadow-2xs);
+  --shadow-xs: var(----shadow-xs);
+  --shadow-sm: var(----shadow-sm);
+  --shadow: var(----shadow);
+  --shadow-md: var(----shadow-md);
+  --shadow-lg: var(----shadow-lg);
+  --shadow-xl: var(----shadow-xl);
+  --shadow-2xl: var(----shadow-2xl);
+  --tracking-normal: var(----tracking-normal);
+  --spacing: var(----spacing);
 }
