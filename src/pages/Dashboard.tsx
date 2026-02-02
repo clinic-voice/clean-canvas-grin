@@ -74,7 +74,7 @@ export default function Dashboard() {
       subtitle="Welcome back, Dr. Santhira. Here's your clinic overview."
     >
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
         <StatsCard
           title="Today's Appointments"
           value="24"
@@ -106,9 +106,9 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
         {/* Appointments Column */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="xl:col-span-2 space-y-4 md:space-y-6">
           {/* Today's Appointments */}
           <div className="rounded-xl bg-card border border-border overflow-hidden">
             <div className="px-5 py-4 border-b border-border flex items-center justify-between">
@@ -156,7 +156,7 @@ export default function Dashboard() {
         </div>
 
         {/* Right Sidebar */}
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {/* Voice AI Widget */}
           <VoiceAIWidget
             isActive={true}
