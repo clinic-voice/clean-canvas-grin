@@ -15,6 +15,8 @@ const Appointments = lazy(() => import("./pages/Appointments"));
 const Patients = lazy(() => import("./pages/Patients"));
 const VoiceAI = lazy(() => import("./pages/VoiceAI"));
 const Analytics = lazy(() => import("./pages/Analytics"));
+const Medications = lazy(() => import("./pages/Medications"));
+const Billing = lazy(() => import("./pages/Billing"));
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,8 @@ const App = () => (
               <Route path="/patients" element={<ProtectedRoute><Patients /></ProtectedRoute>} />
               <Route path="/voice-ai" element={<ProtectedRoute><VoiceAI /></ProtectedRoute>} />
               <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+              <Route path="/medications" element={<ProtectedRoute><Medications /></ProtectedRoute>} />
+              <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
               
               {/* Fallback */}
               <Route path="*" element={<LandingPage />} />
