@@ -29,10 +29,13 @@ const iconTextColors = {
 
 export function StatsCard({ title, value, change, icon: Icon, iconColor }: StatsCardProps) {
   return (
-    <div className="rounded-xl bg-card border border-border p-3 md:p-5 transition-all hover:shadow-lg hover:border-cv-primary/30">
+    <div className="group rounded-xl bg-card border border-border p-3 md:p-5 transition-all duration-300 hover:shadow-lg hover:shadow-cv-primary/10 hover:border-cv-primary/30 hover:-translate-y-1 cursor-pointer">
       <div className="flex items-start justify-between mb-2 md:mb-3">
-        <div className={cn("w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center", iconBgColors[iconColor])}>
-          <Icon className={cn("w-4 h-4 md:w-5 md:h-5", iconTextColors[iconColor])} />
+        <div className={cn(
+          "w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110",
+          iconBgColors[iconColor]
+        )}>
+          <Icon className={cn("w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:rotate-6", iconTextColors[iconColor])} />
         </div>
         {change && (
           <div
