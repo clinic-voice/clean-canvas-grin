@@ -64,13 +64,16 @@ function NavSection({ title, items, currentPath }: NavSectionProps) {
               key={item.href}
               to={item.href}
               className={cn(
-                "flex items-center gap-3 px-4 py-2.5 text-sm transition-all duration-200 border-l-[3px] border-transparent",
+                "group flex items-center gap-3 px-4 py-2.5 text-sm transition-all duration-200 border-l-[3px] border-transparent",
                 isActive
                   ? "bg-cv-primary/10 text-cv-primary-light border-l-cv-primary"
-                  : "text-cv-text-secondary hover:bg-muted/50 hover:text-cv-text-primary"
+                  : "text-cv-text-secondary hover:bg-muted/50 hover:text-cv-text-primary hover:translate-x-1 hover:border-l-cv-primary/50"
               )}
             >
-              <item.icon className="w-[18px] h-[18px]" />
+              <item.icon className={cn(
+                "w-[18px] h-[18px] transition-transform duration-200",
+                !isActive && "group-hover:scale-110"
+              )} />
               <span className="font-medium">{item.label}</span>
               {"badge" in item && item.badge && (
                 <span className="ml-auto px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-cv-success/20 text-cv-success animate-pulse">
@@ -99,12 +102,12 @@ export function DashboardSidebar() {
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-[250px] bg-sidebar border-r border-sidebar-border flex flex-col">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
-        <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border group cursor-pointer hover:bg-muted/30 transition-all duration-200">
+        <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3">
           <Phone className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h1 className="text-lg font-bold text-cv-text-primary">ClinicVoice</h1>
+          <h1 className="text-lg font-bold text-cv-text-primary group-hover:text-cv-primary-light transition-colors">ClinicVoice</h1>
           <p className="text-[10px] font-medium text-cv-primary-light uppercase tracking-wider">
             AI Platform
           </p>
@@ -135,9 +138,9 @@ export function DashboardSidebar() {
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 w-full px-3 py-2 text-sm text-cv-text-secondary hover:text-cv-danger hover:bg-cv-danger/10 rounded-lg transition-colors"
+          className="group flex items-center gap-2 w-full px-3 py-2 text-sm text-cv-text-secondary hover:text-cv-danger hover:bg-cv-danger/10 rounded-lg transition-all duration-200"
         >
-          <LogOut className="w-4 h-4" />
+          <LogOut className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
           Sign Out
         </button>
       </div>
