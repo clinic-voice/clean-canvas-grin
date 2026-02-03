@@ -121,9 +121,13 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
+        {/* Subtle gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-96 h-96 bg-cv-primary/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-cv-accent/15 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cv-primary/5 via-transparent to-cv-accent/5" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--cv-primary)/0.15),transparent)]" />
+          <div className="absolute top-20 left-1/4 w-96 h-96 bg-cv-primary/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-cv-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,hsl(var(--cv-primary)/0.08),transparent_50%)]" />
         </div>
         
         <div className="max-w-7xl mx-auto relative">
@@ -180,7 +184,9 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-6 bg-card/30">
+      <section id="features" className="py-20 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_40%_60%,hsl(var(--cv-primary)/0.06),transparent)] pointer-events-none" />
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cv-primary/20 text-cv-primary-light">
@@ -218,7 +224,9 @@ export default function LandingPage() {
       </section>
 
       {/* Impact Section */}
-      <section id="impact" className="py-20 px-6">
+      <section id="impact" className="py-20 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_80%_20%,hsl(var(--cv-secondary)/0.08),transparent)] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-card/20 to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cv-secondary/20 text-cv-secondary">
@@ -260,7 +268,9 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-6 bg-card/30">
+      <section id="pricing" className="py-20 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-cv-accent/5 via-transparent to-cv-primary/5 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_30%_80%,hsl(var(--cv-accent)/0.08),transparent)] pointer-events-none" />
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cv-accent/20 text-cv-accent">
@@ -319,7 +329,9 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,hsl(var(--cv-primary)/0.1),transparent)] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50 pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-extrabold text-cv-text-primary mb-6">
             Ready to Transform Your Clinic?
