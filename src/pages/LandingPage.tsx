@@ -6,6 +6,7 @@ import {
   Stethoscope, Pill, CreditCard, ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FloatingParticles } from "@/components/clinicvoice/FloatingParticles";
 
 const features = [
   {
@@ -121,13 +122,17 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
+        {/* Floating Particles Animation */}
+        <FloatingParticles count={35} />
+        
         {/* Subtle gradient mesh background */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-cv-primary/5 via-transparent to-cv-accent/5" />
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--cv-primary)/0.15),transparent)]" />
-          <div className="absolute top-20 left-1/4 w-96 h-96 bg-cv-primary/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-cv-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,hsl(var(--cv-primary)/0.08),transparent_50%)]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cv-primary/8 via-transparent to-cv-accent/8" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--cv-primary)/0.2),transparent)]" />
+          <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-cv-primary/25 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-cv-accent/20 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[radial-gradient(circle,hsl(var(--cv-primary)/0.1),transparent_50%)]" />
+          <div className="absolute top-40 right-20 w-[300px] h-[300px] bg-cv-secondary/10 rounded-full blur-[60px]" />
         </div>
         
         <div className="max-w-7xl mx-auto relative">
