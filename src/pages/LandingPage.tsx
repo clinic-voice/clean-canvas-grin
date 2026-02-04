@@ -63,15 +63,15 @@ const impactMetrics = [
 const pricingPlans = [
   {
     name: "Starter",
-    price: "₹2,999",
-    period: "/month",
+    price: "Free",
+    period: "",
     description: "Perfect for small clinics",
     features: ["Voice AI (100 calls/month)", "WhatsApp Booking", "Basic EMR", "5 Staff Accounts"],
     popular: false,
   },
   {
     name: "Professional",
-    price: "₹7,999",
+    price: "₹1,000",
     period: "/month",
     description: "For growing practices",
     features: ["Voice AI (500 calls/month)", "WhatsApp + SMS", "Full EMR & E-Rx", "Unlimited Staff", "Analytics Dashboard", "Priority Support"],
@@ -79,7 +79,7 @@ const pricingPlans = [
   },
   {
     name: "Enterprise",
-    price: "₹19,999",
+    price: "₹2,000",
     period: "/month",
     description: "Multi-location hospitals",
     features: ["Unlimited Voice AI", "Custom Integrations", "On-Premise Option", "Dedicated Account Manager", "Custom Training", "SLA Guarantee"],
@@ -273,7 +273,7 @@ export default function LandingPage() {
               Affordable for Every Clinic
             </h2>
             <p className="text-lg text-muted-foreground">
-              Starting at just ₹2,999/month - 10x cheaper than competitors
+              Start free, upgrade from just ₹1,000/month - 10x cheaper than competitors
             </p>
           </div>
 
