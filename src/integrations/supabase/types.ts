@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      message_logs: {
+        Row: {
+          channel: string
+          created_at: string
+          error_message: string | null
+          id: string
+          language: string | null
+          message_content: string
+          message_sid: string | null
+          status: string
+          template_name: string | null
+          to_phone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          channel: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          language?: string | null
+          message_content: string
+          message_sid?: string | null
+          status?: string
+          template_name?: string | null
+          to_phone: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          channel?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          language?: string | null
+          message_content?: string
+          message_sid?: string | null
+          status?: string
+          template_name?: string | null
+          to_phone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           clinic_name: string | null
