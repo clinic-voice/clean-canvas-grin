@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Sparkles, Volume2, VolumeX, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -24,14 +24,18 @@ const QUICK_REPLIES = [
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 const SOUND_STORAGE_KEY = 'clinicvoice-chat-sound-enabled';
 
+const INITIAL_MESSAGE: Message = {
+  role: 'assistant',
+  content: "👋 Welcome to ClinicVoice AI! I'm here to help you manage your clinic efficiently. Ask me about:\n\n• **Appointment scheduling**\n• **Patient management**\n• **Voice AI features**\n• **Billing & analytics**\n\nHow can I assist you today?",
+};
+
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: "👋 Welcome to ClinicVoice AI! I'm here to help you manage your clinic efficiently. Ask me about:\n\n• **Appointment scheduling**\n• **Patient management**\n• **Voice AI features**\n• **Billing & analytics**\n\nHow can I assist you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+
+  const clearChatHistory = () => {
+    setMessages([INITIAL_MESSAGE]);
+  };
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => {
@@ -215,6 +219,16 @@ export function ChatBot() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={clearChatHistory}
+                    className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
+                    title="Clear chat history"
+                    disabled={messages.length <= 1 || isLoading}
+                  >
+                    <RotateCcw className="size-4" />
+                  </Button>
                   <Button
                     variant="ghost"
                     size="icon"
