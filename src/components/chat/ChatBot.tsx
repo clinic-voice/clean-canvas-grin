@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Sparkles, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Sparkles, Volume2, VolumeX, RotateCcw, Minus, Maximize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -31,6 +31,7 @@ const INITIAL_MESSAGE: Message = {
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
 
   const clearChatHistory = () => {
@@ -190,62 +191,101 @@ export function ChatBot() {
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className={cn(
-              'fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)]',
+              'fixed bottom-6 right-6 z-50',
+              isMinimized ? 'w-[280px]' : 'w-[400px] max-w-[calc(100vw-3rem)]',
               'bg-cv-dark-card/95 backdrop-blur-xl',
               'border border-cv-accent/20 rounded-2xl',
               'shadow-2xl shadow-black/50 overflow-hidden'
             )}
           >
             {/* Header with Gradient */}
-            <div className="relative p-4 border-b border-cv-accent/10 overflow-hidden">
+            <div 
+              className={cn(
+                "relative p-4 overflow-hidden cursor-pointer",
+                !isMinimized && "border-b border-cv-accent/10"
+              )}
+              onClick={() => isMinimized && setIsMinimized(false)}
+            >
               {/* Background gradient */}
               <div className="absolute inset-0 bg-gradient-to-r from-teal-600/20 via-teal-500/10 to-transparent" />
               
               <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <motion.div 
-                    className="p-2.5 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/30"
+                    className={cn(
+                      "rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/30",
+                      isMinimized ? "p-2" : "p-2.5"
+                    )}
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
                   >
-                    <Sparkles className="size-5 text-white" />
+                    <Sparkles className={isMinimized ? "size-4 text-white" : "size-5 text-white"} />
                   </motion.div>
                   <div>
-                    <h3 className="font-semibold text-white text-sm tracking-wide">ClinicVoice AI</h3>
+                    <h3 className={cn(
+                      "font-semibold text-white tracking-wide",
+                      isMinimized ? "text-xs" : "text-sm"
+                    )}>ClinicVoice AI</h3>
                     <div className="flex items-center gap-1.5">
                       <span className="size-2 bg-green-400 rounded-full animate-pulse" />
-                      <p className="text-xs text-cv-text-secondary">Always here to help</p>
+                      <p className={cn(
+                        "text-cv-text-secondary",
+                        isMinimized ? "text-[10px]" : "text-xs"
+                      )}>Always here to help</p>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
+                  {!isMinimized && (
+                    <>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={clearChatHistory}
+                        className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
+                        title="Clear chat history"
+                        disabled={messages.length <= 1 || isLoading}
+                      >
+                        <RotateCcw className="size-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setSoundEnabled(!soundEnabled)}
+                        className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
+                        title={soundEnabled ? 'Disable notification sound' : 'Enable notification sound'}
+                      >
+                        {soundEnabled ? (
+                          <Volume2 className="size-4" />
+                        ) : (
+                          <VolumeX className="size-4" />
+                        )}
+                      </Button>
+                    </>
+                  )}
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={clearChatHistory}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsMinimized(!isMinimized);
+                    }}
                     className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
-                    title="Clear chat history"
-                    disabled={messages.length <= 1 || isLoading}
+                    title={isMinimized ? 'Expand chat' : 'Minimize chat'}
                   >
-                    <RotateCcw className="size-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setSoundEnabled(!soundEnabled)}
-                    className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
-                    title={soundEnabled ? 'Disable notification sound' : 'Enable notification sound'}
-                  >
-                    {soundEnabled ? (
-                      <Volume2 className="size-4" />
+                    {isMinimized ? (
+                      <Maximize2 className="size-4" />
                     ) : (
-                      <VolumeX className="size-4" />
+                      <Minus className="size-4" />
                     )}
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsOpen(false);
+                    }}
                     className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
                   >
                     <X className="size-4" />
@@ -254,155 +294,166 @@ export function ChatBot() {
               </div>
             </div>
 
-            {/* Messages */}
-            <ScrollArea className="h-[420px] p-4" ref={scrollAreaRef}>
-            <div className="space-y-4">
-                {messages.map((message, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: index * 0.05, type: 'spring', damping: 20 }}
-                    className={cn(
-                      'flex gap-3',
-                      message.role === 'user' && 'flex-row-reverse'
-                    )}
-                  >
-                    <motion.div
-                      className={cn(
-                        'size-8 rounded-xl flex items-center justify-center shrink-0',
-                        message.role === 'assistant'
-                          ? 'bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/20'
-                          : 'bg-cv-dark-hover border border-cv-accent/20'
+            {/* Messages - Hidden when minimized */}
+            <AnimatePresence>
+              {!isMinimized && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ScrollArea className="h-[420px] p-4" ref={scrollAreaRef}>
+                    <div className="space-y-4">
+                      {messages.map((message, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{ delay: index * 0.05, type: 'spring', damping: 20 }}
+                          className={cn(
+                            'flex gap-3',
+                            message.role === 'user' && 'flex-row-reverse'
+                          )}
+                        >
+                          <motion.div
+                            className={cn(
+                              'size-8 rounded-xl flex items-center justify-center shrink-0',
+                              message.role === 'assistant'
+                                ? 'bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/20'
+                                : 'bg-cv-dark-hover border border-cv-accent/20'
+                            )}
+                            whileHover={{ scale: 1.1 }}
+                          >
+                            {message.role === 'assistant' ? (
+                              <Bot className="size-4 text-white" />
+                            ) : (
+                              <User className="size-4 text-cv-text-secondary" />
+                            )}
+                          </motion.div>
+                          <div
+                            className={cn(
+                              'rounded-2xl px-4 py-3 max-w-[80%]',
+                              message.role === 'assistant'
+                                ? 'bg-cv-dark-hover/80 border border-cv-accent/10 text-cv-text-primary'
+                                : 'bg-gradient-to-br from-teal-500 to-teal-600 text-white shadow-lg shadow-teal-500/20'
+                            )}
+                          >
+                            {message.role === 'assistant' ? (
+                              <div className="prose prose-sm prose-invert max-w-none prose-p:text-cv-text-primary prose-p:leading-relaxed prose-strong:text-teal-400 prose-ul:text-cv-text-secondary">
+                                <ReactMarkdown>{message.content || '...'}</ReactMarkdown>
+                              </div>
+                            ) : (
+                              <p className="text-sm leading-relaxed">{message.content}</p>
+                            )}
+                          </div>
+                        </motion.div>
+                      ))}
+                      
+                      {/* Quick Reply Buttons - show after initial message only */}
+                      {messages.length === 1 && !isLoading && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 }}
+                          className="flex flex-wrap gap-2 pt-2"
+                        >
+                          {QUICK_REPLIES.map((reply) => (
+                            <motion.button
+                              key={reply.label}
+                              onClick={() => {
+                                setInput(reply.message);
+                                setTimeout(() => {
+                                  const form = document.querySelector('form');
+                                  form?.requestSubmit();
+                                }, 50);
+                              }}
+                              className={cn(
+                                'px-3 py-1.5 text-xs font-medium rounded-full',
+                                'bg-cv-dark-hover border border-cv-accent/20',
+                                'text-cv-text-secondary hover:text-white',
+                                'hover:border-teal-500/40 hover:bg-teal-500/10',
+                                'transition-all duration-200'
+                              )}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              {reply.label}
+                            </motion.button>
+                          ))}
+                        </motion.div>
                       )}
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      {message.role === 'assistant' ? (
-                        <Bot className="size-4 text-white" />
-                      ) : (
-                        <User className="size-4 text-cv-text-secondary" />
-                      )}
-                    </motion.div>
-                    <div
-                      className={cn(
-                        'rounded-2xl px-4 py-3 max-w-[80%]',
-                        message.role === 'assistant'
-                          ? 'bg-cv-dark-hover/80 border border-cv-accent/10 text-cv-text-primary'
-                          : 'bg-gradient-to-br from-teal-500 to-teal-600 text-white shadow-lg shadow-teal-500/20'
-                      )}
-                    >
-                      {message.role === 'assistant' ? (
-                        <div className="prose prose-sm prose-invert max-w-none prose-p:text-cv-text-primary prose-p:leading-relaxed prose-strong:text-teal-400 prose-ul:text-cv-text-secondary">
-                          <ReactMarkdown>{message.content || '...'}</ReactMarkdown>
-                        </div>
-                      ) : (
-                        <p className="text-sm leading-relaxed">{message.content}</p>
+                      
+                      {/* Typing Indicator */}
+                      {isLoading && messages[messages.length - 1]?.role === 'user' && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="flex gap-3"
+                        >
+                          <div className="size-8 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-lg shadow-teal-500/20">
+                            <Bot className="size-4 text-white" />
+                          </div>
+                          <div className="bg-cv-dark-hover/80 border border-cv-accent/10 rounded-2xl px-4 py-3">
+                            <div className="flex gap-1.5">
+                              {[0, 1, 2].map((i) => (
+                                <motion.span
+                                  key={i}
+                                  className="size-2 bg-teal-400 rounded-full"
+                                  animate={{ y: [0, -6, 0] }}
+                                  transition={{
+                                    repeat: Infinity,
+                                    duration: 0.6,
+                                    delay: i * 0.15,
+                                    ease: 'easeInOut',
+                                  }}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </motion.div>
                       )}
                     </div>
-                  </motion.div>
-                ))}
-                
-                {/* Quick Reply Buttons - show after initial message only */}
-                {messages.length === 1 && !isLoading && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="flex flex-wrap gap-2 pt-2"
-                  >
-                    {QUICK_REPLIES.map((reply) => (
-                      <motion.button
-                        key={reply.label}
-                        onClick={() => {
-                          setInput(reply.message);
-                          setTimeout(() => {
-                            const form = document.querySelector('form');
-                            form?.requestSubmit();
-                          }, 50);
-                        }}
+                  </ScrollArea>
+
+                  {/* Input Area */}
+                  <form onSubmit={handleSubmit} className="p-4 border-t border-cv-accent/10 bg-cv-dark-hover/30">
+                    <div className="flex gap-2">
+                      <Input
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Ask me anything..."
+                        disabled={isLoading}
                         className={cn(
-                          'px-3 py-1.5 text-xs font-medium rounded-full',
-                          'bg-cv-dark-hover border border-cv-accent/20',
-                          'text-cv-text-secondary hover:text-white',
-                          'hover:border-teal-500/40 hover:bg-teal-500/10',
+                          'flex-1 bg-cv-dark-card border-cv-accent/20',
+                          'text-cv-text-primary placeholder:text-cv-text-secondary/50',
+                          'focus:border-teal-500/50 focus:ring-teal-500/20',
+                          'rounded-xl h-11'
+                        )}
+                      />
+                      <Button 
+                        type="submit" 
+                        size="icon" 
+                        disabled={isLoading || !input.trim()}
+                        className={cn(
+                          'size-11 rounded-xl',
+                          'bg-gradient-to-br from-teal-500 to-teal-600',
+                          'hover:from-teal-400 hover:to-teal-500',
+                          'shadow-lg shadow-teal-500/30 hover:shadow-teal-500/40',
+                          'disabled:opacity-50 disabled:shadow-none',
                           'transition-all duration-200'
                         )}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
                       >
-                        {reply.label}
-                      </motion.button>
-                    ))}
-                  </motion.div>
-                )}
-                
-                {/* Typing Indicator */}
-                {isLoading && messages[messages.length - 1]?.role === 'user' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex gap-3"
-                  >
-                    <div className="size-8 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-lg shadow-teal-500/20">
-                      <Bot className="size-4 text-white" />
+                        <Send className="size-4" />
+                      </Button>
                     </div>
-                    <div className="bg-cv-dark-hover/80 border border-cv-accent/10 rounded-2xl px-4 py-3">
-                      <div className="flex gap-1.5">
-                        {[0, 1, 2].map((i) => (
-                          <motion.span
-                            key={i}
-                            className="size-2 bg-teal-400 rounded-full"
-                            animate={{ y: [0, -6, 0] }}
-                            transition={{
-                              repeat: Infinity,
-                              duration: 0.6,
-                              delay: i * 0.15,
-                              ease: 'easeInOut',
-                            }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            </ScrollArea>
-
-            {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-4 border-t border-cv-accent/10 bg-cv-dark-hover/30">
-              <div className="flex gap-2">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask me anything..."
-                  disabled={isLoading}
-                  className={cn(
-                    'flex-1 bg-cv-dark-card border-cv-accent/20',
-                    'text-cv-text-primary placeholder:text-cv-text-secondary/50',
-                    'focus:border-teal-500/50 focus:ring-teal-500/20',
-                    'rounded-xl h-11'
-                  )}
-                />
-                <Button 
-                  type="submit" 
-                  size="icon" 
-                  disabled={isLoading || !input.trim()}
-                  className={cn(
-                    'size-11 rounded-xl',
-                    'bg-gradient-to-br from-teal-500 to-teal-600',
-                    'hover:from-teal-400 hover:to-teal-500',
-                    'shadow-lg shadow-teal-500/30 hover:shadow-teal-500/40',
-                    'disabled:opacity-50 disabled:shadow-none',
-                    'transition-all duration-200'
-                  )}
-                >
-                  <Send className="size-4" />
-                </Button>
-              </div>
-              <p className="text-[10px] text-cv-text-secondary/50 text-center mt-2">
-                Powered by ClinicVoice AI
-              </p>
-            </form>
+                    <p className="text-[10px] text-cv-text-secondary/50 text-center mt-2">
+                      Powered by ClinicVoice AI
+                    </p>
+                  </form>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
