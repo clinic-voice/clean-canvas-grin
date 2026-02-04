@@ -38,7 +38,7 @@ export function Header() {
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         isTransparent
           ? 'bg-transparent'
-          : 'bg-background/90 backdrop-blur-lg border-b border-border shadow-sm'
+          : 'bg-background/95 backdrop-blur-md border-b border-border'
       )}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -47,10 +47,10 @@ export function Header() {
           <Link
             to="/"
             className={cn(
-              'text-lg font-light tracking-widest transition-all duration-300',
+              'text-sm font-medium tracking-[0.2em] transition-all duration-300',
               isTransparent
                 ? 'text-white hover:text-white/80'
-                : 'text-foreground hover:text-foreground/80'
+                : 'text-foreground hover:text-muted-foreground'
             )}
           >
             <motion.span
@@ -63,7 +63,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-10">
             {navLinks.map((link, index) => (
                 <motion.div
                   key={link.path}
@@ -73,14 +73,22 @@ export function Header() {
                 >
                   <Link
                     to={link.path}
-                    className="relative text-lg leading-7 font-light tracking-wide text-white transition-colors duration-300 hover:text-white/80"
+                    className={cn(
+                      "relative text-sm font-medium tracking-[0.1em] transition-colors duration-300",
+                      isTransparent
+                        ? 'text-white hover:text-white/70'
+                        : 'text-foreground hover:text-muted-foreground'
+                    )}
                   >
-                    {link.name}
+                    {link.name.toUpperCase()}
                     {/* Active underline */}
                     {location.pathname === link.path && (
                       <motion.div
                         layoutId="activeNav"
-                        className="absolute -bottom-1 left-0 right-0 h-px bg-white"
+                        className={cn(
+                          "absolute -bottom-1 left-0 right-0 h-px",
+                          isTransparent ? 'bg-white' : 'bg-foreground'
+                        )}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -114,15 +122,15 @@ export function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-full sm:w-80">
-                <nav className="flex flex-col gap-6 mt-8">
+                <nav className="flex flex-col gap-8 mt-12">
                   {navLinks.map((link) => (
                     <Link
                       key={link.path}
                       to={link.path}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-lg leading-7 font-light tracking-wide text-foreground hover:text-foreground/80"
+                      className="text-sm font-medium tracking-[0.1em] text-foreground hover:text-muted-foreground transition-colors"
                     >
-                      {link.name}
+                      {link.name.toUpperCase()}
                     </Link>
                   ))}
                 </nav>

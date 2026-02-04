@@ -31,111 +31,111 @@
 }
 
 :root {
-  /* ClinicVoice Brand Colors - HSL Format */
-  --cv-primary: 174 82% 30%;
-  --cv-primary-light: 174 76% 40%;
-  --cv-primary-dark: 174 80% 25%;
+  /* Professional Portfolio Brand Colors - HSL Format */
+  --cv-primary: 220 14% 30%;
+  --cv-primary-light: 220 14% 45%;
+  --cv-primary-dark: 220 14% 20%;
 
-  --cv-secondary: 24 95% 53%;
-  --cv-accent: 258 77% 65%;
-  --cv-blue: 217 91% 60%;
-  --cv-pink: 330 81% 60%;
+  --cv-secondary: 45 6% 58%;
+  --cv-accent: 220 14% 40%;
+  --cv-blue: 220 60% 50%;
+  --cv-pink: 0 0% 40%;
 
-  /* Dark Theme Base */
-  --cv-bg-dark: 222 47% 11%;
-  --cv-bg-card: 217 33% 17%;
-  --cv-bg-card-hover: 215 25% 27%;
-  --cv-bg-input: 220 30% 12%;
+  /* Light Theme Base - Professional & Corporate */
+  --cv-bg-dark: 0 0% 98%;
+  --cv-bg-card: 0 0% 100%;
+  --cv-bg-card-hover: 220 14% 96%;
+  --cv-bg-input: 0 0% 100%;
 
-  /* Text Colors */
-  --cv-text-primary: 213 31% 96%;
-  --cv-text-secondary: 215 16% 62%;
-  --cv-text-muted: 215 16% 47%;
+  /* Text Colors - High Contrast */
+  --cv-text-primary: 220 14% 15%;
+  --cv-text-secondary: 220 10% 40%;
+  --cv-text-muted: 220 8% 55%;
 
   /* Border */
-  --cv-border: 215 25% 27%;
+  --cv-border: 220 14% 88%;
 
   /* Status Colors */
-  --cv-success: 158 64% 52%;
-  --cv-warning: 43 96% 56%;
-  --cv-danger: 0 84% 60%;
-  --cv-gold: 38 92% 50%;
+  --cv-success: 160 60% 40%;
+  --cv-warning: 45 90% 50%;
+  --cv-danger: 0 70% 50%;
+  --cv-gold: 45 70% 45%;
 
-  /* Semantic tokens mapped to ClinicVoice */
-  --background: hsl(60 4% 95%);
-  --foreground: hsl(24 9% 10%);
-  --card: hsl(60 9% 97%);
-  --card-foreground: hsl(24 9% 10%);
-  --popover: hsl(20 5% 90%);
-  --popover-foreground: hsl(24 9% 10%);
-  --primary: hsl(37 92% 50%);
-  --primary-foreground: hsl(47 100% 96%);
-  --secondary: hsl(24 5% 44%);
-  --secondary-foreground: hsl(60 9% 97%);
-  --muted: hsl(23 5% 82%);
-  --muted-foreground: hsl(24 9% 10%);
-  --accent: hsl(47 100% 96%);
-  --accent-foreground: hsl(37 92% 50%);
-  --destructive: hsl(0 72% 50%);
-  --destructive-foreground: hsl(0 85% 97%);
-  --border: hsl(23 5% 82%);
-  --input: hsl(23 5% 82%);
-  --ring: hsl(37 92% 50%);
-  --radius: 1rem;
+  /* Semantic tokens - Professional Light Theme */
+  --background: 0 0% 100%;
+  --foreground: 220 14% 15%;
+  --card: 0 0% 99%;
+  --card-foreground: 220 14% 15%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 14% 15%;
+  --primary: 220 14% 25%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 10% 94%;
+  --secondary-foreground: 220 14% 25%;
+  --muted: 220 10% 94%;
+  --muted-foreground: 220 10% 45%;
+  --accent: 220 10% 94%;
+  --accent-foreground: 220 14% 20%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 14% 90%;
+  --input: 220 14% 90%;
+  --ring: 220 14% 25%;
+  --radius: 0.5rem;
 
   /* Sidebar */
-  --sidebar-background: 222 55% 7%;
-  --sidebar-foreground: hsl(24 9% 10%);
-  --sidebar-primary: hsl(37 92% 50%);
-  --sidebar-primary-foreground: hsl(47 100% 96%);
-  --sidebar-accent: hsl(24 5% 44%);
-  --sidebar-accent-foreground: hsl(60 9% 97%);
-  --sidebar-border: hsl(23 5% 82%);
-  --sidebar-ring: hsl(37 92% 50%);
+  --sidebar-background: 220 14% 98%;
+  --sidebar-foreground: 220 14% 15%;
+  --sidebar-primary: 220 14% 25%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 10% 94%;
+  --sidebar-accent-foreground: 220 14% 25%;
+  --sidebar-border: 220 14% 90%;
+  --sidebar-ring: 220 14% 25%;
 
   /* Additional Design System Variables */
   --cv-gradient-primary: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-primary-dark)));
   --cv-gradient-accent: linear-gradient(135deg, hsl(var(--cv-primary)), hsl(var(--cv-accent)));
-  --cv-gradient-secondary: linear-gradient(135deg, hsl(var(--cv-secondary)), hsl(var(--cv-danger)));
-  --cv-shadow-glow: 0 0 60px -15px hsl(var(--cv-primary) / 0.3);
-  --cv-shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
-  --chart-1: hsl(45 96% 64%);
-  --chart-2: hsl(47 95% 53%);
-  --chart-3: hsl(43 96% 56%);
-  --chart-4: hsl(37 92% 50%);
-  --chart-5: hsl(24 5% 44%);
-  --sidebar: hsl(60 9% 97%);
+  --cv-gradient-secondary: linear-gradient(135deg, hsl(var(--cv-secondary)), hsl(var(--cv-primary)));
+  --cv-shadow-glow: 0 0 40px -15px hsl(var(--cv-primary) / 0.15);
+  --cv-shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.08);
+  --chart-1: hsl(220 60% 50%);
+  --chart-2: hsl(220 50% 60%);
+  --chart-3: hsl(220 40% 70%);
+  --chart-4: hsl(220 30% 40%);
+  --chart-5: hsl(220 20% 50%);
+  --sidebar: hsl(220 14% 98%);
   --font-sans: 'Source Sans Pro', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
   --font-serif: 'Source Serif Pro', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-mono: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
-  --tracking-normal: 0em;
+  --shadow-2xs: 0 1px 2px 0 hsl(0 0% 0% / 0.03);
+  --shadow-xs: 0 1px 3px 0 hsl(0 0% 0% / 0.04);
+  --shadow-sm: 0 2px 4px -1px hsl(0 0% 0% / 0.06);
+  --shadow: 0 4px 8px -2px hsl(0 0% 0% / 0.08);
+  --shadow-md: 0 6px 16px -4px hsl(0 0% 0% / 0.1);
+  --shadow-lg: 0 10px 24px -6px hsl(0 0% 0% / 0.12);
+  --shadow-xl: 0 16px 40px -8px hsl(0 0% 0% / 0.15);
+  --shadow-2xl: 0 24px 50px -12px hsl(0 0% 0% / 0.18);
+  --tracking-normal: 0.01em;
   --spacing: 0.25rem;
 }
 
-/* Light mode override - ClinicVoice is dark-first but supports light */
+/* Light mode - default professional theme */
 .light {
   --background: 0 0% 100%;
-  --foreground: 222 47% 11%;
-  --card: 0 0% 98%;
-  --card-foreground: 222 47% 11%;
+  --foreground: 220 14% 15%;
+  --card: 0 0% 99%;
+  --card-foreground: 220 14% 15%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --primary: var(--cv-primary);
+  --popover-foreground: 220 14% 15%;
+  --primary: 220 14% 25%;
   --primary-foreground: 0 0% 100%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --sidebar-background: 0 0% 98%;
-  --sidebar-foreground: 222 47% 11%;
+  --muted: 220 10% 94%;
+  --muted-foreground: 220 10% 45%;
+  --border: 220 14% 90%;
+  --input: 220 14% 90%;
+  --sidebar-background: 220 14% 98%;
+  --sidebar-foreground: 220 14% 15%;
 }
 
 @theme {
@@ -286,46 +286,46 @@
 }
 
 .dark {
-  --background: hsl(24 9% 10%);
-  --foreground: hsl(60 9% 97%);
-  --card: hsl(12 6% 15%);
-  --card-foreground: hsl(60 9% 97%);
-  --popover: hsl(30 6% 25%);
-  --popover-foreground: hsl(60 9% 97%);
-  --primary: hsl(43 96% 56%);
-  --primary-foreground: hsl(20 91% 14%);
-  --secondary: hsl(24 5% 44%);
-  --secondary-foreground: hsl(60 9% 97%);
-  --muted: hsl(24 5% 44%);
-  --muted-foreground: hsl(60 9% 97%);
-  --accent: hsl(25 83% 14%);
-  --accent-foreground: hsl(47 95% 53%);
-  --destructive: hsl(0 84% 60%);
-  --destructive-foreground: hsl(0 85% 97%);
-  --border: hsl(33 5% 32%);
-  --input: hsl(33 5% 32%);
-  --ring: hsl(43 96% 56%);
-  --chart-1: hsl(45 96% 64%);
-  --chart-2: hsl(48 96% 76%);
-  --chart-3: hsl(43 96% 56%);
-  --chart-4: hsl(37 92% 50%);
-  --chart-5: hsl(33 5% 32%);
-  --sidebar: hsl(12 6% 15%);
-  --sidebar-foreground: hsl(60 9% 97%);
-  --sidebar-primary: hsl(43 96% 56%);
-  --sidebar-primary-foreground: hsl(20 91% 14%);
-  --sidebar-accent: hsl(47 95% 53%);
-  --sidebar-accent-foreground: hsl(25 83% 14%);
-  --sidebar-border: hsl(33 5% 32%);
-  --sidebar-ring: hsl(43 96% 56%);
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  --background: 220 14% 8%;
+  --foreground: 0 0% 96%;
+  --card: 220 14% 12%;
+  --card-foreground: 0 0% 96%;
+  --popover: 220 14% 10%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 220 14% 10%;
+  --secondary: 220 10% 20%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 220 10% 20%;
+  --muted-foreground: 220 8% 60%;
+  --accent: 220 10% 18%;
+  --accent-foreground: 0 0% 96%;
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 10% 20%;
+  --input: 220 10% 20%;
+  --ring: 0 0% 100%;
+  --chart-1: hsl(220 50% 60%);
+  --chart-2: hsl(220 40% 50%);
+  --chart-3: hsl(220 60% 70%);
+  --chart-4: hsl(220 30% 45%);
+  --chart-5: hsl(220 20% 55%);
+  --sidebar: 220 14% 10%;
+  --sidebar-foreground: 0 0% 96%;
+  --sidebar-primary: 0 0% 100%;
+  --sidebar-primary-foreground: 220 14% 10%;
+  --sidebar-accent: 220 10% 18%;
+  --sidebar-accent-foreground: 0 0% 96%;
+  --sidebar-border: 220 10% 20%;
+  --sidebar-ring: 0 0% 100%;
+  --shadow-2xs: 0 1px 2px 0 hsl(0 0% 0% / 0.2);
+  --shadow-xs: 0 1px 3px 0 hsl(0 0% 0% / 0.25);
+  --shadow-sm: 0 2px 4px -1px hsl(0 0% 0% / 0.3);
+  --shadow: 0 4px 8px -2px hsl(0 0% 0% / 0.35);
+  --shadow-md: 0 6px 16px -4px hsl(0 0% 0% / 0.4);
+  --shadow-lg: 0 10px 24px -6px hsl(0 0% 0% / 0.45);
+  --shadow-xl: 0 16px 40px -8px hsl(0 0% 0% / 0.5);
+  --shadow-2xl: 0 24px 50px -12px hsl(0 0% 0% / 0.55);
 }
 
 @theme inline {
