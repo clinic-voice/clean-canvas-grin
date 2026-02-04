@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -20,7 +20,7 @@ export function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm Sarah's assistant. How can I help you today? Feel free to ask about photography services, availability, or the booking process.",
+      content: "👋 Welcome to ClinicVoice AI! I'm here to help you manage your clinic efficiently. Ask me about:\n\n• **Appointment scheduling**\n• **Patient management**\n• **Voice AI features**\n• **Billing & analytics**\n\nHow can I assist you today?",
     },
   ]);
   const [input, setInput] = useState('');
@@ -52,7 +52,7 @@ export function ChatBot() {
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
-          messages: [...messages.slice(1), userMessage], // Exclude initial greeting
+          messages: [...messages.slice(1), userMessage],
         }),
       });
 
@@ -69,7 +69,6 @@ export function ChatBot() {
       const decoder = new TextDecoder();
       let buffer = '';
 
-      // Add empty assistant message to update
       setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
 
       while (true) {
@@ -105,7 +104,6 @@ export function ChatBot() {
               });
             }
           } catch {
-            // Incomplete JSON, wait for more data
             buffer = line + '\n' + buffer;
             break;
           }
@@ -114,7 +112,6 @@ export function ChatBot() {
     } catch (error) {
       console.error('Chat error:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to send message');
-      // Remove the empty assistant message if error occurred
       setMessages((prev) => {
         if (prev[prev.length - 1]?.content === '') {
           return prev.slice(0, -1);
@@ -128,111 +125,154 @@ export function ChatBot() {
 
   return (
     <>
-      {/* Chat Toggle Button */}
+      {/* Floating Chat Toggle Button with Glow */}
       <motion.button
         onClick={() => setIsOpen(true)}
         className={cn(
-          'fixed bottom-6 right-6 z-50 p-4 rounded-full bg-primary text-primary-foreground shadow-lg',
-          'hover:scale-105 transition-transform',
+          'fixed bottom-6 right-6 z-50 p-4 rounded-2xl',
+          'bg-gradient-to-br from-teal-500 to-teal-600',
+          'text-white shadow-lg shadow-teal-500/30',
+          'hover:shadow-xl hover:shadow-teal-500/40 hover:-translate-y-1',
+          'transition-all duration-300',
           isOpen && 'hidden'
         )}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         aria-label="Open chat"
       >
-        <MessageCircle className="size-6" />
+        <div className="relative">
+          <MessageCircle className="size-6" />
+          <motion.span
+            className="absolute -top-1 -right-1 size-3 bg-green-400 rounded-full border-2 border-teal-600"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          />
+        </div>
       </motion.button>
 
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] bg-background border border-border rounded-lg shadow-2xl overflow-hidden"
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className={cn(
+              'fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)]',
+              'bg-cv-dark-card/95 backdrop-blur-xl',
+              'border border-cv-accent/20 rounded-2xl',
+              'shadow-2xl shadow-black/50 overflow-hidden'
+            )}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border bg-muted/50">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-full bg-primary/10">
-                  <Bot className="size-5 text-primary" />
+            {/* Header with Gradient */}
+            <div className="relative p-4 border-b border-cv-accent/10 overflow-hidden">
+              {/* Background gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-600/20 via-teal-500/10 to-transparent" />
+              
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <motion.div 
+                    className="p-2.5 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/30"
+                    animate={{ rotate: [0, 5, -5, 0] }}
+                    transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+                  >
+                    <Sparkles className="size-5 text-white" />
+                  </motion.div>
+                  <div>
+                    <h3 className="font-semibold text-white text-sm tracking-wide">ClinicVoice AI</h3>
+                    <div className="flex items-center gap-1.5">
+                      <span className="size-2 bg-green-400 rounded-full animate-pulse" />
+                      <p className="text-xs text-cv-text-secondary">Always here to help</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-medium text-sm">Sarah's Assistant</h3>
-                  <p className="text-xs text-muted-foreground">Ask about photography services</p>
-                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsOpen(false)}
+                  className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
+                >
+                  <X className="size-4" />
+                </Button>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsOpen(false)}
-                className="size-8"
-              >
-                <X className="size-4" />
-              </Button>
             </div>
 
             {/* Messages */}
-            <ScrollArea className="h-[400px] p-4" ref={scrollAreaRef}>
+            <ScrollArea className="h-[420px] p-4" ref={scrollAreaRef}>
               <div className="space-y-4">
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: index * 0.05, type: 'spring', damping: 20 }}
                     className={cn(
                       'flex gap-3',
                       message.role === 'user' && 'flex-row-reverse'
                     )}
                   >
-                    <div
+                    <motion.div
                       className={cn(
-                        'size-8 rounded-full flex items-center justify-center shrink-0',
+                        'size-8 rounded-xl flex items-center justify-center shrink-0',
                         message.role === 'assistant'
-                          ? 'bg-primary/10 text-primary'
-                          : 'bg-muted text-muted-foreground'
+                          ? 'bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/20'
+                          : 'bg-cv-dark-hover border border-cv-accent/20'
                       )}
+                      whileHover={{ scale: 1.1 }}
                     >
                       {message.role === 'assistant' ? (
-                        <Bot className="size-4" />
+                        <Bot className="size-4 text-white" />
                       ) : (
-                        <User className="size-4" />
+                        <User className="size-4 text-cv-text-secondary" />
                       )}
-                    </div>
+                    </motion.div>
                     <div
                       className={cn(
-                        'rounded-lg px-4 py-2 max-w-[80%]',
+                        'rounded-2xl px-4 py-3 max-w-[80%]',
                         message.role === 'assistant'
-                          ? 'bg-muted text-foreground'
-                          : 'bg-primary text-primary-foreground'
+                          ? 'bg-cv-dark-hover/80 border border-cv-accent/10 text-cv-text-primary'
+                          : 'bg-gradient-to-br from-teal-500 to-teal-600 text-white shadow-lg shadow-teal-500/20'
                       )}
                     >
                       {message.role === 'assistant' ? (
-                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                        <div className="prose prose-sm prose-invert max-w-none prose-p:text-cv-text-primary prose-p:leading-relaxed prose-strong:text-teal-400 prose-ul:text-cv-text-secondary">
                           <ReactMarkdown>{message.content || '...'}</ReactMarkdown>
                         </div>
                       ) : (
-                        <p className="text-sm">{message.content}</p>
+                        <p className="text-sm leading-relaxed">{message.content}</p>
                       )}
                     </div>
                   </motion.div>
                 ))}
+                
+                {/* Typing Indicator */}
                 {isLoading && messages[messages.length - 1]?.role === 'user' && (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
                     className="flex gap-3"
                   >
-                    <div className="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                      <Bot className="size-4" />
+                    <div className="size-8 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-lg shadow-teal-500/20">
+                      <Bot className="size-4 text-white" />
                     </div>
-                    <div className="bg-muted rounded-lg px-4 py-2">
-                      <div className="flex gap-1">
-                        <span className="size-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <span className="size-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <span className="size-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <div className="bg-cv-dark-hover/80 border border-cv-accent/10 rounded-2xl px-4 py-3">
+                      <div className="flex gap-1.5">
+                        {[0, 1, 2].map((i) => (
+                          <motion.span
+                            key={i}
+                            className="size-2 bg-teal-400 rounded-full"
+                            animate={{ y: [0, -6, 0] }}
+                            transition={{
+                              repeat: Infinity,
+                              duration: 0.6,
+                              delay: i * 0.15,
+                              ease: 'easeInOut',
+                            }}
+                          />
+                        ))}
                       </div>
                     </div>
                   </motion.div>
@@ -240,20 +280,40 @@ export function ChatBot() {
               </div>
             </ScrollArea>
 
-            {/* Input */}
-            <form onSubmit={handleSubmit} className="p-4 border-t border-border">
+            {/* Input Area */}
+            <form onSubmit={handleSubmit} className="p-4 border-t border-cv-accent/10 bg-cv-dark-hover/30">
               <div className="flex gap-2">
                 <Input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message..."
+                  placeholder="Ask me anything..."
                   disabled={isLoading}
-                  className="flex-1"
+                  className={cn(
+                    'flex-1 bg-cv-dark-card border-cv-accent/20',
+                    'text-cv-text-primary placeholder:text-cv-text-secondary/50',
+                    'focus:border-teal-500/50 focus:ring-teal-500/20',
+                    'rounded-xl h-11'
+                  )}
                 />
-                <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+                <Button 
+                  type="submit" 
+                  size="icon" 
+                  disabled={isLoading || !input.trim()}
+                  className={cn(
+                    'size-11 rounded-xl',
+                    'bg-gradient-to-br from-teal-500 to-teal-600',
+                    'hover:from-teal-400 hover:to-teal-500',
+                    'shadow-lg shadow-teal-500/30 hover:shadow-teal-500/40',
+                    'disabled:opacity-50 disabled:shadow-none',
+                    'transition-all duration-200'
+                  )}
+                >
                   <Send className="size-4" />
                 </Button>
               </div>
+              <p className="text-[10px] text-cv-text-secondary/50 text-center mt-2">
+                Powered by ClinicVoice AI
+              </p>
             </form>
           </motion.div>
         )}
