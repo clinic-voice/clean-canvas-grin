@@ -7,6 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown';
 import { toast } from 'sonner';
+import { useNotificationSound } from '@/hooks/useNotificationSound';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -26,6 +27,7 @@ export function ChatBot() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { playNotification } = useNotificationSound();
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -68,6 +70,7 @@ export function ChatBot() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
+      let hasPlayedSound = false;
 
       setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
 
@@ -93,6 +96,11 @@ export function ChatBot() {
             const parsed = JSON.parse(jsonStr);
             const content = parsed.choices?.[0]?.delta?.content;
             if (content) {
+              // Play notification sound on first content chunk
+              if (!hasPlayedSound) {
+                playNotification();
+                hasPlayedSound = true;
+              }
               assistantContent += content;
               setMessages((prev) => {
                 const updated = [...prev];
