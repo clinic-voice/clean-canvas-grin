@@ -20,7 +20,7 @@ export default function Home() {
       <SEOHead />
       
       <div className="min-h-screen">
-        {/* Hero Section - Full viewport with featured image */}
+      {/* Hero Section - Full viewport with featured image */}
       <section className="relative h-screen w-full overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0">
@@ -39,42 +39,48 @@ export default function Home() {
           >
             <source src="https://videos.pexels.com/video-files/2675516/2675516-sd_960_540_24fps.mp4" type="video/mp4" />
           </video>
-          {/* Video from Pexels */}
-          {/* Gradient Overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+          {/* Refined gradient overlay - more sophisticated */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
         </div>
 
-        {/* Hero Content */}
+        {/* Hero Content - Refined typography */}
         <div className="relative h-full flex flex-col items-center justify-center px-6">
           <motion.div
-            className="text-center space-y-6 max-w-4xl"
+            className="text-center space-y-8 max-w-4xl"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h1
-              className="text-6xl md:text-8xl lg:text-9xl font-extralight tracking-widest text-white"
+              className="text-5xl md:text-7xl lg:text-8xl font-light tracking-[0.2em] text-white"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
               {photographerInfo.name.toUpperCase()}
             </motion.h1>
             
+            <motion.div
+              className="w-24 h-px bg-white/60 mx-auto"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            />
+            
             <motion.p
-              className="text-xl md:text-2xl font-light tracking-wide text-white/90"
+              className="text-lg md:text-xl font-light tracking-[0.15em] text-white/90 uppercase"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
             >
               {photographerInfo.tagline}
             </motion.p>
 
             <motion.p
-              className="text-base md:text-lg font-light leading-relaxed text-white/80 max-w-2xl mx-auto"
+              className="text-base md:text-lg font-light leading-relaxed text-white/75 max-w-xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
             >
               {photographerInfo.heroIntroduction}
             </motion.p>
@@ -92,24 +98,25 @@ export default function Home() {
         </div>
       </section>
 
-        {/* Introduction Section */}
-        <section className="py-24 md:py-32 px-6 lg:px-8 bg-background">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
+        {/* Introduction Section - Professional styling */}
+        <section className="py-28 md:py-36 px-6 lg:px-8 bg-background">
+          <div className="max-w-3xl mx-auto text-center space-y-10">
             <ScrollReveal>
-              <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-light tracking-wide">
-              About My Work
-            </h2>
-            <div className="space-y-4 text-lg font-light leading-relaxed text-muted-foreground">
-              <p>
-                {photographerInfo.biography.split('\n\n')[0]}
-              </p>
-            </div>
+              <div className="space-y-8">
+                <h2 className="text-2xl md:text-3xl font-light tracking-[0.1em] text-foreground">
+                  ABOUT MY WORK
+                </h2>
+                <div className="w-16 h-px bg-border mx-auto" />
+                <div className="space-y-6 text-base md:text-lg font-light leading-relaxed text-muted-foreground">
+                  <p>
+                    {photographerInfo.biography.split('\n\n')[0]}
+                  </p>
+                </div>
                 <Link
                   to="/about"
-                  className="inline-flex items-center gap-2 text-base font-light tracking-wide text-foreground hover:text-muted-foreground transition-colors group"
+                  className="inline-flex items-center gap-3 text-sm font-medium tracking-[0.1em] uppercase text-foreground hover:text-muted-foreground transition-colors duration-300 group border-b border-foreground/30 pb-1 hover:border-foreground"
                 >
-                  <span>Learn More About Me</span>
+                  <span>Learn More</span>
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -117,22 +124,23 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Featured Projects Section */}
-        <section className="py-24 md:py-32 border-t border-border">
+        {/* Featured Projects Section - Professional layout */}
+        <section className="py-28 md:py-36 border-t border-border bg-muted/30">
           {/* Section Header */}
           <ScrollReveal>
-            <div className="text-center mb-16 space-y-4 px-6">
-              <h2 className="text-4xl md:text-5xl font-light tracking-wide">
-                Featured Projects
+            <div className="text-center mb-20 space-y-6 px-6">
+              <h2 className="text-2xl md:text-3xl font-light tracking-[0.1em] text-foreground">
+                FEATURED PROJECTS
               </h2>
-              <p className="text-lg text-muted-foreground font-light tracking-wide">
+              <div className="w-16 h-px bg-border mx-auto" />
+              <p className="text-base text-muted-foreground font-light tracking-wide">
                 A selection of recent work
               </p>
             </div>
           </ScrollReveal>
 
-          {/* Projects Grid - Edge to edge with minimal gaps */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+          {/* Projects Grid - Refined spacing */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 px-4 md:px-6">
             {featuredProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
@@ -146,13 +154,13 @@ export default function Home() {
 
           {/* View All Link */}
           <ScrollReveal delay={0.4}>
-            <div className="flex justify-center mt-16 px-6">
+            <div className="flex justify-center mt-20 px-6">
               <Link
                 to="/portfolio"
-                className="group inline-flex items-center gap-2 text-lg font-light tracking-wide text-foreground hover:text-muted-foreground transition-colors"
+                className="inline-flex items-center gap-3 text-sm font-medium tracking-[0.1em] uppercase text-foreground hover:text-muted-foreground transition-colors duration-300 group border-b border-foreground/30 pb-1 hover:border-foreground"
               >
                 <span>View All Projects</span>
-                <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
           </ScrollReveal>

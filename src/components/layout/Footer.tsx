@@ -9,25 +9,25 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+    <footer className="border-t border-border bg-muted/30">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           {/* Copyright */}
-          <p className="text-sm text-muted-foreground font-light tracking-wide">
-            © {currentYear} {photographerInfo.name}. All rights reserved.
+          <p className="text-xs text-muted-foreground font-medium tracking-[0.1em] uppercase">
+            © {currentYear} {photographerInfo.name}
           </p>
 
           {/* Social Links */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             {photographerInfo.socialLinks.instagram && (
               <a
                 href={photographerInfo.socialLinks.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-300"
                 aria-label="Instagram"
               >
-                <Instagram className="size-5" />
+                <Instagram className="size-4" />
               </a>
             )}
             {photographerInfo.socialLinks.linkedin && (
@@ -35,10 +35,10 @@ export function Footer() {
                 href={photographerInfo.socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-300"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="size-5" />
+                <Linkedin className="size-4" />
               </a>
             )}
             {photographerInfo.socialLinks.behance && (
@@ -46,11 +46,11 @@ export function Footer() {
                 href={photographerInfo.socialLinks.behance}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-300"
                 aria-label="Behance"
               >
                 <svg
-                  className="size-5"
+                  className="size-4"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
