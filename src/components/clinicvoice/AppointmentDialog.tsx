@@ -25,6 +25,7 @@ interface AppointmentDialogProps {
   appointment?: Appointment | null;
   onSave: (data: AppointmentFormData) => Promise<{ success: boolean }>;
   defaultDate?: string;
+  defaultTime?: string;
 }
 
 const statusOptions = [
@@ -47,6 +48,7 @@ export function AppointmentDialog({
   appointment,
   onSave,
   defaultDate,
+  defaultTime,
 }: AppointmentDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<AppointmentFormData>({
@@ -55,7 +57,7 @@ export function AppointmentDialog({
     patient_age: undefined,
     reason: '',
     appointment_date: defaultDate || new Date().toISOString().split('T')[0],
-    appointment_time: '09:00',
+    appointment_time: defaultTime || '09:00',
     status: 'confirmed',
     source: 'manual',
     notes: '',
@@ -81,13 +83,13 @@ export function AppointmentDialog({
         patient_age: undefined,
         reason: '',
         appointment_date: defaultDate || new Date().toISOString().split('T')[0],
-        appointment_time: '09:00',
+        appointment_time: defaultTime || '09:00',
         status: 'confirmed',
         source: 'manual',
         notes: '',
       });
     }
-  }, [appointment, defaultDate, open]);
+  }, [appointment, defaultDate, defaultTime, open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
