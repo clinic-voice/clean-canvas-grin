@@ -14,9 +14,29 @@ import {
   MoreVertical,
   Calendar,
   CreditCard,
-  Heart
+  Heart,
+  Pencil,
+  Trash2,
+  LucideIcon
 } from "lucide-react";
 import { useState } from "react";
+import { TemplateEditor, Template } from "@/components/clinicvoice/TemplateEditor";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const stats = [
   { label: "Messages Today", value: "156", change: "+12%", icon: MessageSquare, color: "text-cv-primary" },
@@ -34,40 +54,47 @@ const conversations = [
   { id: 6, name: "Anitha Raman", phone: "+91 43210 98765", lastMessage: "Bill payment done ✓", time: "5 hours ago", unread: false, avatar: "AR" },
 ];
 
-const templates = [
+const initialTemplates: Template[] = [
   { 
     id: 1, 
     name: "Appointment Reminder", 
     category: "Appointments",
-    tamil: "வணக்கம் {name}! உங்கள் சந்திப்பு {date} அன்று {time} மணிக்கு உள்ளது.",
-    english: "Hello {name}! Your appointment is scheduled for {date} at {time}.",
+    tamil: "வணக்கம் {patient_name}! உங்கள் சந்திப்பு {appointment_date} அன்று {appointment_time} மணிக்கு உள்ளது.",
+    english: "Hello {patient_name}! Your appointment is scheduled for {appointment_date} at {appointment_time}.",
     icon: Calendar
   },
   { 
     id: 2, 
     name: "Payment Reminder", 
     category: "Billing",
-    tamil: "வணக்கம் {name}! உங்கள் நிலுவை தொகை ₹{amount}. தயவுசெய்து செலுத்தவும்.",
-    english: "Hello {name}! Your pending amount is ₹{amount}. Please make the payment.",
+    tamil: "வணக்கம் {patient_name}! உங்கள் நிலுவை தொகை {amount}. தயவுசெய்து செலுத்தவும்.",
+    english: "Hello {patient_name}! Your pending amount is {amount}. Please make the payment.",
     icon: CreditCard
   },
   { 
     id: 3, 
     name: "Follow-up Care", 
     category: "Follow-up",
-    tamil: "வணக்கம் {name}! உங்கள் ஆரோக்கியம் எப்படி உள்ளது? மருந்துகள் எடுத்துக்கொள்கிறீர்களா?",
-    english: "Hello {name}! How are you feeling? Are you taking your medications regularly?",
+    tamil: "வணக்கம் {patient_name}! உங்கள் ஆரோக்கியம் எப்படி உள்ளது? மருந்துகள் எடுத்துக்கொள்கிறீர்களா?",
+    english: "Hello {patient_name}! How are you feeling? Are you taking your medications regularly?",
     icon: Heart
   },
   { 
     id: 4, 
     name: "General Update", 
     category: "General",
-    tamil: "வணக்கம் {name}! கிளினிக் {date} முதல் {end_date} வரை விடுமுறையில் இருக்கும்.",
-    english: "Hello {name}! The clinic will be closed from {date} to {end_date}.",
+    tamil: "வணக்கம் {patient_name}! {clinic_name} இலிருந்து முக்கிய அறிவிப்பு.",
+    english: "Hello {patient_name}! Important update from {clinic_name}.",
     icon: Bell
   },
 ];
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Appointments: Calendar,
+  Billing: CreditCard,
+  "Follow-up": Heart,
+  General: Bell,
+};
 
 const quickActions = [
   { label: "Send Reminder", icon: Bell, description: "Send appointment reminders to patients" },
@@ -82,6 +109,54 @@ export default function WhatsApp() {
     followUp: true,
     payment: false,
   });
+
+  const [templates, setTemplates] = useState<Template[]>(initialTemplates);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [templateToDelete, setTemplateToDelete] = useState<Template | null>(null);
+
+  const handleCreateTemplate = () => {
+    setEditingTemplate(null);
+    setEditorOpen(true);
+  };
+
+  const handleEditTemplate = (template: Template) => {
+    setEditingTemplate(template);
+    setEditorOpen(true);
+  };
+
+  const handleSaveTemplate = (templateData: Omit<Template, "id" | "icon">) => {
+    const icon = CATEGORY_ICONS[templateData.category] || Bell;
+
+    if (editingTemplate) {
+      // Update existing template
+      setTemplates((prev) =>
+        prev.map((t) =>
+          t.id === editingTemplate.id
+            ? { ...t, ...templateData, icon }
+            : t
+        )
+      );
+    } else {
+      // Create new template
+      const newId = Math.max(...templates.map((t) => t.id), 0) + 1;
+      setTemplates((prev) => [...prev, { id: newId, ...templateData, icon }]);
+    }
+  };
+
+  const handleDeleteClick = (template: Template) => {
+    setTemplateToDelete(template);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (templateToDelete) {
+      setTemplates((prev) => prev.filter((t) => t.id !== templateToDelete.id));
+    }
+    setDeleteDialogOpen(false);
+    setTemplateToDelete(null);
+  };
 
   return (
     <DashboardLayout 
@@ -223,7 +298,7 @@ export default function WhatsApp() {
         <div className="rounded-xl bg-card border border-border p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-cv-text-primary">Message Templates</h2>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={handleCreateTemplate}>
               <FileText className="w-4 h-4 mr-2" />
               Create Template
             </Button>
@@ -243,9 +318,26 @@ export default function WhatsApp() {
                       </span>
                     </div>
                   </div>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <MoreVertical className="w-4 h-4" />
-                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MoreVertical className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => handleEditTemplate(template)}>
+                        <Pencil className="w-4 h-4 mr-2" />
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => handleDeleteClick(template)}
+                        className="text-destructive focus:text-destructive"
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="p-2 rounded bg-muted/50">
@@ -262,13 +354,41 @@ export default function WhatsApp() {
                     <Send className="w-3 h-3 mr-1" />
                     Use Template
                   </Button>
-                  <Button size="sm" variant="outline">Edit</Button>
+                  <Button size="sm" variant="outline" onClick={() => handleEditTemplate(template)}>
+                    Edit
+                  </Button>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Template Editor Modal */}
+      <TemplateEditor
+        open={editorOpen}
+        onOpenChange={setEditorOpen}
+        template={editingTemplate}
+        onSave={handleSaveTemplate}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Template</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{templateToDelete?.name}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardLayout>
   );
 }
