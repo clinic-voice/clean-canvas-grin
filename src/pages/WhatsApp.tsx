@@ -17,10 +17,12 @@ import {
   Heart,
   Pencil,
   Trash2,
-  LucideIcon
+  LucideIcon,
+  ArrowLeft
 } from "lucide-react";
 import { useState } from "react";
 import { TemplateEditor, Template } from "@/components/clinicvoice/TemplateEditor";
+import { ConversationDetail, Conversation } from "@/components/clinicvoice/ConversationDetail";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,7 +47,7 @@ const stats = [
   { label: "Active Templates", value: "12", change: "3 new", icon: FileText, color: "text-cv-warning" },
 ];
 
-const conversations = [
+const conversations: Conversation[] = [
   { id: 1, name: "Priya Lakshmi", phone: "+91 98765 43210", lastMessage: "நன்றி டாக்டர், நாளை வருகிறேன்", time: "2 min ago", unread: true, avatar: "PL" },
   { id: 2, name: "Rajesh Kumar", phone: "+91 87654 32109", lastMessage: "Appointment confirmed for tomorrow", time: "15 min ago", unread: true, avatar: "RK" },
   { id: 3, name: "Meena Devi", phone: "+91 76543 21098", lastMessage: "மருந்து எடுத்துக்கொண்டேன்", time: "1 hour ago", unread: false, avatar: "MD" },
@@ -115,6 +117,7 @@ export default function WhatsApp() {
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [templateToDelete, setTemplateToDelete] = useState<Template | null>(null);
+  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
 
   const handleCreateTemplate = () => {
     setEditingTemplate(null);
@@ -130,7 +133,6 @@ export default function WhatsApp() {
     const icon = CATEGORY_ICONS[templateData.category] || Bell;
 
     if (editingTemplate) {
-      // Update existing template
       setTemplates((prev) =>
         prev.map((t) =>
           t.id === editingTemplate.id
@@ -139,7 +141,6 @@ export default function WhatsApp() {
         )
       );
     } else {
-      // Create new template
       const newId = Math.max(...templates.map((t) => t.id), 0) + 1;
       setTemplates((prev) => [...prev, { id: newId, ...templateData, icon }]);
     }
@@ -157,6 +158,31 @@ export default function WhatsApp() {
     setDeleteDialogOpen(false);
     setTemplateToDelete(null);
   };
+
+  const handleConversationClick = (conversation: Conversation) => {
+    setSelectedConversation(conversation);
+  };
+
+  const handleBackFromConversation = () => {
+    setSelectedConversation(null);
+  };
+
+  // If a conversation is selected, show the detail view
+  if (selectedConversation) {
+    return (
+      <DashboardLayout 
+        title="WhatsApp Integration" 
+        subtitle="Manage patient communications and automated reminders"
+      >
+        <div className="h-[calc(100vh-12rem)]">
+          <ConversationDetail 
+            conversation={selectedConversation} 
+            onBack={handleBackFromConversation} 
+          />
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout 
@@ -197,6 +223,7 @@ export default function WhatsApp() {
               {conversations.map((conv) => (
                 <div 
                   key={conv.id} 
+                  onClick={() => handleConversationClick(conv)}
                   className={cn(
                     "flex items-center gap-3 p-3 rounded-lg transition-colors cursor-pointer",
                     conv.unread ? "bg-cv-primary/5 border border-cv-primary/20" : "hover:bg-muted/50"
