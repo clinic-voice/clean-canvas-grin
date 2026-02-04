@@ -75,30 +75,36 @@ export default function Dashboard() {
       title="Dashboard"
       subtitle="Welcome back, Dr. Santhira. Here's your clinic overview."
     >
-      {/* Hero Welcome Section - Professional */}
+      {/* Hero Welcome Section */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative mb-6 rounded-lg overflow-hidden"
+        className="relative mb-6 rounded-xl overflow-hidden"
       >
-        <div className="relative bg-muted/50 border border-border rounded-lg p-6 md:p-8">
+        <div className="relative bg-primary/5 border border-primary/10 rounded-xl p-6 md:p-8">
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-4 h-4 text-primary" />
                 <span className="text-xs font-semibold uppercase tracking-wider text-primary">AI-Powered Dashboard</span>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1 tracking-tight">
                 Good Morning, Dr. Santhira! 👋
               </h2>
               <p className="text-muted-foreground">
-                Your clinic is performing <span className="text-green-600 dark:text-green-400 font-semibold">18% better</span> than last week
+                Your clinic is performing <span className="text-primary font-semibold">18% better</span> than last week
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
-                <span className="text-sm font-medium text-green-700 dark:text-green-400">🟢 AI Active</span>
+              <div className="px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+                <span className="text-sm font-medium text-primary flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                  </span>
+                  AI Active
+                </span>
               </div>
             </div>
           </div>
@@ -113,7 +119,7 @@ export default function Dashboard() {
             value="24"
             change={{ value: "+12%", trend: "up" }}
             icon={Calendar}
-            iconColor="blue"
+            iconColor="teal"
           />
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
@@ -122,7 +128,7 @@ export default function Dashboard() {
             value="1,847"
             change={{ value: "+3.2%", trend: "up" }}
             icon={Users}
-            iconColor="green"
+            iconColor="cyan"
           />
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
@@ -131,7 +137,7 @@ export default function Dashboard() {
             value="47"
             change={{ value: "+28%", trend: "up" }}
             icon={Phone}
-            iconColor="orange"
+            iconColor="blue"
           />
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
@@ -155,8 +161,8 @@ export default function Dashboard() {
         {/* Appointments Column */}
         <div className="xl:col-span-2 space-y-4 md:space-y-6">
           {/* Today's Appointments */}
-          <div className="rounded-lg bg-card border border-border overflow-hidden">
-            <div className="px-5 py-4 border-b border-border flex items-center justify-between">
+          <div className="rounded-xl bg-card border border-border/60 overflow-hidden">
+            <div className="px-5 py-4 border-b border-border/60 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-primary" />
                 Today's Appointments
@@ -180,8 +186,8 @@ export default function Dashboard() {
           </div>
 
           {/* AI Insights */}
-          <div className="rounded-lg bg-card border border-border overflow-hidden">
-            <div className="px-5 py-4 border-b border-border">
+          <div className="rounded-xl bg-card border border-border/60 overflow-hidden">
+            <div className="px-5 py-4 border-b border-border/60">
               <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-primary" />
                 AI Insights
@@ -194,9 +200,9 @@ export default function Dashboard() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="flex items-start gap-3 p-4 rounded-lg bg-muted/50 hover:bg-muted transition-all duration-300 cursor-pointer group"
+                  className="flex items-start gap-3 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all duration-300 cursor-pointer group"
                 >
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${insight.bgColor} group-hover:scale-105 transition-transform duration-300`}>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${insight.bgColor} group-hover:scale-105 transition-transform duration-300`}>
                     <insight.icon className={`w-5 h-5 ${insight.color}`} />
                   </div>
                   <div className="flex-1">
@@ -239,24 +245,27 @@ export default function Dashboard() {
             <QuickActions />
           </motion.div>
 
-          {/* Tamil Greeting Card - Professional */}
+          {/* Tamil Greeting Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45 }}
-            className="relative rounded-lg p-5 bg-muted/50 border border-border overflow-hidden"
+            className="relative rounded-xl p-5 bg-primary/5 border border-primary/10 overflow-hidden"
           >
             <div className="relative z-10">
               <p className="text-xl font-bold text-foreground mb-2">வணக்கம்! 🙏</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Your Tamil Voice AI is helping patients book appointments 24/7
               </p>
-              <div className="mt-4 p-4 rounded-lg bg-card border border-border">
+              <div className="mt-4 p-4 rounded-xl bg-card border border-border/60">
                 <p className="text-sm text-muted-foreground italic">
                   "Naalai 10 mani-ku appointment confirm aagividuthu!"
                 </p>
-                <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-green-500" />
+                <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1.5">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                  </span>
                   Recent AI Call
                 </p>
               </div>

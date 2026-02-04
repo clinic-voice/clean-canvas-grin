@@ -16,9 +16,9 @@ export function DashboardLayout({ children, title, subtitle }: DashboardLayoutPr
       </div>
       
       {/* Main content - full width on mobile, offset on desktop */}
-      <main className="lg:ml-[250px]">
+      <main className="lg:ml-[260px]">
         <DashboardHeader title={title} subtitle={subtitle} />
-        <div className="p-4 md:p-6">
+        <div className="p-4 md:p-6 lg:p-8">
           {children}
         </div>
       </main>
