@@ -1,147 +1,137 @@
 
 
-# WhatsApp Business API Integration
-
-This plan covers creating a backend function to send WhatsApp messages to patients, along with UI integration for real-time messaging capabilities.
+# Message Template Editor Implementation Plan
 
 ## Overview
+Create a full-featured message template editor with variable support for patient communications. The editor will allow clinic staff to create, edit, and preview bilingual (Tamil/English) message templates with dynamic variables like patient name, appointment time, and doctor name.
 
-The integration will use the WhatsApp Business API (Cloud API) to send messages. This requires:
-1. Setting up API credentials (Phone Number ID and Access Token)
-2. Creating a backend function to handle the API calls securely
-3. Adding a database table to log message history
-4. Updating the WhatsApp page UI to send real messages
+## Features
 
-## Architecture
+### Core Functionality
+- **Create new templates** with name, category, and bilingual content
+- **Edit existing templates** with a user-friendly modal interface
+- **Variable insertion** via clickable chips for easy placeholder addition
+- **Live preview** showing how the message will look with sample data
+- **Category management** for organizing templates (Appointments, Billing, Follow-up, General)
 
-```text
-+------------------+       +---------------------+       +------------------+
-|   WhatsApp Page  | ----> |  Backend Function   | ----> |  WhatsApp Cloud  |
-|   (React UI)     |       |  send-whatsapp-msg  |       |      API         |
-+------------------+       +---------------------+       +------------------+
-         |                          |
-         |                          v
-         |                 +------------------+
-         +---------------> |  message_logs    |
-                           |  (Database)      |
-                           +------------------+
-```
-
-## Implementation Steps
-
-### Step 1: Add WhatsApp API Credentials
-
-You'll need to provide two secret values from your Meta/WhatsApp Business account:
-- **WHATSAPP_PHONE_NUMBER_ID** - Your WhatsApp Business phone number ID
-- **WHATSAPP_ACCESS_TOKEN** - Your access token from Meta Developer Console
-
-### Step 2: Create Message Logs Table
-
-A new database table to track all sent messages:
-- `id` - Unique identifier
-- `user_id` - References the authenticated user
-- `recipient_phone` - Patient phone number
-- `message_content` - Text sent
-- `template_used` - Which template was used (optional)
-- `status` - sent/delivered/failed
-- `sent_at` - Timestamp
-- `whatsapp_message_id` - ID returned by WhatsApp API
-
-### Step 3: Create Backend Function
-
-A new function at `supabase/functions/send-whatsapp-message/index.ts` that:
-- Validates the request (recipient phone, message content)
-- Calls the WhatsApp Cloud API
-- Logs the result to the database
-- Returns success/failure status
-
-### Step 4: Update WhatsApp Page
-
-Enhance the existing page with:
-- A "Send Message" dialog for composing messages
-- Phone number input with validation
-- Template selection with variable substitution
-- Real-time feedback on message status
-- Display of message history from the database
-
-### Step 5: Create React Hook
-
-A custom hook `useWhatsAppMessages` to:
-- Send messages via the backend function
-- Fetch message history
-- Handle loading/error states
+### Supported Variables
+| Variable | Description | Example Value |
+|----------|-------------|---------------|
+| `{patient_name}` | Patient's full name | Priya Lakshmi |
+| `{appointment_date}` | Appointment date | 15th January 2026 |
+| `{appointment_time}` | Appointment time | 10:30 AM |
+| `{doctor_name}` | Doctor's name | Dr. Ramesh Kumar |
+| `{clinic_name}` | Clinic name | ClinicVoice Healthcare |
+| `{amount}` | Payment amount | ₹1,500 |
+| `{phone}` | Clinic phone | +91 98765 43210 |
 
 ---
 
-## Technical Details
+## Technical Approach
 
-### Files to Create
+### New Component
+**`src/components/clinicvoice/TemplateEditor.tsx`**
 
-| File | Purpose |
-|------|---------|
-| `supabase/functions/send-whatsapp-message/index.ts` | Backend function for WhatsApp API |
-| `src/hooks/useWhatsAppMessages.ts` | React hook for messaging operations |
-| `src/components/clinicvoice/SendMessageDialog.tsx` | UI dialog for composing messages |
+A modal-based editor component with:
+- Template name and category inputs
+- Dual textarea for Tamil and English content
+- Variable insertion toolbar with clickable chips
+- Live preview panel with sample data substitution
+- Form validation before saving
 
-### Files to Modify
+### WhatsApp Page Updates
+**`src/pages/WhatsApp.tsx`**
 
-| File | Changes |
-|------|---------|
-| `supabase/config.toml` | Add function configuration |
-| `src/pages/WhatsApp.tsx` | Integrate send dialog and real message history |
+- Add state management for templates (create, edit, delete)
+- Connect "Create Template" and "Edit" buttons to the editor modal
+- Add delete confirmation dialog
+- Implement template persistence (local state initially, can extend to database)
 
-### Database Migration
+### UI Components Used
+- `Dialog` - Modal container
+- `Input` - Template name field
+- `Textarea` - Message content fields
+- `Select` - Category dropdown
+- `Badge` - Variable chips
+- `Tabs` - Switch between Edit and Preview modes
+- `Button` - Actions and variable insertion
 
-```sql
--- Create message_logs table for tracking WhatsApp messages
-CREATE TABLE public.message_logs (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
-  recipient_phone TEXT NOT NULL,
-  recipient_name TEXT,
-  message_content TEXT NOT NULL,
-  template_name TEXT,
-  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'sent', 'delivered', 'read', 'failed')),
-  whatsapp_message_id TEXT,
-  error_message TEXT,
-  sent_at TIMESTAMPTZ DEFAULT NOW(),
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
+---
 
--- Enable RLS
-ALTER TABLE public.message_logs ENABLE ROW LEVEL SECURITY;
+## Component Structure
 
--- Users can only see their own message logs
-CREATE POLICY "Users can view own message logs"
-  ON public.message_logs FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can insert own message logs"
-  ON public.message_logs FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
+```text
+TemplateEditor (Dialog Modal)
+├── DialogHeader
+│   └── Title: "Create Template" / "Edit Template"
+├── DialogContent
+│   ├── Template Details Section
+│   │   ├── Name Input
+│   │   └── Category Select
+│   ├── Variables Toolbar
+│   │   └── Clickable Badge chips for each variable
+│   ├── Tabs (Edit / Preview)
+│   │   ├── Edit Tab
+│   │   │   ├── Tamil Textarea
+│   │   │   └── English Textarea
+│   │   └── Preview Tab
+│   │       ├── Tamil Preview (with substituted values)
+│   │       └── English Preview (with substituted values)
+│   └── DialogFooter
+│       ├── Cancel Button
+│       └── Save Button
 ```
 
-### Backend Function Structure
+---
 
-The function will:
-1. Parse the incoming request for phone number and message
-2. Validate the phone number format (Indian mobile numbers)
-3. Call WhatsApp Cloud API at `https://graph.facebook.com/v18.0/{PHONE_NUMBER_ID}/messages`
-4. Store the result in `message_logs` table
-5. Return appropriate success/error response
+## User Flow
 
-### Prerequisites
+1. **Create New Template**
+   - Click "Create Template" button
+   - Modal opens with empty fields
+   - Enter template name and select category
+   - Click variable chips to insert placeholders at cursor
+   - Write Tamil and English messages
+   - Switch to Preview tab to see sample output
+   - Click Save to add template
 
-Before implementation, you'll need to:
-1. Create a Meta Developer account at developers.facebook.com
-2. Set up a WhatsApp Business account
-3. Get your Phone Number ID from the WhatsApp Business settings
-4. Generate a permanent access token
+2. **Edit Existing Template**
+   - Click "Edit" button on any template card
+   - Modal opens with pre-filled data
+   - Make changes and preview
+   - Save updates
 
-### Security Considerations
+3. **Variable Insertion**
+   - Position cursor in Tamil or English textarea
+   - Click a variable chip (e.g., "Patient Name")
+   - Variable placeholder `{patient_name}` inserted at cursor position
 
-- All API credentials stored as backend secrets (never exposed to frontend)
-- RLS policies ensure users only see their own message logs
-- Phone number validation prevents invalid API calls
-- Rate limiting can be added to prevent abuse
+---
+
+## Implementation Steps
+
+1. **Create TemplateEditor component**
+   - Build the modal structure with form fields
+   - Implement variable insertion logic with cursor tracking
+   - Add preview mode with sample data substitution
+   - Include form validation
+
+2. **Update WhatsApp page**
+   - Convert static templates array to React state
+   - Add modal trigger states (open/close, selected template)
+   - Wire up Create/Edit buttons to open the editor
+   - Handle save/update callbacks
+
+3. **Add delete functionality**
+   - Add delete option in template card menu
+   - Confirm deletion with alert dialog
+
+---
+
+## Files to Create/Modify
+
+| File | Action | Description |
+|------|--------|-------------|
+| `src/components/clinicvoice/TemplateEditor.tsx` | Create | New template editor modal component |
+| `src/pages/WhatsApp.tsx` | Modify | Add state management and connect editor |
 
