@@ -90,29 +90,29 @@ const pricingPlans = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-background/80 backdrop-blur-lg border-b border-border">
+      {/* Navigation - Professional & Clean */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-5 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <Phone className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+              <Phone className="w-5 h-5 text-primary-foreground" />
             </div>
             <div>
-              <span className="text-lg font-bold text-cv-text-primary">ClinicVoice</span>
-              <span className="text-lg font-bold text-cv-primary-light"> AI</span>
+              <span className="text-lg font-semibold text-foreground tracking-tight">ClinicVoice</span>
+              <span className="text-lg font-semibold text-primary"> AI</span>
             </div>
           </div>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm text-cv-text-secondary hover:text-cv-text-primary transition-colors">Features</a>
-            <a href="#impact" className="text-sm text-cv-text-secondary hover:text-cv-text-primary transition-colors">Impact</a>
-            <a href="#pricing" className="text-sm text-cv-text-secondary hover:text-cv-text-primary transition-colors">Pricing</a>
+          <div className="hidden md:flex items-center gap-10">
+            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</a>
+            <a href="#impact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Impact</a>
+            <a href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
           </div>
           <div className="flex items-center gap-3">
             <Link to="/auth">
-              <Button variant="ghost" size="sm">Login</Button>
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">Login</Button>
             </Link>
             <Link to="/auth">
-              <Button className="gradient-primary text-white" size="sm">
+              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
                 Start Free Trial
               </Button>
             </Link>
@@ -120,19 +120,13 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-        {/* Floating Particles Animation */}
-        <FloatingParticles count={35} />
-        
-        {/* Subtle gradient mesh background */}
+      {/* Hero Section - Professional & Clean */}
+      <section className="pt-36 pb-24 px-6 relative overflow-hidden">
+        {/* Subtle background - minimal, professional */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-cv-primary/8 via-transparent to-cv-accent/8" />
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--cv-primary)/0.2),transparent)]" />
-          <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-cv-primary/25 rounded-full blur-[100px] animate-pulse" />
-          <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-cv-accent/20 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[radial-gradient(circle,hsl(var(--cv-primary)/0.1),transparent_50%)]" />
-          <div className="absolute top-40 right-20 w-[300px] h-[300px] bg-cv-secondary/10 rounded-full blur-[60px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-transparent to-transparent" />
+          <div className="absolute top-20 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]" />
+          <div className="absolute bottom-20 right-1/4 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px]" />
         </div>
         
         <div className="max-w-7xl mx-auto relative">
@@ -142,36 +136,36 @@ export default function LandingPage() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <div className="inline-block px-6 py-2 rounded-full gradient-secondary text-white text-sm font-bold uppercase tracking-wider mb-8 animate-pulse">
-              Enterprise Solution
+            <div className="inline-block px-5 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold uppercase tracking-wider mb-8">
+              Enterprise Healthcare Solution
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-              <span className="gradient-text">Tamil-First AI</span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight">
+              <span className="text-foreground">Tamil-First AI</span>
               <br />
-              <span className="text-cv-text-primary">Clinic Management</span>
+              <span className="text-primary">Clinic Management</span>
             </h1>
             
-            <p className="text-xl text-cv-text-secondary max-w-3xl mx-auto mb-10">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
               The only clinic management solution with native Tamil Voice AI for appointment booking, 
               patient engagement, and practice growth
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
               <Link to="/auth">
-                <Button size="lg" className="gradient-primary text-white gap-2 px-8 py-6 text-lg">
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-8 h-12 text-base font-medium">
                   Start Free Trial
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="gap-2 px-8 py-6 text-lg border-cv-primary/50 hover:bg-cv-primary/10">
-                <Phone className="w-5 h-5" />
+              <Button size="lg" variant="outline" className="gap-2 px-8 h-12 text-base font-medium border-border hover:bg-muted">
+                <Phone className="w-4 h-4" />
                 Book Demo
               </Button>
             </div>
 
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+            {/* Stats - Clean grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               {[
                 { value: "90+", label: "Features" },
                 { value: "95%", label: "Call Resolution" },
@@ -179,8 +173,8 @@ export default function LandingPage() {
                 { value: "24/7", label: "AI Availability" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-4xl font-extrabold text-cv-primary-light">{stat.value}</p>
-                  <p className="text-sm text-cv-text-muted uppercase tracking-wider">{stat.label}</p>
+                  <p className="text-3xl md:text-4xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -188,19 +182,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/40 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_40%_60%,hsl(var(--cv-primary)/0.06),transparent)] pointer-events-none" />
+      {/* Features Section - Clean cards */}
+      <section id="features" className="py-24 px-6 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cv-primary/20 text-cv-primary-light">
+            <span className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-primary/10 text-primary">
               Features
             </span>
-            <h2 className="text-4xl font-extrabold text-cv-text-primary mt-4 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-6 mb-4">
               Everything Your Clinic Needs
             </h2>
-            <p className="text-lg text-cv-text-secondary max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               90+ features across Voice AI, Patient Management, Clinical EMR, and Business Analytics
             </p>
           </div>
@@ -212,14 +204,14 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-2xl bg-card border border-border p-6 hover:border-cv-primary/30 transition-all hover:shadow-xl group"
+                className="rounded-xl bg-card border border-border p-6 hover:border-primary/30 hover:shadow-lg transition-all duration-300 group"
               >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <feature.icon className="w-7 h-7 text-white" />
+                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-105 transition-transform`}>
+                  <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-cv-text-primary mb-2">{feature.title}</h3>
-                <p className="text-cv-text-secondary mb-4">{feature.description}</p>
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-cv-success/20 text-cv-success">
+                <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
+                <p className="text-muted-foreground text-sm mb-4">{feature.description}</p>
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
                   {feature.highlight}
                 </span>
               </motion.div>
@@ -228,16 +220,14 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section id="impact" className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_80%_20%,hsl(var(--cv-secondary)/0.08),transparent)] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-card/20 to-transparent pointer-events-none" />
+      {/* Impact Section - Clean metrics */}
+      <section id="impact" className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cv-secondary/20 text-cv-secondary">
+            <span className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">
               Impact
             </span>
-            <h2 className="text-4xl font-extrabold text-cv-text-primary mt-4 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-6 mb-4">
               Real Results for Clinics
             </h2>
           </div>
@@ -246,24 +236,24 @@ export default function LandingPage() {
             {impactMetrics.map((metric, i) => (
               <motion.div
                 key={metric.label}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.1 }}
-                className="rounded-2xl bg-card border border-border p-6 text-center"
+                className="rounded-xl bg-card border border-border p-6 text-center hover:shadow-md transition-shadow"
               >
-                <p className="text-sm text-cv-text-muted mb-4">{metric.label}</p>
+                <p className="text-sm text-muted-foreground mb-4 font-medium">{metric.label}</p>
                 <div className="flex items-center justify-center gap-4 mb-4">
                   <div>
-                    <p className="text-lg font-bold text-cv-danger line-through">{metric.before}</p>
-                    <p className="text-xs text-cv-text-muted">Before</p>
+                    <p className="text-lg font-semibold text-red-500 line-through">{metric.before}</p>
+                    <p className="text-xs text-muted-foreground">Before</p>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-cv-primary-light" />
+                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
                   <div>
-                    <p className="text-lg font-bold text-cv-success">{metric.after}</p>
-                    <p className="text-xs text-cv-text-muted">After</p>
+                    <p className="text-lg font-semibold text-green-600">{metric.after}</p>
+                    <p className="text-xs text-muted-foreground">After</p>
                   </div>
                 </div>
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-cv-primary/20 text-cv-primary-light">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
                   {metric.improvement}
                 </span>
               </motion.div>
@@ -272,58 +262,55 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-cv-accent/5 via-transparent to-cv-primary/5 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_30%_80%,hsl(var(--cv-accent)/0.08),transparent)] pointer-events-none" />
+      {/* Pricing Section - Clean cards */}
+      <section id="pricing" className="py-24 px-6 bg-muted/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-cv-accent/20 text-cv-accent">
+            <span className="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-400">
               Pricing
             </span>
-            <h2 className="text-4xl font-extrabold text-cv-text-primary mt-4 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-6 mb-4">
               Affordable for Every Clinic
             </h2>
-            <p className="text-lg text-cv-text-secondary">
+            <p className="text-lg text-muted-foreground">
               Starting at just ₹2,999/month - 10x cheaper than competitors
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {pricingPlans.map((plan, i) => (
               <motion.div
                 key={plan.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className={`rounded-2xl p-8 ${
+                className={`rounded-xl p-8 ${
                   plan.popular 
-                    ? "bg-gradient-to-br from-cv-primary/20 to-cv-accent/10 border-2 border-cv-primary" 
+                    ? "bg-primary text-primary-foreground shadow-xl scale-105" 
                     : "bg-card border border-border"
                 }`}
               >
                 {plan.popular && (
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-cv-primary text-white mb-4">
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white mb-4">
                     Most Popular
                   </span>
                 )}
-                <h3 className="text-2xl font-bold text-cv-text-primary">{plan.name}</h3>
-                <p className="text-cv-text-muted text-sm mb-4">{plan.description}</p>
+                <h3 className={`text-xl font-bold ${plan.popular ? 'text-white' : 'text-foreground'}`}>{plan.name}</h3>
+                <p className={`text-sm mb-4 ${plan.popular ? 'text-white/70' : 'text-muted-foreground'}`}>{plan.description}</p>
                 <div className="mb-6">
-                  <span className="text-4xl font-extrabold text-cv-text-primary">{plan.price}</span>
-                  <span className="text-cv-text-muted">{plan.period}</span>
+                  <span className={`text-4xl font-bold ${plan.popular ? 'text-white' : 'text-foreground'}`}>{plan.price}</span>
+                  <span className={plan.popular ? 'text-white/70' : 'text-muted-foreground'}>{plan.period}</span>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-sm text-cv-text-secondary">
-                      <CheckCircle2 className="w-4 h-4 text-cv-success flex-shrink-0" />
+                    <li key={feature} className={`flex items-center gap-2 text-sm ${plan.popular ? 'text-white/90' : 'text-muted-foreground'}`}>
+                      <CheckCircle2 className={`w-4 h-4 flex-shrink-0 ${plan.popular ? 'text-white' : 'text-green-600'}`} />
                       {feature}
                     </li>
                   ))}
                 </ul>
                 <Button 
-                  className={`w-full ${plan.popular ? "gradient-primary text-white" : ""}`}
-                  variant={plan.popular ? "default" : "outline"}
+                  className={`w-full ${plan.popular ? "bg-white text-primary hover:bg-white/90" : "bg-primary text-primary-foreground hover:bg-primary/90"}`}
                 >
                   Get Started
                 </Button>
@@ -333,50 +320,48 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,hsl(var(--cv-primary)/0.1),transparent)] pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50 pointer-events-none" />
+      {/* CTA Section - Clean & Professional */}
+      <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-extrabold text-cv-text-primary mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
             Ready to Transform Your Clinic?
           </h2>
-          <p className="text-lg text-cv-text-secondary mb-8">
+          <p className="text-lg text-muted-foreground mb-8">
             Join 500+ clinics across Tamil Nadu using ClinicVoice AI
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link to="/auth">
-              <Button size="lg" className="gradient-primary text-white gap-2 px-8">
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 px-8">
                 Start Free Trial
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="gap-2 px-8">
-              <Phone className="w-5 h-5" />
+            <Button size="lg" variant="outline" className="gap-2 px-8 border-border hover:bg-muted">
+              <Phone className="w-4 h-4" />
               Call: +91 98765 43210
             </Button>
           </div>
-          <p className="text-sm text-cv-text-muted mt-6">
+          <p className="text-sm text-muted-foreground mt-6">
             14-day free trial • No credit card required • Cancel anytime
           </p>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border">
+      {/* Footer - Clean */}
+      <footer className="py-12 px-6 border-t border-border bg-muted/30">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-              <Phone className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <Phone className="w-4 h-4 text-primary-foreground" />
             </div>
-            <span className="text-sm text-cv-text-muted">
+            <span className="text-sm text-muted-foreground">
               © 2026 ClinicVoice AI by Santhira (Terv Pro Technology Pvt Ltd)
             </span>
           </div>
-          <div className="flex items-center gap-6 text-sm text-cv-text-muted">
-            <a href="#" className="hover:text-cv-text-primary transition-colors">Privacy</a>
-            <a href="#" className="hover:text-cv-text-primary transition-colors">Terms</a>
-            <a href="#" className="hover:text-cv-text-primary transition-colors">Contact</a>
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
+            <a href="#" className="hover:text-foreground transition-colors">Terms</a>
+            <a href="#" className="hover:text-foreground transition-colors">Contact</a>
           </div>
         </div>
       </footer>
