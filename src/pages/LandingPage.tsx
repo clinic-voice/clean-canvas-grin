@@ -336,9 +336,11 @@ export default function LandingPage() {
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="gap-2 px-8 border-border hover:bg-muted">
-              <Phone className="w-4 h-4" />
-              Call: +91 98765 43210
+            <Button size="lg" variant="outline" className="gap-2 px-8 border-border hover:bg-muted" asChild>
+              <a href="tel:+919176772077">
+                <Phone className="w-4 h-4" />
+                Call: +91 9176772077
+              </a>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-6">
