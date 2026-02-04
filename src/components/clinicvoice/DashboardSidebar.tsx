@@ -17,6 +17,7 @@ import {
   Phone,
   Stethoscope,
   LogOut,
+  ChevronRight,
 } from "lucide-react";
 
 const mainNavItems = [
@@ -52,11 +53,11 @@ interface NavSectionProps {
 
 function NavSection({ title, items, currentPath }: NavSectionProps) {
   return (
-    <div className="mb-6">
-      <p className="px-4 mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+    <div className="mb-5">
+      <p className="px-4 mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/70">
         {title}
       </p>
-      <nav className="space-y-0.5">
+      <nav className="space-y-0.5 px-2">
         {items.map((item) => {
           const isActive = currentPath === item.href;
           return (
@@ -64,21 +65,24 @@ function NavSection({ title, items, currentPath }: NavSectionProps) {
               key={item.href}
               to={item.href}
               className={cn(
-                "group flex items-center gap-3 px-4 py-2.5 text-sm transition-all duration-200",
+                "group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200",
                 isActive
-                  ? "bg-primary/10 text-primary border-l-2 border-primary"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground border-l-2 border-transparent"
+                  ? "bg-primary/10 text-primary font-medium"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               )}
             >
               <item.icon className={cn(
-                "w-[18px] h-[18px] transition-transform duration-200",
-                !isActive && "group-hover:scale-105"
+                "w-[18px] h-[18px] transition-all duration-200",
+                isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
               )} />
-              <span className="font-medium">{item.label}</span>
+              <span className="flex-1">{item.label}</span>
               {"badge" in item && item.badge && (
-                <span className="ml-auto px-2 py-0.5 text-[10px] font-semibold uppercase rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                <span className="px-1.5 py-0.5 text-[9px] font-semibold uppercase rounded bg-primary/15 text-primary">
                   {item.badge}
                 </span>
+              )}
+              {isActive && (
+                <ChevronRight className="w-3.5 h-3.5 text-primary/60" />
               )}
             </Link>
           );
@@ -100,15 +104,17 @@ export function DashboardSidebar() {
   };
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-[250px] bg-card border-r border-border flex flex-col">
-      {/* Logo - Professional */}
-      <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
-        <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-          <Phone className="w-5 h-5 text-primary-foreground" />
+    <aside className="fixed left-0 top-0 z-40 h-screen w-[260px] bg-card border-r border-border/60 flex flex-col">
+      {/* Logo */}
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-border/60">
+        <div className="w-10 h-10 rounded-xl gradient-teal flex items-center justify-center shadow-md">
+          <Phone className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h1 className="text-lg font-semibold text-foreground">ClinicVoice</h1>
-          <p className="text-[10px] font-medium text-primary uppercase tracking-wider">
+          <h1 className="text-lg font-semibold text-foreground tracking-tight">
+            Clinic<span className="text-primary">Voice</span>
+          </h1>
+          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
             AI Platform
           </p>
         </div>
@@ -122,11 +128,11 @@ export function DashboardSidebar() {
         <NavSection title="System" items={settingsNavItems} currentPath={currentPath} />
       </div>
 
-      {/* User & Logout */}
-      <div className="p-4 border-t border-border">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-sm font-semibold text-primary">
+      {/* User Section */}
+      <div className="p-4 border-t border-border/60">
+        <div className="flex items-center gap-3 mb-3 px-2">
+          <div className="w-9 h-9 rounded-full gradient-teal flex items-center justify-center shadow-sm">
+            <span className="text-sm font-semibold text-white">
               {user?.email?.charAt(0).toUpperCase() || "U"}
             </span>
           </div>
@@ -134,6 +140,7 @@ export function DashboardSidebar() {
             <p className="text-sm font-medium text-foreground truncate">
               {user?.email || "User"}
             </p>
+            <p className="text-[10px] text-muted-foreground">Admin</p>
           </div>
         </div>
         <button
@@ -145,20 +152,23 @@ export function DashboardSidebar() {
         </button>
       </div>
 
-      {/* Voice AI Status Widget - Professional */}
-      <div className="p-4 border-t border-border">
-        <div className="rounded-lg p-4 bg-muted/50 border border-border">
+      {/* Voice AI Status Widget */}
+      <div className="p-4 border-t border-border/60">
+        <div className="rounded-xl p-4 bg-primary/5 border border-primary/10">
           <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+            </span>
             <span className="text-xs font-semibold text-foreground">Voice AI Active</span>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <div className="text-center">
-              <p className="text-lg font-bold text-foreground">47</p>
+              <p className="text-xl font-bold text-primary">47</p>
               <p className="text-[10px] text-muted-foreground">Calls Today</p>
             </div>
             <div className="text-center">
-              <p className="text-lg font-bold text-foreground">95%</p>
+              <p className="text-xl font-bold text-primary">95%</p>
               <p className="text-[10px] text-muted-foreground">Resolution</p>
             </div>
           </div>
