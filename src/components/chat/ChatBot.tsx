@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot, User, Sparkles } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Sparkles, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -22,6 +22,7 @@ const QUICK_REPLIES = [
 ];
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+const SOUND_STORAGE_KEY = 'clinicvoice-chat-sound-enabled';
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,8 +34,17 @@ export function ChatBot() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(() => {
+    const stored = localStorage.getItem(SOUND_STORAGE_KEY);
+    return stored !== null ? stored === 'true' : true;
+  });
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { playNotification } = useNotificationSound();
+
+  // Persist sound preference
+  useEffect(() => {
+    localStorage.setItem(SOUND_STORAGE_KEY, String(soundEnabled));
+  }, [soundEnabled]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -103,8 +113,8 @@ export function ChatBot() {
             const parsed = JSON.parse(jsonStr);
             const content = parsed.choices?.[0]?.delta?.content;
             if (content) {
-              // Play notification sound on first content chunk
-              if (!hasPlayedSound) {
+              // Play notification sound on first content chunk if enabled
+              if (!hasPlayedSound && soundEnabled) {
                 playNotification();
                 hasPlayedSound = true;
               }
@@ -204,14 +214,29 @@ export function ChatBot() {
                     </div>
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsOpen(false)}
-                  className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
-                >
-                  <X className="size-4" />
-                </Button>
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSoundEnabled(!soundEnabled)}
+                    className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
+                    title={soundEnabled ? 'Disable notification sound' : 'Enable notification sound'}
+                  >
+                    {soundEnabled ? (
+                      <Volume2 className="size-4" />
+                    ) : (
+                      <VolumeX className="size-4" />
+                    )}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsOpen(false)}
+                    className="size-8 rounded-lg hover:bg-white/10 text-cv-text-secondary hover:text-white transition-colors"
+                  >
+                    <X className="size-4" />
+                  </Button>
+                </div>
               </div>
             </div>
 
