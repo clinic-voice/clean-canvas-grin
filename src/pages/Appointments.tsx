@@ -2,9 +2,11 @@ import { DashboardLayout } from "@/components/clinicvoice/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Calendar, Clock, Filter, Plus, Search, Phone, MessageSquare, MoreVertical, Pencil, Trash2, Loader2 } from "lucide-react";
-import { useState } from "react";
-import { useAppointments, Appointment, AppointmentFormData } from "@/hooks/useAppointments";
+import { useState, useCallback } from "react";
+import { Appointment, AppointmentFormData } from "@/hooks/useAppointments";
+import { useAllAppointments } from "@/hooks/useAllAppointments";
 import { AppointmentDialog } from "@/components/clinicvoice/AppointmentDialog";
+import { CalendarView } from "@/components/clinicvoice/CalendarView";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +23,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import "@/styles/calendar.css";
 
 const statusConfig: Record<string, { label: string; class: string }> = {
   completed: { label: "Completed", class: "bg-muted text-muted-foreground" },
@@ -47,10 +50,11 @@ function getInitials(name: string): string {
 
 export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [view, setView] = useState<"list" | "timeline">("list");
+  const [view, setView] = useState<"list" | "calendar">("list");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState<Appointment | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [defaultFormValues, setDefaultFormValues] = useState<{ date?: string; time?: string }>({});
 
   const {
     appointments,
@@ -58,7 +62,12 @@ export default function Appointments() {
     createAppointment,
     updateAppointment,
     deleteAppointment,
-  } = useAppointments(selectedDate);
+  } = useAllAppointments();
+
+  // Filter appointments for list view by selected date
+  const filteredAppointments = appointments.filter(apt => 
+    apt.appointment_date === selectedDate.toISOString().split('T')[0]
+  );
 
   const handleSave = async (data: AppointmentFormData) => {
     if (editingAppointment) {
@@ -69,6 +78,7 @@ export default function Appointments() {
 
   const handleEdit = (apt: Appointment) => {
     setEditingAppointment(apt);
+    setDefaultFormValues({});
     setDialogOpen(true);
   };
 
@@ -81,14 +91,35 @@ export default function Appointments() {
 
   const handleNewAppointment = () => {
     setEditingAppointment(null);
+    setDefaultFormValues({
+      date: selectedDate.toISOString().split('T')[0],
+    });
     setDialogOpen(true);
   };
 
+  // Calendar handlers
+  const handleEventDrop = useCallback(async (id: string, date: string, time: string) => {
+    await updateAppointment(id, {
+      appointment_date: date,
+      appointment_time: time,
+    });
+  }, [updateAppointment]);
+
+  const handleSelectSlot = useCallback((date: string, time: string) => {
+    setEditingAppointment(null);
+    setDefaultFormValues({ date, time });
+    setDialogOpen(true);
+  }, []);
+
+  const handleSelectEvent = useCallback((appointment: Appointment) => {
+    handleEdit(appointment);
+  }, []);
+
   const stats = {
-    total: appointments.length,
-    completed: appointments.filter(a => a.status === 'completed').length,
-    waiting: appointments.filter(a => a.status === 'waiting').length,
-    upcoming: appointments.filter(a => ['confirmed', 'in-progress'].includes(a.status)).length,
+    total: filteredAppointments.length,
+    completed: filteredAppointments.filter(a => a.status === 'completed').length,
+    waiting: filteredAppointments.filter(a => a.status === 'waiting').length,
+    upcoming: filteredAppointments.filter(a => ['confirmed', 'in-progress'].includes(a.status)).length,
   };
 
   return (
@@ -122,26 +153,28 @@ export default function Appointments() {
               List
             </button>
             <button
-              onClick={() => setView("timeline")}
+              onClick={() => setView("calendar")}
               className={cn(
                 "px-3 py-1.5 text-sm font-medium transition-colors",
-                view === "timeline" ? "bg-primary text-primary-foreground" : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                view === "calendar" ? "bg-primary text-primary-foreground" : "bg-muted/50 text-muted-foreground hover:bg-muted"
               )}
             >
-              Timeline
+              Calendar
             </button>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border">
-            <Calendar className="w-4 h-4 text-primary" />
-            <input
-              type="date"
-              value={selectedDate.toISOString().split('T')[0]}
-              onChange={(e) => setSelectedDate(new Date(e.target.value))}
-              className="text-sm font-medium bg-transparent border-none focus:outline-none"
-            />
-          </div>
+          {view === "list" && (
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border">
+              <Calendar className="w-4 h-4 text-primary" />
+              <input
+                type="date"
+                value={selectedDate.toISOString().split('T')[0]}
+                onChange={(e) => setSelectedDate(new Date(e.target.value))}
+                className="text-sm font-medium bg-transparent border-none focus:outline-none"
+              />
+            </div>
+          )}
           <Button onClick={handleNewAppointment} className="gap-2">
             <Plus className="w-4 h-4" />
             New Appointment
@@ -149,137 +182,155 @@ export default function Appointments() {
         </div>
       </div>
 
-      {/* Stats Bar */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        {[
-          { label: "Total", value: stats.total, color: "text-foreground" },
-          { label: "Completed", value: stats.completed, color: "text-green-600 dark:text-green-400" },
-          { label: "Waiting", value: stats.waiting, color: "text-yellow-600 dark:text-yellow-400" },
-          { label: "Upcoming", value: stats.upcoming, color: "text-blue-600 dark:text-blue-400" },
-        ].map((stat) => (
-          <div key={stat.label} className="rounded-lg bg-card border border-border p-4 text-center">
-            <p className={cn("text-2xl font-bold", stat.color)}>{stat.value}</p>
-            <p className="text-xs text-muted-foreground">{stat.label}</p>
-          </div>
-        ))}
-      </div>
+      {/* Stats Bar - only show in list view */}
+      {view === "list" && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          {[
+            { label: "Total", value: stats.total, color: "text-foreground" },
+            { label: "Completed", value: stats.completed, color: "text-green-600 dark:text-green-400" },
+            { label: "Waiting", value: stats.waiting, color: "text-yellow-600 dark:text-yellow-400" },
+            { label: "Upcoming", value: stats.upcoming, color: "text-blue-600 dark:text-blue-400" },
+          ].map((stat) => (
+            <div key={stat.label} className="rounded-lg bg-card border border-border p-4 text-center">
+              <p className={cn("text-2xl font-bold", stat.color)}>{stat.value}</p>
+              <p className="text-xs text-muted-foreground">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* Appointments Table */}
-      <div className="rounded-xl bg-card border border-border overflow-hidden">
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
+      {/* Calendar View */}
+      {view === "calendar" ? (
+        isLoading ? (
+          <div className="flex items-center justify-center py-12 rounded-xl bg-card border border-border">
             <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
           </div>
-        ) : appointments.length === 0 ? (
-          <div className="text-center py-12">
-            <Calendar className="w-12 h-12 mx-auto text-muted-foreground mb-3" />
-            <p className="text-muted-foreground">No appointments for this date</p>
-            <Button onClick={handleNewAppointment} variant="outline" className="mt-4">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Appointment
-            </Button>
-          </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border bg-muted/30">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Time
-                  </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Patient
-                  </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Reason
-                  </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Source
-                  </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {appointments.map((apt) => {
-                  const SourceIcon = sourceIcons[apt.source || 'manual'] || Calendar;
-                  const status = statusConfig[apt.status] || statusConfig.confirmed;
-                  
-                  return (
-                    <tr key={apt.id} className="border-b border-border/50 hover:bg-muted/20 transition-colors">
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-sm font-semibold">{apt.appointment_time.slice(0, 5)}</span>
-                        </div>
-                      </td>
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-primary-foreground font-semibold text-xs">
-                            {getInitials(apt.patient_name)}
+          <CalendarView
+            appointments={appointments}
+            onEventDrop={handleEventDrop}
+            onSelectSlot={handleSelectSlot}
+            onSelectEvent={handleSelectEvent}
+          />
+        )
+      ) : (
+        /* List View - Appointments Table */
+        <div className="rounded-xl bg-card border border-border overflow-hidden">
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+            </div>
+          ) : filteredAppointments.length === 0 ? (
+            <div className="text-center py-12">
+              <Calendar className="w-12 h-12 mx-auto text-muted-foreground mb-3" />
+              <p className="text-muted-foreground">No appointments for this date</p>
+              <Button onClick={handleNewAppointment} variant="outline" className="mt-4">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Appointment
+              </Button>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-border bg-muted/30">
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Time
+                    </th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Patient
+                    </th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Reason
+                    </th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Source
+                    </th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredAppointments.map((apt) => {
+                    const SourceIcon = sourceIcons[apt.source || 'manual'] || Calendar;
+                    const status = statusConfig[apt.status] || statusConfig.confirmed;
+                    
+                    return (
+                      <tr key={apt.id} className="border-b border-border/50 hover:bg-muted/20 transition-colors">
+                        <td className="px-5 py-4">
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-muted-foreground" />
+                            <span className="text-sm font-semibold">{apt.appointment_time.slice(0, 5)}</span>
                           </div>
-                          <div>
-                            <p className="text-sm font-medium">{apt.patient_name}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {apt.patient_age ? `Age: ${apt.patient_age}` : ''} 
-                              {apt.patient_age && apt.patient_phone ? ' • ' : ''}
-                              {apt.patient_phone || ''}
-                            </p>
+                        </td>
+                        <td className="px-5 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-primary-foreground font-semibold text-xs">
+                              {getInitials(apt.patient_name)}
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium">{apt.patient_name}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {apt.patient_age ? `Age: ${apt.patient_age}` : ''} 
+                                {apt.patient_age && apt.patient_phone ? ' • ' : ''}
+                                {apt.patient_phone || ''}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-5 py-4">
-                        <p className="text-sm text-muted-foreground">{apt.reason || '-'}</p>
-                      </td>
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-2">
-                          <SourceIcon className={cn(
-                            "w-4 h-4",
-                            apt.source === "voice" ? "text-orange-500" :
-                            apt.source === "whatsapp" ? "text-green-500" : "text-blue-500"
-                          )} />
-                          <span className="text-xs text-muted-foreground capitalize">{apt.source || 'manual'}</span>
-                        </div>
-                      </td>
-                      <td className="px-5 py-4">
-                        <span className={cn("px-2.5 py-1 rounded text-xs font-semibold", status.class)}>
-                          {status.label}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button className="p-1.5 rounded hover:bg-muted transition-colors">
-                              <MoreVertical className="w-4 h-4 text-muted-foreground" />
-                            </button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => handleEdit(apt)}>
-                              <Pencil className="w-4 h-4 mr-2" />
-                              Edit
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onClick={() => setDeleteConfirmId(apt.id)}
-                              className="text-destructive focus:text-destructive"
-                            >
-                              <Trash2 className="w-4 h-4 mr-2" />
-                              Delete
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                        </td>
+                        <td className="px-5 py-4">
+                          <p className="text-sm text-muted-foreground">{apt.reason || '-'}</p>
+                        </td>
+                        <td className="px-5 py-4">
+                          <div className="flex items-center gap-2">
+                            <SourceIcon className={cn(
+                              "w-4 h-4",
+                              apt.source === "voice" ? "text-orange-500" :
+                              apt.source === "whatsapp" ? "text-green-500" : "text-blue-500"
+                            )} />
+                            <span className="text-xs text-muted-foreground capitalize">{apt.source || 'manual'}</span>
+                          </div>
+                        </td>
+                        <td className="px-5 py-4">
+                          <span className={cn("px-2.5 py-1 rounded text-xs font-semibold", status.class)}>
+                            {status.label}
+                          </span>
+                        </td>
+                        <td className="px-5 py-4">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <button className="p-1.5 rounded hover:bg-muted transition-colors">
+                                <MoreVertical className="w-4 h-4 text-muted-foreground" />
+                              </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => handleEdit(apt)}>
+                                <Pencil className="w-4 h-4 mr-2" />
+                                Edit
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => setDeleteConfirmId(apt.id)}
+                                className="text-destructive focus:text-destructive"
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Dialogs */}
       <AppointmentDialog
@@ -287,7 +338,8 @@ export default function Appointments() {
         onOpenChange={setDialogOpen}
         appointment={editingAppointment}
         onSave={handleSave}
-        defaultDate={selectedDate.toISOString().split('T')[0]}
+        defaultDate={defaultFormValues.date || selectedDate.toISOString().split('T')[0]}
+        defaultTime={defaultFormValues.time}
       />
 
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
