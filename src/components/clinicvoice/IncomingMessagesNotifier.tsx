@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useIncomingMessages } from '@/hooks/useIncomingMessages';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, Phone, Bell } from 'lucide-react';
+import { MessageSquare, Phone, Bell, Plus } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 import {
   Popover,
   PopoverContent,
@@ -17,12 +19,47 @@ interface IncomingMessagesNotifierProps {
 }
 
 export function IncomingMessagesNotifier({ className }: IncomingMessagesNotifierProps) {
+  const [isSending, setIsSending] = useState(false);
   const { messages, unreadCount, markAsRead, isLoading } = useIncomingMessages({
     realtime: true,
     playSound: true,
     showToast: true,
     limit: 10,
   });
+
+  const simulateIncomingMessage = async () => {
+    setIsSending(true);
+    try {
+      const testMessages = [
+        "Hi, I'd like to book an appointment for next week",
+        "What are your clinic hours?",
+        "Can I reschedule my appointment?",
+        "Thank you for the reminder!",
+        "Is Dr. Smith available tomorrow?",
+      ];
+      const randomMessage = testMessages[Math.floor(Math.random() * testMessages.length)];
+      const randomPhone = `+91${Math.floor(9000000000 + Math.random() * 999999999)}`;
+      const isWhatsApp = Math.random() > 0.3;
+
+      const { error } = await supabase.from('message_logs').insert({
+        channel: isWhatsApp ? 'whatsapp' : 'sms',
+        direction: 'inbound',
+        from_phone: randomPhone,
+        to_phone: '+14155238886',
+        message_content: randomMessage,
+        status: 'received',
+        message_sid: `SM_TEST_${Date.now()}`,
+      });
+
+      if (error) throw error;
+      toast.success('Test message simulated!');
+    } catch (err) {
+      console.error('Failed to simulate message:', err);
+      toast.error('Failed to simulate message');
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   return (
     <Popover onOpenChange={(open) => open && markAsRead()}>
@@ -46,10 +83,24 @@ export function IncomingMessagesNotifier({ className }: IncomingMessagesNotifier
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0" align="end">
         <div className="p-3 border-b border-border">
-          <h4 className="font-semibold text-sm">Incoming Messages</h4>
-          <p className="text-xs text-muted-foreground">
-            Recent messages from patients
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h4 className="font-semibold text-sm">Incoming Messages</h4>
+              <p className="text-xs text-muted-foreground">
+                Recent messages from patients
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={simulateIncomingMessage}
+              disabled={isSending}
+              className="h-7 text-xs"
+            >
+              <Plus className="h-3 w-3 mr-1" />
+              Test
+            </Button>
+          </div>
         </div>
         <ScrollArea className="max-h-80">
           {isLoading ? (
