@@ -24,6 +24,7 @@ const QUICK_REPLIES = [
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 const SOUND_STORAGE_KEY = 'clinicvoice-chat-sound-enabled';
 const CHAT_HISTORY_KEY = 'clinicvoice-chat-history';
+const MAX_CHARS = 500;
 
 const INITIAL_MESSAGE: Message = {
   role: 'assistant',
@@ -445,9 +446,10 @@ export function ChatBot() {
                     <div className="flex gap-2">
                       <Input
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={(e) => setInput(e.target.value.slice(0, MAX_CHARS))}
                         placeholder="Ask me anything..."
                         disabled={isLoading}
+                        maxLength={MAX_CHARS}
                         className={cn(
                           'flex-1 bg-cv-dark-card border-cv-accent/20',
                           'text-cv-text-primary placeholder:text-cv-text-secondary/50',
@@ -471,9 +473,21 @@ export function ChatBot() {
                         <Send className="size-4" />
                       </Button>
                     </div>
-                    <p className="text-[10px] text-cv-text-secondary/50 text-center mt-2">
-                      Powered by ClinicVoice AI
-                    </p>
+                    <div className="flex items-center justify-between mt-2 px-1">
+                      <p className="text-[10px] text-cv-text-secondary/50">
+                        Powered by ClinicVoice AI
+                      </p>
+                      <p className={cn(
+                        "text-[10px] transition-colors",
+                        input.length >= MAX_CHARS 
+                          ? "text-red-400" 
+                          : input.length >= MAX_CHARS * 0.8 
+                            ? "text-yellow-400" 
+                            : "text-cv-text-secondary/50"
+                      )}>
+                        {input.length}/{MAX_CHARS}
+                      </p>
+                    </div>
                   </form>
                 </motion.div>
               )}
