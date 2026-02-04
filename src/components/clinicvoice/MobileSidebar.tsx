@@ -58,7 +58,7 @@ interface NavSectionProps {
 function NavSection({ title, items, currentPath, onNavigate }: NavSectionProps) {
   return (
     <div className="mb-6">
-      <p className="px-4 mb-2 text-[11px] font-semibold uppercase tracking-wider text-cv-text-muted">
+      <p className="px-4 mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {title}
       </p>
       <nav className="space-y-1">
@@ -72,14 +72,14 @@ function NavSection({ title, items, currentPath, onNavigate }: NavSectionProps) 
               className={cn(
                 "flex items-center gap-3 px-4 py-2.5 text-sm transition-all duration-200 border-l-[3px] border-transparent",
                 isActive
-                  ? "bg-cv-primary/10 text-cv-primary-light border-l-cv-primary"
-                  : "text-cv-text-secondary hover:bg-muted/50 hover:text-cv-text-primary"
+                  ? "bg-primary/10 text-primary border-l-primary"
+                  : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
               )}
             >
               <item.icon className="w-[18px] h-[18px]" />
               <span className="font-medium">{item.label}</span>
               {"badge" in item && item.badge && (
-                <span className="ml-auto px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-cv-success/20 text-cv-success animate-pulse">
+                <span className="ml-auto px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 animate-pulse">
                   {item.badge}
                 </span>
               )}
@@ -114,15 +114,15 @@ export function MobileSidebar() {
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[280px] p-0 bg-sidebar border-sidebar-border">
+      <SheetContent side="left" className="w-[280px] p-0 bg-background border-border">
         {/* Logo */}
-        <div className="flex items-center gap-3 px-5 py-5 border-b border-sidebar-border">
-          <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-            <Phone className="w-5 h-5 text-white" />
+        <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+            <Phone className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-cv-text-primary">ClinicVoice</h1>
-            <p className="text-[10px] font-medium text-cv-primary-light uppercase tracking-wider">
+            <h1 className="text-lg font-bold text-foreground">ClinicVoice</h1>
+            <p className="text-[10px] font-medium text-primary uppercase tracking-wider">
               AI Platform
             </p>
           </div>
@@ -137,22 +137,22 @@ export function MobileSidebar() {
         </div>
 
         {/* User & Logout */}
-        <div className="absolute bottom-[120px] left-0 right-0 p-4 border-t border-sidebar-border bg-sidebar">
+        <div className="absolute bottom-[120px] left-0 right-0 p-4 border-t border-border bg-background">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-full bg-cv-primary/20 flex items-center justify-center">
-              <span className="text-sm font-bold text-cv-primary-light">
+            <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center">
+              <span className="text-sm font-bold text-primary">
                 {user?.email?.charAt(0).toUpperCase() || "U"}
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-cv-text-primary truncate">
+              <p className="text-sm font-medium text-foreground truncate">
                 {user?.email || "User"}
               </p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 w-full px-3 py-2 text-sm text-cv-text-secondary hover:text-cv-danger hover:bg-cv-danger/10 rounded-lg transition-colors"
+            className="flex items-center gap-2 w-full px-3 py-2 text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
           >
             <LogOut className="w-4 h-4" />
             Sign Out
@@ -160,20 +160,20 @@ export function MobileSidebar() {
         </div>
 
         {/* Voice AI Status Widget */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-sidebar-border bg-sidebar">
-          <div className="rounded-xl p-4 bg-gradient-to-br from-cv-primary/20 to-cv-accent/10 border border-cv-primary/20">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-background">
+          <div className="rounded-xl p-4 bg-muted/50 border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-cv-success animate-pulse" />
-              <span className="text-xs font-semibold text-cv-text-primary">Voice AI Active</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-xs font-semibold text-foreground">Voice AI Active</span>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="text-center">
-                <p className="text-lg font-bold text-cv-primary-light">47</p>
-                <p className="text-[10px] text-cv-text-muted">Calls Today</p>
+                <p className="text-lg font-bold text-primary">47</p>
+                <p className="text-[10px] text-muted-foreground">Calls Today</p>
               </div>
               <div className="text-center">
-                <p className="text-lg font-bold text-cv-primary-light">95%</p>
-                <p className="text-[10px] text-cv-text-muted">Resolution</p>
+                <p className="text-lg font-bold text-primary">95%</p>
+                <p className="text-[10px] text-muted-foreground">Resolution</p>
               </div>
             </div>
           </div>

@@ -9,10 +9,10 @@ interface AppointmentRowProps {
 }
 
 const statusStyles = {
-  confirmed: "bg-cv-success/20 text-cv-success",
-  waiting: "bg-cv-warning/20 text-cv-warning",
-  "in-progress": "bg-cv-blue/20 text-cv-blue",
-  completed: "bg-muted text-cv-text-muted",
+  confirmed: "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400",
+  waiting: "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400",
+  "in-progress": "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400",
+  completed: "bg-muted text-muted-foreground",
 };
 
 const statusLabels = {
@@ -32,20 +32,20 @@ export function AppointmentRow({
   return (
     <div className="flex items-center py-3 border-b border-border/50 last:border-b-0">
       {/* Patient Avatar */}
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cv-blue to-cv-accent flex items-center justify-center text-white font-semibold text-sm mr-3 flex-shrink-0">
+      <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold text-sm mr-3 flex-shrink-0">
         {patientInitials}
       </div>
 
       {/* Patient Info */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-cv-text-primary truncate">{patientName}</p>
-        <p className="text-xs text-cv-text-muted truncate">{reason}</p>
+        <p className="text-sm font-semibold text-foreground truncate">{patientName}</p>
+        <p className="text-xs text-muted-foreground truncate">{reason}</p>
       </div>
 
       {/* Time */}
       <div className="text-right mr-4">
-        <p className="text-sm font-semibold text-cv-text-primary">{time}</p>
-        <p className="text-xs text-cv-text-muted">Today</p>
+        <p className="text-sm font-semibold text-foreground">{time}</p>
+        <p className="text-xs text-muted-foreground">Today</p>
       </div>
 
       {/* Status */}
