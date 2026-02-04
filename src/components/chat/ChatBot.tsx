@@ -14,6 +14,13 @@ interface Message {
   content: string;
 }
 
+const QUICK_REPLIES = [
+  { label: '💰 Pricing', message: 'What are the pricing plans?' },
+  { label: '🎯 Features', message: 'What features does ClinicVoice offer?' },
+  { label: '🎙️ Voice AI', message: 'How does the Voice AI work?' },
+  { label: '📅 Demo', message: 'How can I schedule a demo?' },
+];
+
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 export function ChatBot() {
@@ -210,7 +217,7 @@ export function ChatBot() {
 
             {/* Messages */}
             <ScrollArea className="h-[420px] p-4" ref={scrollAreaRef}>
-              <div className="space-y-4">
+            <div className="space-y-4">
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
@@ -255,6 +262,40 @@ export function ChatBot() {
                     </div>
                   </motion.div>
                 ))}
+                
+                {/* Quick Reply Buttons - show after initial message only */}
+                {messages.length === 1 && !isLoading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="flex flex-wrap gap-2 pt-2"
+                  >
+                    {QUICK_REPLIES.map((reply) => (
+                      <motion.button
+                        key={reply.label}
+                        onClick={() => {
+                          setInput(reply.message);
+                          setTimeout(() => {
+                            const form = document.querySelector('form');
+                            form?.requestSubmit();
+                          }, 50);
+                        }}
+                        className={cn(
+                          'px-3 py-1.5 text-xs font-medium rounded-full',
+                          'bg-cv-dark-hover border border-cv-accent/20',
+                          'text-cv-text-secondary hover:text-white',
+                          'hover:border-teal-500/40 hover:bg-teal-500/10',
+                          'transition-all duration-200'
+                        )}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {reply.label}
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                )}
                 
                 {/* Typing Indicator */}
                 {isLoading && messages[messages.length - 1]?.role === 'user' && (
