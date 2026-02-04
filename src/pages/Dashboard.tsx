@@ -50,22 +50,22 @@ const aiInsights = [
     icon: AlertCircle,
     title: "5 patients due for follow-up",
     description: "Based on last visit dates",
-    color: "text-cv-warning",
-    bgColor: "bg-cv-warning/10",
+    color: "text-orange-600 dark:text-orange-400",
+    bgColor: "bg-orange-100 dark:bg-orange-900/30",
   },
   {
     icon: CheckCircle2,
     title: "Medication adherence improved",
     description: "12% increase this week",
-    color: "text-cv-success",
-    bgColor: "bg-cv-success/10",
+    color: "text-green-600 dark:text-green-400",
+    bgColor: "bg-green-100 dark:bg-green-900/30",
   },
   {
     icon: Clock,
     title: "Peak hours: 10AM - 12PM",
     description: "Consider adding slots",
-    color: "text-cv-blue",
-    bgColor: "bg-cv-blue/10",
+    color: "text-blue-600 dark:text-blue-400",
+    bgColor: "bg-blue-100 dark:bg-blue-900/30",
   },
 ];
 
@@ -75,38 +75,33 @@ export default function Dashboard() {
       title="Dashboard"
       subtitle="Welcome back, Dr. Santhira. Here's your clinic overview."
     >
-      {/* Hero Welcome Section with Particles */}
+      {/* Hero Welcome Section - Professional */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative mb-6 rounded-2xl overflow-hidden"
+        className="relative mb-6 rounded-lg overflow-hidden"
       >
-        <div className="relative bg-gradient-to-br from-cv-primary/20 via-cv-primary/10 to-cv-accent/15 border border-cv-primary/20 rounded-2xl p-6 md:p-8">
-          <FloatingParticles count={20} />
+        <div className="relative bg-muted/50 border border-border rounded-lg p-6 md:p-8">
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="w-5 h-5 text-cv-primary-light animate-pulse" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-cv-primary-light">AI-Powered Dashboard</span>
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span className="text-xs font-semibold uppercase tracking-wider text-primary">AI-Powered Dashboard</span>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-cv-text-primary mb-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-1">
                 Good Morning, Dr. Santhira! 👋
               </h2>
-              <p className="text-cv-text-secondary">
-                Your clinic is performing <span className="text-cv-success font-semibold">18% better</span> than last week
+              <p className="text-muted-foreground">
+                Your clinic is performing <span className="text-green-600 dark:text-green-400 font-semibold">18% better</span> than last week
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="px-4 py-2 rounded-full bg-cv-success/20 border border-cv-success/30">
-                <span className="text-sm font-semibold text-cv-success">🟢 AI Active</span>
+              <div className="px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
+                <span className="text-sm font-medium text-green-700 dark:text-green-400">🟢 AI Active</span>
               </div>
             </div>
           </div>
-          
-          {/* Decorative gradient orbs */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-cv-primary/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-cv-accent/15 rounded-full blur-2xl pointer-events-none" />
         </div>
       </motion.div>
 
@@ -160,13 +155,13 @@ export default function Dashboard() {
         {/* Appointments Column */}
         <div className="xl:col-span-2 space-y-4 md:space-y-6">
           {/* Today's Appointments */}
-          <div className="rounded-2xl bg-card/80 backdrop-blur-sm border border-border hover:border-cv-primary/30 transition-all duration-300 overflow-hidden shadow-lg">
-            <div className="px-5 py-4 border-b border-border flex items-center justify-between bg-gradient-to-r from-cv-primary/5 to-transparent">
-              <h3 className="text-sm font-semibold text-cv-text-primary flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-cv-primary-light" />
+          <div className="rounded-lg bg-card border border-border overflow-hidden">
+            <div className="px-5 py-4 border-b border-border flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-primary" />
                 Today's Appointments
               </h3>
-              <button className="text-xs font-medium text-cv-primary-light hover:underline transition-colors">
+              <button className="text-xs font-medium text-primary hover:underline transition-colors">
                 View All →
               </button>
             </div>
@@ -185,11 +180,10 @@ export default function Dashboard() {
           </div>
 
           {/* AI Insights */}
-          <div className="rounded-2xl bg-card/80 backdrop-blur-sm border border-border hover:border-cv-accent/30 transition-all duration-300 overflow-hidden shadow-lg">
-            <div className="px-5 py-4 border-b border-border bg-gradient-to-r from-cv-accent/5 to-transparent">
-              <h3 className="text-sm font-semibold text-cv-text-primary flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-cv-accent" />
-                <span className="w-2 h-2 rounded-full bg-cv-accent animate-pulse" />
+          <div className="rounded-lg bg-card border border-border overflow-hidden">
+            <div className="px-5 py-4 border-b border-border">
+              <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary" />
                 AI Insights
               </h3>
             </div>
@@ -200,16 +194,16 @@ export default function Dashboard() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-r from-muted/40 to-muted/20 hover:from-muted/60 hover:to-muted/30 transition-all duration-300 cursor-pointer group border border-transparent hover:border-border"
+                  className="flex items-start gap-3 p-4 rounded-lg bg-muted/50 hover:bg-muted transition-all duration-300 cursor-pointer group"
                 >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${insight.bgColor} group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${insight.bgColor} group-hover:scale-105 transition-transform duration-300`}>
                     <insight.icon className={`w-5 h-5 ${insight.color}`} />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-cv-text-primary group-hover:text-cv-primary-light transition-colors">
+                    <p className="text-sm font-medium text-foreground">
                       {insight.title}
                     </p>
-                    <p className="text-xs text-cv-text-muted mt-0.5">{insight.description}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{insight.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -245,25 +239,24 @@ export default function Dashboard() {
             <QuickActions />
           </motion.div>
 
-          {/* Tamil Greeting Card */}
+          {/* Tamil Greeting Card - Professional */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45 }}
-            className="relative rounded-2xl p-5 bg-gradient-to-br from-cv-primary/25 via-cv-primary/15 to-cv-accent/15 border border-cv-primary/30 overflow-hidden shadow-lg"
+            className="relative rounded-lg p-5 bg-muted/50 border border-border overflow-hidden"
           >
-            <FloatingParticles count={10} />
             <div className="relative z-10">
-              <p className="text-xl font-bold text-cv-text-primary mb-2">வணக்கம்! 🙏</p>
-              <p className="text-sm text-cv-text-secondary leading-relaxed">
+              <p className="text-xl font-bold text-foreground mb-2">வணக்கம்! 🙏</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Your Tamil Voice AI is helping patients book appointments 24/7
               </p>
-              <div className="mt-4 p-4 rounded-xl bg-background/60 backdrop-blur-sm border border-cv-primary/20">
-                <p className="text-sm text-cv-text-secondary italic">
+              <div className="mt-4 p-4 rounded-lg bg-card border border-border">
+                <p className="text-sm text-muted-foreground italic">
                   "Naalai 10 mani-ku appointment confirm aagividuthu!"
                 </p>
-                <p className="text-xs text-cv-text-muted mt-2 flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-cv-success animate-pulse" />
+                <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-green-500" />
                   Recent AI Call
                 </p>
               </div>

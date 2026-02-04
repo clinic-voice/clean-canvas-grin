@@ -105,55 +105,49 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen bg-background flex">
-      {/* Left side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 gradient-primary relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
-        <div className="relative z-10 flex flex-col justify-center p-12 text-white">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+      {/* Left side - Branding - Professional */}
+      <div className="hidden lg:flex lg:w-1/2 bg-primary relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0YzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-50"></div>
+        <div className="relative z-10 flex flex-col justify-center p-12 text-primary-foreground">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="w-12 h-12 rounded-lg bg-primary-foreground/20 flex items-center justify-center">
               <Phone className="w-6 h-6" />
             </div>
-            <span className="text-2xl font-bold">ClinicVoice AI</span>
+            <span className="text-2xl font-semibold tracking-tight">ClinicVoice AI</span>
           </div>
           
-          <h1 className="text-4xl font-bold mb-4">
+          <h1 className="text-4xl font-bold mb-4 leading-tight">
             Transform Your Clinic with AI-Powered Voice
           </h1>
-          <p className="text-lg text-white/80 mb-8">
+          <p className="text-lg text-primary-foreground/80 mb-10 leading-relaxed">
             Join 500+ clinics using Tamil-first voice AI to automate appointments, 
             reduce no-shows, and enhance patient care.
           </p>
 
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <span className="text-sm">✓</span>
+            {[
+              "95% Appointment Booking Accuracy",
+              "40% Reduction in No-Shows",
+              "Native Tamil Language Support"
+            ].map((text) => (
+              <div key={text} className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                  <span className="text-xs">✓</span>
+                </div>
+                <span className="text-sm font-medium">{text}</span>
               </div>
-              <span>95% Appointment Booking Accuracy</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <span className="text-sm">✓</span>
-              </div>
-              <span>40% Reduction in No-Shows</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <span className="text-sm">✓</span>
-              </div>
-              <span>Native Tamil Language Support</span>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Right side - Auth Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12">
+      {/* Right side - Auth Form - Professional */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12 bg-background">
         <div className="w-full max-w-md">
           {/* Back to home */}
           <button 
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-cv-text-secondary hover:text-cv-text-primary mb-8 transition-colors"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors text-sm font-medium"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to home
@@ -161,17 +155,17 @@ export default function Auth() {
 
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <Phone className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+              <Phone className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-cv-text-primary">ClinicVoice AI</span>
+            <span className="text-xl font-semibold text-foreground">ClinicVoice AI</span>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-cv-text-primary mb-2">
+            <h2 className="text-2xl font-bold text-foreground mb-2">
               {isLogin ? "Welcome back" : "Create your account"}
             </h2>
-            <p className="text-cv-text-secondary">
+            <p className="text-muted-foreground">
               {isLogin 
                 ? "Log in to access your clinic dashboard" 
                 : "Start your 14-day free trial today"}
@@ -181,42 +175,42 @@ export default function Auth() {
           {isLogin ? (
             <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-cv-text-primary">Email</Label>
+                <Label htmlFor="email" className="text-foreground text-sm font-medium">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cv-text-secondary" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="clinic@example.com"
-                    className="pl-10 bg-cv-surface border-cv-border focus:border-cv-primary"
+                    className="pl-10 h-11 bg-background border-input focus:border-primary"
                     {...loginForm.register("email")}
                   />
                 </div>
                 {loginForm.formState.errors.email && (
-                  <p className="text-red-500 text-sm">{loginForm.formState.errors.email.message}</p>
+                  <p className="text-destructive text-sm">{loginForm.formState.errors.email.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-cv-text-primary">Password</Label>
+                <Label htmlFor="password" className="text-foreground text-sm font-medium">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cv-text-secondary" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="password"
                     type="password"
                     placeholder="••••••••"
-                    className="pl-10 bg-cv-surface border-cv-border focus:border-cv-primary"
+                    className="pl-10 h-11 bg-background border-input focus:border-primary"
                     {...loginForm.register("password")}
                   />
                 </div>
                 {loginForm.formState.errors.password && (
-                  <p className="text-red-500 text-sm">{loginForm.formState.errors.password.message}</p>
+                  <p className="text-destructive text-sm">{loginForm.formState.errors.password.message}</p>
                 )}
               </div>
 
               <Button 
                 type="submit" 
-                className="w-full gradient-primary text-white hover:opacity-90"
+                className="w-full h-11 bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -232,76 +226,76 @@ export default function Auth() {
           ) : (
             <form onSubmit={signupForm.handleSubmit(handleSignup)} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="clinicName" className="text-cv-text-primary">Clinic Name</Label>
+                <Label htmlFor="clinicName" className="text-foreground text-sm font-medium">Clinic Name</Label>
                 <div className="relative">
-                  <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cv-text-secondary" />
+                  <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="clinicName"
                     type="text"
                     placeholder="Your Clinic Name"
-                    className="pl-10 bg-cv-surface border-cv-border focus:border-cv-primary"
+                    className="pl-10 h-11 bg-background border-input focus:border-primary"
                     {...signupForm.register("clinicName")}
                   />
                 </div>
                 {signupForm.formState.errors.clinicName && (
-                  <p className="text-red-500 text-sm">{signupForm.formState.errors.clinicName.message}</p>
+                  <p className="text-destructive text-sm">{signupForm.formState.errors.clinicName.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="signupEmail" className="text-cv-text-primary">Email</Label>
+                <Label htmlFor="signupEmail" className="text-foreground text-sm font-medium">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cv-text-secondary" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="signupEmail"
                     type="email"
                     placeholder="clinic@example.com"
-                    className="pl-10 bg-cv-surface border-cv-border focus:border-cv-primary"
+                    className="pl-10 h-11 bg-background border-input focus:border-primary"
                     {...signupForm.register("email")}
                   />
                 </div>
                 {signupForm.formState.errors.email && (
-                  <p className="text-red-500 text-sm">{signupForm.formState.errors.email.message}</p>
+                  <p className="text-destructive text-sm">{signupForm.formState.errors.email.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="signupPassword" className="text-cv-text-primary">Password</Label>
+                <Label htmlFor="signupPassword" className="text-foreground text-sm font-medium">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cv-text-secondary" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="signupPassword"
                     type="password"
                     placeholder="••••••••"
-                    className="pl-10 bg-cv-surface border-cv-border focus:border-cv-primary"
+                    className="pl-10 h-11 bg-background border-input focus:border-primary"
                     {...signupForm.register("password")}
                   />
                 </div>
                 {signupForm.formState.errors.password && (
-                  <p className="text-red-500 text-sm">{signupForm.formState.errors.password.message}</p>
+                  <p className="text-destructive text-sm">{signupForm.formState.errors.password.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-cv-text-primary">Confirm Password</Label>
+                <Label htmlFor="confirmPassword" className="text-foreground text-sm font-medium">Confirm Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-cv-text-secondary" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="confirmPassword"
                     type="password"
                     placeholder="••••••••"
-                    className="pl-10 bg-cv-surface border-cv-border focus:border-cv-primary"
+                    className="pl-10 h-11 bg-background border-input focus:border-primary"
                     {...signupForm.register("confirmPassword")}
                   />
                 </div>
                 {signupForm.formState.errors.confirmPassword && (
-                  <p className="text-red-500 text-sm">{signupForm.formState.errors.confirmPassword.message}</p>
+                  <p className="text-destructive text-sm">{signupForm.formState.errors.confirmPassword.message}</p>
                 )}
               </div>
 
               <Button 
                 type="submit" 
-                className="w-full gradient-primary text-white hover:opacity-90"
+                className="w-full h-11 bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -317,7 +311,7 @@ export default function Auth() {
           )}
 
           <div className="mt-6 text-center">
-            <p className="text-cv-text-secondary">
+            <p className="text-muted-foreground text-sm">
               {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
               <button
                 type="button"
@@ -326,7 +320,7 @@ export default function Auth() {
                   loginForm.reset();
                   signupForm.reset();
                 }}
-                className="text-cv-primary hover:underline font-medium"
+                className="text-primary hover:underline font-medium"
               >
                 {isLogin ? "Sign up" : "Log in"}
               </button>
