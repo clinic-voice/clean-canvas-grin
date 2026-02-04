@@ -11,9 +11,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2, MessageSquare } from "lucide-react";
+import { Send, Loader2, MessageSquare, Phone } from "lucide-react";
 import { useTwilioWhatsApp } from "@/hooks/useTwilioWhatsApp";
+import { useTwilioSms } from "@/hooks/useTwilioSms";
 import { cn } from "@/lib/utils";
+
+type MessageChannel = "whatsapp" | "sms";
 
 interface SendMessageDialogProps {
   open: boolean;
@@ -24,20 +27,26 @@ interface SendMessageDialogProps {
     english: string;
   } | null;
   prefillPhone?: string;
+  defaultChannel?: MessageChannel;
 }
 
 export function SendMessageDialog({ 
   open, 
   onOpenChange, 
   template,
-  prefillPhone = "" 
+  prefillPhone = "",
+  defaultChannel = "whatsapp"
 }: SendMessageDialogProps) {
   const [phone, setPhone] = useState(prefillPhone);
   const [customMessage, setCustomMessage] = useState("");
   const [language, setLanguage] = useState<"tamil" | "english">("english");
   const [variables, setVariables] = useState<Record<string, string>>({});
+  const [channel, setChannel] = useState<MessageChannel>(defaultChannel);
   
-  const { sendWhatsApp, sendTemplateMessage, isSending } = useTwilioWhatsApp();
+  const { sendWhatsApp, sendTemplateMessage: sendWhatsAppTemplate, isSending: isSendingWhatsApp } = useTwilioWhatsApp();
+  const { sendSms, sendTemplateMessage: sendSmsTemplate, isSending: isSendingSms } = useTwilioSms();
+
+  const isSending = isSendingWhatsApp || isSendingSms;
 
   // Extract variables from template
   const extractVariables = (text: string): string[] => {
@@ -54,12 +63,22 @@ export function SendMessageDialog({
 
     let success = false;
     
-    if (template) {
-      const result = await sendTemplateMessage(phone, template, variables, language);
-      success = result.success;
-    } else if (customMessage) {
-      const result = await sendWhatsApp({ to: phone, message: customMessage });
-      success = result.success;
+    if (channel === "whatsapp") {
+      if (template) {
+        const result = await sendWhatsAppTemplate(phone, template, variables, language);
+        success = result.success;
+      } else if (customMessage) {
+        const result = await sendWhatsApp({ to: phone, message: customMessage });
+        success = result.success;
+      }
+    } else {
+      if (template) {
+        const result = await sendSmsTemplate(phone, template, variables, language);
+        success = result.success;
+      } else if (customMessage) {
+        const result = await sendSms({ to: phone, message: customMessage });
+        success = result.success;
+      }
     }
 
     if (success) {
@@ -86,17 +105,59 @@ export function SendMessageDialog({
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <MessageSquare className="w-5 h-5 text-primary" />
-            {template ? `Send: ${template.name}` : "Send WhatsApp Message"}
+            {channel === "whatsapp" ? (
+              <MessageSquare className="w-5 h-5 text-primary" />
+            ) : (
+              <Phone className="w-5 h-5 text-primary" />
+            )}
+            {template ? `Send: ${template.name}` : `Send ${channel === "whatsapp" ? "WhatsApp" : "SMS"} Message`}
           </DialogTitle>
           <DialogDescription>
             {template 
               ? "Fill in the template variables and send to patient" 
-              : "Compose and send a custom WhatsApp message"}
+              : `Compose and send a custom ${channel === "whatsapp" ? "WhatsApp" : "SMS"} message`}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
+          {/* Channel Toggle */}
+          <div className="space-y-2">
+            <Label>Message Channel</Label>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant={channel === "whatsapp" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setChannel("whatsapp")}
+                className={cn(
+                  "flex items-center gap-2",
+                  channel === "whatsapp" && "bg-green-600 hover:bg-green-700 text-white"
+                )}
+              >
+                <MessageSquare className="w-4 h-4" />
+                WhatsApp
+              </Button>
+              <Button
+                type="button"
+                variant={channel === "sms" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setChannel("sms")}
+                className={cn(
+                  "flex items-center gap-2",
+                  channel === "sms" && "bg-blue-600 hover:bg-blue-700 text-white"
+                )}
+              >
+                <Phone className="w-4 h-4" />
+                SMS
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {channel === "whatsapp" 
+                ? "Send via WhatsApp (requires patient to have WhatsApp)" 
+                : "Send via SMS (works on any phone)"}
+            </p>
+          </div>
+
           {/* Phone Number */}
           <div className="space-y-2">
             <Label htmlFor="phone">Phone Number</Label>
@@ -193,7 +254,11 @@ export function SendMessageDialog({
           <Button 
             onClick={handleSend} 
             disabled={isSending || !phone || (!template && !customMessage)}
-            className="gradient-teal text-white"
+            className={cn(
+              channel === "whatsapp" 
+                ? "bg-green-600 hover:bg-green-700 text-white" 
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            )}
           >
             {isSending ? (
               <>
@@ -203,7 +268,7 @@ export function SendMessageDialog({
             ) : (
               <>
                 <Send className="w-4 h-4 mr-2" />
-                Send WhatsApp
+                Send {channel === "whatsapp" ? "WhatsApp" : "SMS"}
               </>
             )}
           </Button>
