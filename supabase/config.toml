@@ -2,3 +2,6 @@ project_id = "dycrfntiziwkltcdtxmu"
 
 [functions.chat]
 verify_jwt = false
+
+[functions.twilio-whatsapp]
+verify_jwt = false

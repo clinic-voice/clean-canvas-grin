@@ -18,11 +18,13 @@ import {
   Pencil,
   Trash2,
   LucideIcon,
-  ArrowLeft
+  ArrowLeft,
+  Plus
 } from "lucide-react";
 import { useState } from "react";
 import { TemplateEditor, Template } from "@/components/clinicvoice/TemplateEditor";
 import { ConversationDetail, Conversation } from "@/components/clinicvoice/ConversationDetail";
+import { SendMessageDialog } from "@/components/clinicvoice/SendMessageDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -118,6 +120,9 @@ export default function WhatsApp() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [templateToDelete, setTemplateToDelete] = useState<Template | null>(null);
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
+  const [sendDialogOpen, setSendDialogOpen] = useState(false);
+  const [selectedTemplateForSend, setSelectedTemplateForSend] = useState<Template | null>(null);
+  const [quickSendOpen, setQuickSendOpen] = useState(false);
 
   const handleCreateTemplate = () => {
     setEditingTemplate(null);
@@ -165,6 +170,16 @@ export default function WhatsApp() {
 
   const handleBackFromConversation = () => {
     setSelectedConversation(null);
+  };
+
+  const handleUseTemplate = (template: Template) => {
+    setSelectedTemplateForSend(template);
+    setSendDialogOpen(true);
+  };
+
+  const handleQuickSend = () => {
+    setSelectedTemplateForSend(null);
+    setQuickSendOpen(true);
   };
 
   // If a conversation is selected, show the detail view
@@ -254,18 +269,31 @@ export default function WhatsApp() {
             <div className="rounded-xl bg-card border border-border p-5">
               <h2 className="text-lg font-semibold text-cv-text-primary mb-4">Quick Actions</h2>
               <div className="space-y-3">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start h-auto py-3 px-4"
+                  onClick={handleQuickSend}
+                >
+                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center mr-3">
+                    <Send className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium text-foreground">Send Message</p>
+                    <p className="text-xs text-muted-foreground">Send a custom WhatsApp message</p>
+                  </div>
+                </Button>
                 {quickActions.map((action) => (
                   <Button
                     key={action.label}
                     variant="outline"
                     className="w-full justify-start h-auto py-3 px-4"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-cv-primary/20 flex items-center justify-center mr-3">
-                      <action.icon className="w-5 h-5 text-cv-primary" />
+                    <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center mr-3">
+                      <action.icon className="w-5 h-5 text-primary" />
                     </div>
                     <div className="text-left">
-                      <p className="font-medium text-cv-text-primary">{action.label}</p>
-                      <p className="text-xs text-cv-text-secondary">{action.description}</p>
+                      <p className="font-medium text-foreground">{action.label}</p>
+                      <p className="text-xs text-muted-foreground">{action.description}</p>
                     </div>
                   </Button>
                 ))}
@@ -377,7 +405,11 @@ export default function WhatsApp() {
                   </div>
                 </div>
                 <div className="flex gap-2 mt-3">
-                  <Button size="sm" className="flex-1 gradient-primary text-white">
+                  <Button 
+                    size="sm" 
+                    className="flex-1 gradient-teal text-white"
+                    onClick={() => handleUseTemplate(template)}
+                  >
                     <Send className="w-3 h-3 mr-1" />
                     Use Template
                   </Button>
@@ -416,6 +448,20 @@ export default function WhatsApp() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Send Message Dialog - Template */}
+      <SendMessageDialog
+        open={sendDialogOpen}
+        onOpenChange={setSendDialogOpen}
+        template={selectedTemplateForSend}
+      />
+
+      {/* Send Message Dialog - Quick Send */}
+      <SendMessageDialog
+        open={quickSendOpen}
+        onOpenChange={setQuickSendOpen}
+        template={null}
+      />
     </DashboardLayout>
   );
 }

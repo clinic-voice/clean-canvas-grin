@@ -1,0 +1,214 @@
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Send, Loader2, MessageSquare } from "lucide-react";
+import { useTwilioWhatsApp } from "@/hooks/useTwilioWhatsApp";
+import { cn } from "@/lib/utils";
+
+interface SendMessageDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  template?: {
+    name: string;
+    tamil: string;
+    english: string;
+  } | null;
+  prefillPhone?: string;
+}
+
+export function SendMessageDialog({ 
+  open, 
+  onOpenChange, 
+  template,
+  prefillPhone = "" 
+}: SendMessageDialogProps) {
+  const [phone, setPhone] = useState(prefillPhone);
+  const [customMessage, setCustomMessage] = useState("");
+  const [language, setLanguage] = useState<"tamil" | "english">("english");
+  const [variables, setVariables] = useState<Record<string, string>>({});
+  
+  const { sendWhatsApp, sendTemplateMessage, isSending } = useTwilioWhatsApp();
+
+  // Extract variables from template
+  const extractVariables = (text: string): string[] => {
+    const matches = text.match(/\{([^}]+)\}/g) || [];
+    return [...new Set(matches.map(m => m.slice(1, -1)))];
+  };
+
+  const templateVariables = template 
+    ? extractVariables(template.tamil + template.english)
+    : [];
+
+  const handleSend = async () => {
+    if (!phone) return;
+
+    let success = false;
+    
+    if (template) {
+      const result = await sendTemplateMessage(phone, template, variables, language);
+      success = result.success;
+    } else if (customMessage) {
+      const result = await sendWhatsApp({ to: phone, message: customMessage });
+      success = result.success;
+    }
+
+    if (success) {
+      onOpenChange(false);
+      // Reset form
+      setPhone("");
+      setCustomMessage("");
+      setVariables({});
+    }
+  };
+
+  const previewMessage = () => {
+    if (!template) return customMessage;
+    
+    let message = language === "tamil" ? template.tamil : template.english;
+    Object.entries(variables).forEach(([key, value]) => {
+      message = message.replace(new RegExp(`\\{${key}\\}`, "g"), value || `{${key}}`);
+    });
+    return message;
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <MessageSquare className="w-5 h-5 text-primary" />
+            {template ? `Send: ${template.name}` : "Send WhatsApp Message"}
+          </DialogTitle>
+          <DialogDescription>
+            {template 
+              ? "Fill in the template variables and send to patient" 
+              : "Compose and send a custom WhatsApp message"}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4 py-4">
+          {/* Phone Number */}
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
+              id="phone"
+              placeholder="+91 98765 43210"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">
+              Include country code (e.g., +91 for India)
+            </p>
+          </div>
+
+          {/* Template Variables or Custom Message */}
+          {template ? (
+            <>
+              {/* Language Toggle */}
+              <div className="space-y-2">
+                <Label>Language</Label>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant={language === "english" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setLanguage("english")}
+                    className={cn(language === "english" && "gradient-teal text-white")}
+                  >
+                    English
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={language === "tamil" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setLanguage("tamil")}
+                    className={cn(language === "tamil" && "gradient-teal text-white")}
+                  >
+                    தமிழ் (Tamil)
+                  </Button>
+                </div>
+              </div>
+
+              {/* Variable Inputs */}
+              {templateVariables.length > 0 && (
+                <div className="space-y-3">
+                  <Label>Template Variables</Label>
+                  {templateVariables.map((variable) => (
+                    <div key={variable} className="space-y-1">
+                      <Label htmlFor={variable} className="text-xs text-muted-foreground capitalize">
+                        {variable.replace(/_/g, " ")}
+                      </Label>
+                      <Input
+                        id={variable}
+                        placeholder={`Enter ${variable.replace(/_/g, " ")}`}
+                        value={variables[variable] || ""}
+                        onChange={(e) => setVariables(prev => ({ 
+                          ...prev, 
+                          [variable]: e.target.value 
+                        }))}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Preview */}
+              <div className="space-y-2">
+                <Label>Message Preview</Label>
+                <div className="p-3 rounded-lg bg-muted/50 border border-border">
+                  <p className="text-sm text-foreground whitespace-pre-wrap">
+                    {previewMessage()}
+                  </p>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="space-y-2">
+              <Label htmlFor="message">Message</Label>
+              <Textarea
+                id="message"
+                placeholder="Type your message here..."
+                value={customMessage}
+                onChange={(e) => setCustomMessage(e.target.value)}
+                rows={4}
+              />
+            </div>
+          )}
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button 
+            onClick={handleSend} 
+            disabled={isSending || !phone || (!template && !customMessage)}
+            className="gradient-teal text-white"
+          >
+            {isSending ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Sending...
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4 mr-2" />
+                Send WhatsApp
+              </>
+            )}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
