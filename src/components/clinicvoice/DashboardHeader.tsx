@@ -1,7 +1,8 @@
-import { Bell, Search, Plus, Phone } from "lucide-react";
+import { Search, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MobileSidebar } from "./MobileSidebar";
+import { IncomingMessagesNotifier } from "./IncomingMessagesNotifier";
 
 interface DashboardHeaderProps {
   title: string;
@@ -40,11 +41,8 @@ export function DashboardHeader({ title, subtitle }: DashboardHeaderProps) {
           <span className="hidden sm:inline">New Appointment</span>
         </Button>
 
-        {/* Notifications */}
-        <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
-          <Bell className="w-5 h-5 text-muted-foreground" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary ring-2 ring-background" />
-        </button>
+        {/* Incoming Messages Notifications */}
+        <IncomingMessagesNotifier />
 
         {/* User Avatar */}
         <div className="w-9 h-9 rounded-full gradient-teal flex items-center justify-center text-white font-semibold text-sm shadow-md">
