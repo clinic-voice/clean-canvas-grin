@@ -1,10 +1,12 @@
 import { DashboardLayout } from "@/components/clinicvoice/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Calendar, Clock, Filter, Plus, Search, Phone, MessageSquare, MoreVertical, Pencil, Trash2, Loader2 } from "lucide-react";
+import { Calendar, Clock, Filter, Plus, Search, Phone, MessageSquare, MoreVertical, Pencil, Trash2, Loader2, AlertTriangle } from "lucide-react";
 import { useState, useCallback } from "react";
 import { Appointment, AppointmentFormData } from "@/hooks/useAppointments";
 import { useAllAppointments } from "@/hooks/useAllAppointments";
+import { useDemoAppointments } from "@/hooks/useDemoAppointments";
+import { useAuth } from "@/contexts/AuthContext";
 import { AppointmentDialog } from "@/components/clinicvoice/AppointmentDialog";
 import { CalendarView } from "@/components/clinicvoice/CalendarView";
 import {
@@ -56,13 +58,19 @@ export default function Appointments() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [defaultFormValues, setDefaultFormValues] = useState<{ date?: string; time?: string }>({});
 
+  const { isDemoMode } = useAuth();
+  
+  // Use demo hook when in demo mode, otherwise use real Supabase hook
+  const realAppointments = useAllAppointments();
+  const demoAppointments = useDemoAppointments();
+  
   const {
     appointments,
     isLoading,
     createAppointment,
     updateAppointment,
     deleteAppointment,
-  } = useAllAppointments();
+  } = isDemoMode ? demoAppointments : realAppointments;
 
   // Filter appointments for list view by selected date
   const filteredAppointments = appointments.filter(apt => 
@@ -127,6 +135,19 @@ export default function Appointments() {
       title="Appointments"
       subtitle="Manage and track all patient appointments"
     >
+      {/* Demo Mode Banner */}
+      {isDemoMode && (
+        <div className="mb-6 flex items-center gap-3 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
+          <AlertTriangle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+          <div>
+            <p className="text-sm font-medium text-yellow-700 dark:text-yellow-300">Demo Mode Active</p>
+            <p className="text-xs text-yellow-600/80 dark:text-yellow-400/80">
+              Changes are not saved. Remove <code className="px-1 bg-yellow-500/20 rounded">?demo=true</code> from URL to use real data.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
