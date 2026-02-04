@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/clinicvoice/ProtectedRoute";
+import { ChatBot } from "@/components/chat/ChatBot";
 
 // ClinicVoice Pages
 const LandingPage = lazy(() => import("./pages/LandingPage"));
@@ -62,6 +63,7 @@ const App = () => (
               {/* Fallback */}
               <Route path="*" element={<LandingPage />} />
             </Routes>
+            <ChatBot />
           </Suspense>
         </BrowserRouter>
       </TooltipProvider>
