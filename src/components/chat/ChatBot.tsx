@@ -23,19 +23,36 @@ const QUICK_REPLIES = [
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 const SOUND_STORAGE_KEY = 'clinicvoice-chat-sound-enabled';
+const CHAT_HISTORY_KEY = 'clinicvoice-chat-history';
 
 const INITIAL_MESSAGE: Message = {
   role: 'assistant',
   content: "👋 Welcome to ClinicVoice AI! I'm here to help you manage your clinic efficiently. Ask me about:\n\n• **Appointment scheduling**\n• **Patient management**\n• **Voice AI features**\n• **Billing & analytics**\n\nHow can I assist you today?",
 };
 
+const loadChatHistory = (): Message[] => {
+  try {
+    const stored = localStorage.getItem(CHAT_HISTORY_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.error('Failed to load chat history:', e);
+  }
+  return [INITIAL_MESSAGE];
+};
+
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
+  const [messages, setMessages] = useState<Message[]>(loadChatHistory);
 
   const clearChatHistory = () => {
     setMessages([INITIAL_MESSAGE]);
+    localStorage.removeItem(CHAT_HISTORY_KEY);
   };
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +67,13 @@ export function ChatBot() {
   useEffect(() => {
     localStorage.setItem(SOUND_STORAGE_KEY, String(soundEnabled));
   }, [soundEnabled]);
+
+  // Persist chat history
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(messages));
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
