@@ -18,44 +18,53 @@ export type Database = {
         Row: {
           channel: string
           created_at: string
+          direction: string | null
           error_message: string | null
+          from_phone: string | null
           id: string
           language: string | null
+          media_count: number | null
           message_content: string
           message_sid: string | null
           status: string
           template_name: string | null
           to_phone: string
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           channel: string
           created_at?: string
+          direction?: string | null
           error_message?: string | null
+          from_phone?: string | null
           id?: string
           language?: string | null
+          media_count?: number | null
           message_content: string
           message_sid?: string | null
           status?: string
           template_name?: string | null
           to_phone: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           channel?: string
           created_at?: string
+          direction?: string | null
           error_message?: string | null
+          from_phone?: string | null
           id?: string
           language?: string | null
+          media_count?: number | null
           message_content?: string
           message_sid?: string | null
           status?: string
           template_name?: string | null
           to_phone?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
