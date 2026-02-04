@@ -19,12 +19,14 @@ import {
   Trash2,
   LucideIcon,
   ArrowLeft,
-  Plus
+  Plus,
+  History
 } from "lucide-react";
 import { useState } from "react";
 import { TemplateEditor, Template } from "@/components/clinicvoice/TemplateEditor";
 import { ConversationDetail, Conversation } from "@/components/clinicvoice/ConversationDetail";
 import { SendMessageDialog } from "@/components/clinicvoice/SendMessageDialog";
+import { MessageHistory } from "@/components/clinicvoice/MessageHistory";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -419,8 +421,11 @@ export default function WhatsApp() {
                 </div>
               </div>
             ))}
-          </div>
         </div>
+
+        {/* Message History */}
+        <MessageHistory maxHeight="500px" />
+      </div>
       </div>
 
       {/* Template Editor Modal */}
