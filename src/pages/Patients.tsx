@@ -1,4 +1,6 @@
-import { DashboardLayout } from "@/components/clinicvoice/DashboardLayout";
+ import { useState } from "react";
+ import { DashboardLayout } from "@/components/clinicvoice/DashboardLayout";
+ import { PatientDetailSheet, PatientData } from "@/components/clinicvoice/PatientDetailSheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { 
@@ -7,79 +9,98 @@ import {
 } from "lucide-react";
 
 const patients = [
-  {
+   {
     id: 1,
     name: "Priya Lakshmi",
     initials: "PL",
     age: 45,
     gender: "Female",
     phone: "+91 98765 43210",
+     email: "priya.lakshmi@email.com",
+     address: "123 Gandhi Nagar, Chennai",
+     bloodGroup: "B+",
     lastVisit: "2 days ago",
     totalVisits: 12,
     condition: "Diabetes Type 2",
     status: "active",
+     allergies: ["Penicillin", "Sulfa"],
+     medications: ["Metformin 500mg", "Atorvastatin 10mg"],
+     notes: "Regular patient with good compliance. Prefers morning appointments.",
   },
-  {
+   {
     id: 2,
     name: "Rajesh Kumar",
     initials: "RK",
     age: 52,
     gender: "Male",
     phone: "+91 98765 43211",
+     email: "rajesh.kumar@email.com",
+     bloodGroup: "O+",
     lastVisit: "Today",
     totalVisits: 8,
     condition: "Hypertension",
     status: "active",
+     medications: ["Amlodipine 5mg", "Aspirin 75mg"],
   },
-  {
+   {
     id: 3,
     name: "Meera Sundaram",
     initials: "MS",
     age: 38,
     gender: "Female",
     phone: "+91 98765 43212",
+     email: "meera.s@email.com",
+     bloodGroup: "A+",
     lastVisit: "1 week ago",
     totalVisits: 5,
     condition: "Thyroid",
     status: "active",
+     medications: ["Levothyroxine 50mcg"],
   },
-  {
+   {
     id: 4,
     name: "Karthik Venkat",
     initials: "KV",
     age: 61,
     gender: "Male",
     phone: "+91 98765 43213",
+     bloodGroup: "AB+",
     lastVisit: "3 days ago",
     totalVisits: 24,
     condition: "Cardiac",
     status: "followup",
+     allergies: ["Ibuprofen"],
+     medications: ["Clopidogrel 75mg", "Ramipril 5mg", "Rosuvastatin 20mg"],
+     notes: "Post CABG patient. Requires regular monitoring.",
   },
-  {
+   {
     id: 5,
     name: "Anitha Rajan",
     initials: "AR",
     age: 29,
     gender: "Female",
     phone: "+91 98765 43214",
+     email: "anitha.rajan@email.com",
     lastVisit: "2 weeks ago",
     totalVisits: 3,
     condition: "General",
     status: "active",
   },
-  {
+   {
     id: 6,
     name: "Suresh Babu",
     initials: "SB",
     age: 55,
     gender: "Male",
     phone: "+91 98765 43215",
+     bloodGroup: "B-",
     lastVisit: "1 month ago",
     totalVisits: 15,
     condition: "Diabetes Type 1",
     status: "inactive",
+     medications: ["Insulin Glargine", "Insulin Aspart"],
   },
-];
+ ] as PatientData[];
 
 const conditionColors: Record<string, string> = {
   "Diabetes Type 2": "bg-cv-secondary/20 text-cv-secondary",
@@ -91,6 +112,14 @@ const conditionColors: Record<string, string> = {
 };
 
 export default function Patients() {
+   const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(null);
+   const [isDetailOpen, setIsDetailOpen] = useState(false);
+ 
+   const handlePatientClick = (patient: PatientData) => {
+     setSelectedPatient(patient);
+     setIsDetailOpen(true);
+   };
+ 
   return (
     <DashboardLayout
       title="Patients"
@@ -171,7 +200,8 @@ export default function Patients() {
         {patients.map((patient) => (
           <div
             key={patient.id}
-            className="rounded-xl bg-card border border-border p-5 hover:border-cv-primary/30 transition-all hover:shadow-lg"
+           className="rounded-xl bg-card border border-border p-5 hover:border-cv-primary/30 transition-all hover:shadow-lg cursor-pointer"
+           onClick={() => handlePatientClick(patient)}
           >
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -227,6 +257,12 @@ export default function Patients() {
           </div>
         ))}
       </div>
+     
+     <PatientDetailSheet
+       open={isDetailOpen}
+       onOpenChange={setIsDetailOpen}
+       patient={selectedPatient}
+     />
     </DashboardLayout>
   );
 }
