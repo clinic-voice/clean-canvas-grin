@@ -1,6 +1,7 @@
- import { useState } from "react";
- import { DashboardLayout } from "@/components/clinicvoice/DashboardLayout";
- import { PatientDetailSheet, PatientData } from "@/components/clinicvoice/PatientDetailSheet";
+import { useState, useEffect } from "react";
+import { DashboardLayout } from "@/components/clinicvoice/DashboardLayout";
+import { PatientDetailSheet, PatientData, AppointmentHistoryItem } from "@/components/clinicvoice/PatientDetailSheet";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { 
@@ -112,13 +113,47 @@ const conditionColors: Record<string, string> = {
 };
 
 export default function Patients() {
-   const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(null);
-   const [isDetailOpen, setIsDetailOpen] = useState(false);
- 
-   const handlePatientClick = (patient: PatientData) => {
-     setSelectedPatient(patient);
-     setIsDetailOpen(true);
-   };
+  const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [appointmentHistory, setAppointmentHistory] = useState<AppointmentHistoryItem[]>([]);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+
+  const handlePatientClick = async (patient: PatientData) => {
+    setSelectedPatient(patient);
+    setIsDetailOpen(true);
+    setIsLoadingHistory(true);
+    setAppointmentHistory([]);
+
+    try {
+      let query = supabase
+        .from('appointments')
+        .select('*')
+        .order('appointment_date', { ascending: false })
+        .order('appointment_time', { ascending: false });
+
+      // Match by patient name (and phone if available)
+      query = query.eq('patient_name', patient.name);
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      const history: AppointmentHistoryItem[] = (data || []).map((apt) => ({
+        id: apt.id,
+        date: apt.appointment_date,
+        time: apt.appointment_time,
+        reason: apt.reason || 'Consultation',
+        status: apt.status,
+        notes: apt.notes || undefined,
+      }));
+
+      setAppointmentHistory(history);
+    } catch (err) {
+      console.error('Error fetching patient appointments:', err);
+    } finally {
+      setIsLoadingHistory(false);
+    }
+  };
  
   return (
     <DashboardLayout
@@ -258,11 +293,12 @@ export default function Patients() {
         ))}
       </div>
      
-     <PatientDetailSheet
-       open={isDetailOpen}
-       onOpenChange={setIsDetailOpen}
-       patient={selectedPatient}
-     />
+      <PatientDetailSheet
+        open={isDetailOpen}
+        onOpenChange={setIsDetailOpen}
+        patient={selectedPatient}
+        appointmentHistory={appointmentHistory}
+      />
     </DashboardLayout>
   );
 }
