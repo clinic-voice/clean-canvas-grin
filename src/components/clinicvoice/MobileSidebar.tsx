@@ -4,22 +4,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import {
-  LayoutDashboard,
-  Calendar,
-  Users,
-  Mic,
-  BarChart3,
-  Settings,
-  MessageSquare,
-  Pill,
-  FileText,
-  CreditCard,
-  Package,
-  HelpCircle,
-  Phone,
-  Stethoscope,
-  Menu,
-  LogOut,
+  LayoutDashboard, Calendar, Users, Mic, BarChart3, Settings,
+  MessageSquare, Pill, FileText, CreditCard, Package, HelpCircle,
+  Phone, Stethoscope, Menu, LogOut,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -58,10 +45,10 @@ interface NavSectionProps {
 function NavSection({ title, items, currentPath, onNavigate }: NavSectionProps) {
   return (
     <div className="mb-6">
-      <p className="px-4 mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <p className="px-4 mb-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/60">
         {title}
       </p>
-      <nav className="space-y-1">
+      <nav className="space-y-0.5 px-2">
         {items.map((item) => {
           const isActive = currentPath === item.href;
           return (
@@ -70,16 +57,16 @@ function NavSection({ title, items, currentPath, onNavigate }: NavSectionProps) 
               to={item.href}
               onClick={onNavigate}
               className={cn(
-                "flex items-center gap-3 px-4 py-2.5 text-sm transition-all duration-200 border-l-[3px] border-transparent",
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
                 isActive
-                  ? "bg-primary/10 text-primary border-l-primary"
-                  : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                  ? "bg-primary/8 text-primary font-medium"
+                  : "text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
               )}
             >
               <item.icon className="w-[18px] h-[18px]" />
               <span className="font-medium">{item.label}</span>
               {"badge" in item && item.badge && (
-                <span className="ml-auto px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 animate-pulse">
+                <span className="ml-auto px-1.5 py-0.5 text-[9px] font-semibold uppercase rounded-md bg-accent/15 text-accent">
                   {item.badge}
                 </span>
               )}
@@ -114,22 +101,20 @@ export function MobileSidebar() {
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[280px] p-0 bg-background border-border">
+      <SheetContent side="left" className="w-[280px] p-0 bg-card border-border/50">
         {/* Logo */}
-        <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-            <Phone className="w-5 h-5 text-primary-foreground" />
+        <div className="flex items-center gap-3 px-5 py-5 border-b border-border/50">
+          <div className="w-10 h-10 rounded-xl gradient-teal flex items-center justify-center">
+            <Phone className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-foreground">ClinicVoice</h1>
-            <p className="text-[10px] font-medium text-primary uppercase tracking-wider">
-              AI Platform
-            </p>
+            <h1 className="text-lg font-semibold text-foreground">Clinic<span className="text-accent">Voice</span></h1>
+            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">AI Platform</p>
           </div>
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 overflow-y-auto py-4 hide-scrollbar max-h-[calc(100vh-280px)]">
+        <div className="flex-1 overflow-y-auto py-5 hide-scrollbar max-h-[calc(100vh-280px)]">
           <NavSection title="Main" items={mainNavItems} currentPath={currentPath} onNavigate={handleNavigate} />
           <NavSection title="Clinical" items={clinicalNavItems} currentPath={currentPath} onNavigate={handleNavigate} />
           <NavSection title="Business" items={businessNavItems} currentPath={currentPath} onNavigate={handleNavigate} />
@@ -137,22 +122,18 @@ export function MobileSidebar() {
         </div>
 
         {/* User & Logout */}
-        <div className="absolute bottom-[120px] left-0 right-0 p-4 border-t border-border bg-background">
+        <div className="absolute bottom-[120px] left-0 right-0 p-4 border-t border-border/50 bg-card">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center">
-              <span className="text-sm font-bold text-primary">
-                {user?.email?.charAt(0).toUpperCase() || "U"}
-              </span>
+            <div className="w-9 h-9 rounded-full gradient-teal flex items-center justify-center">
+              <span className="text-sm font-semibold text-white">{user?.email?.charAt(0).toUpperCase() || "U"}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">
-                {user?.email || "User"}
-              </p>
+              <p className="text-sm font-medium text-foreground truncate">{user?.email || "User"}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 w-full px-3 py-2 text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+            className="flex items-center gap-2 w-full px-3 py-2 text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/8 rounded-xl transition-colors"
           >
             <LogOut className="w-4 h-4" />
             Sign Out
@@ -160,19 +141,22 @@ export function MobileSidebar() {
         </div>
 
         {/* Voice AI Status Widget */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-background">
-          <div className="rounded-xl p-4 bg-muted/50 border border-border">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border/50 bg-card">
+          <div className="rounded-xl p-4 bg-accent/5 border border-accent/10">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
+              </span>
               <span className="text-xs font-semibold text-foreground">Voice AI Active</span>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="text-center">
-                <p className="text-lg font-bold text-primary">47</p>
+                <p className="text-lg font-bold text-accent">47</p>
                 <p className="text-[10px] text-muted-foreground">Calls Today</p>
               </div>
               <div className="text-center">
-                <p className="text-lg font-bold text-primary">95%</p>
+                <p className="text-lg font-bold text-accent">95%</p>
                 <p className="text-[10px] text-muted-foreground">Resolution</p>
               </div>
             </div>

@@ -9,9 +9,9 @@ interface AppointmentRowProps {
 }
 
 const statusStyles = {
-  confirmed: "bg-primary/10 text-primary",
-  waiting: "bg-accent/10 text-accent",
-  "in-progress": "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+  confirmed: "bg-accent/10 text-accent",
+  waiting: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  "in-progress": "bg-primary/10 text-primary",
   completed: "bg-secondary text-muted-foreground",
 };
 
@@ -30,9 +30,9 @@ export function AppointmentRow({
   status,
 }: AppointmentRowProps) {
   return (
-    <div className="flex items-center py-3 border-b border-border/40 last:border-b-0 group hover:bg-secondary/30 -mx-4 px-4 transition-colors rounded-lg">
+    <div className="flex items-center py-3.5 border-b border-border/30 last:border-b-0 group hover:bg-secondary/30 -mx-4 px-4 transition-colors rounded-xl">
       {/* Patient Avatar */}
-      <div className="w-10 h-10 rounded-full gradient-teal flex items-center justify-center text-white font-semibold text-sm mr-3 flex-shrink-0 shadow-sm">
+      <div className="w-10 h-10 rounded-full gradient-teal flex items-center justify-center text-white font-semibold text-sm mr-3.5 flex-shrink-0">
         {patientInitials}
       </div>
 
@@ -51,7 +51,7 @@ export function AppointmentRow({
       {/* Status */}
       <span
         className={cn(
-          "px-2.5 py-1 rounded-full text-xs font-medium flex-shrink-0",
+          "px-3 py-1 rounded-full text-xs font-medium flex-shrink-0",
           statusStyles[status]
         )}
       >

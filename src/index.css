@@ -1,131 +1,132 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Modern Minimal Design System - Teal & Blue */
+/* Premium Healthcare Design System - Navy & Sage */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================
-   CLINICVOICE AI - MODERN MINIMAL DESIGN
-   Teal & Blue Healthcare Platform
+   CLINICVOICE AI - PREMIUM HEALTHCARE
+   Deep Navy & Sage Green Palette
    ============================================ */
 
 :root {
-  /* Modern Teal & Blue Palette - HSL Format */
-  --cv-teal: 174 62% 47%;
-  --cv-teal-light: 174 55% 58%;
-  --cv-teal-dark: 174 70% 38%;
-  --cv-blue: 210 100% 56%;
-  --cv-blue-light: 210 90% 68%;
-  --cv-blue-dark: 210 100% 45%;
-  --cv-cyan: 188 80% 55%;
-  --cv-navy: 215 50% 23%;
+  /* Premium Healthcare Palette - HSL Format */
+  --cv-navy: 210 52% 24%;
+  --cv-navy-light: 210 45% 35%;
+  --cv-navy-dark: 210 58% 18%;
+  --cv-sage: 155 38% 42%;
+  --cv-sage-light: 155 32% 55%;
+  --cv-sage-dark: 155 45% 32%;
+  --cv-slate: 215 20% 55%;
+  --cv-amber: 38 92% 50%;
+  --cv-warm: 25 30% 96%;
 
-  /* Light Theme Base - Clean & Minimal */
-  --cv-bg: 210 20% 98%;
+  /* Light Theme Base - Warm & Professional */
+  --cv-bg: 220 15% 97%;
   --cv-bg-card: 0 0% 100%;
-  --cv-bg-subtle: 210 15% 96%;
+  --cv-bg-subtle: 220 12% 95%;
 
   /* Text Colors */
-  --cv-text-primary: 215 40% 16%;
-  --cv-text-secondary: 215 20% 45%;
-  --cv-text-muted: 215 15% 60%;
+  --cv-text-primary: 210 40% 16%;
+  --cv-text-secondary: 215 18% 42%;
+  --cv-text-muted: 215 12% 58%;
 
   /* Border */
-  --cv-border: 210 20% 90%;
-  --cv-border-hover: 174 50% 75%;
+  --cv-border: 220 15% 90%;
+  --cv-border-hover: 155 30% 70%;
 
   /* Status Colors */
-  --cv-success: 160 70% 42%;
-  --cv-warning: 38 95% 50%;
-  --cv-danger: 0 75% 55%;
+  --cv-success: 152 55% 40%;
+  --cv-warning: 38 92% 50%;
+  --cv-danger: 0 65% 52%;
 
-  /* Semantic tokens - Modern Minimal Light Theme */
-  --background: 210 20% 98%;
-  --foreground: 215 40% 16%;
+  /* Semantic tokens - Premium Healthcare Light */
+  --background: 220 15% 97%;
+  --foreground: 210 40% 16%;
   --card: 0 0% 100%;
-  --card-foreground: 215 40% 16%;
+  --card-foreground: 210 40% 16%;
   --popover: 0 0% 100%;
-  --popover-foreground: 215 40% 16%;
-  --primary: 174 62% 47%;
+  --popover-foreground: 210 40% 16%;
+  --primary: 210 52% 24%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 210 15% 94%;
-  --secondary-foreground: 215 40% 16%;
-  --muted: 210 15% 94%;
-  --muted-foreground: 215 20% 45%;
-  --accent: 210 100% 56%;
+  --secondary: 220 14% 93%;
+  --secondary-foreground: 210 40% 16%;
+  --muted: 220 14% 93%;
+  --muted-foreground: 215 18% 42%;
+  --accent: 155 38% 42%;
   --accent-foreground: 0 0% 100%;
-  --destructive: 0 75% 55%;
+  --destructive: 0 65% 52%;
   --destructive-foreground: 0 0% 100%;
-  --border: 210 20% 90%;
-  --input: 210 20% 90%;
-  --ring: 174 62% 47%;
+  --border: 220 15% 90%;
+  --input: 220 15% 90%;
+  --ring: 210 52% 24%;
   --radius: 0.75rem;
 
   /* Sidebar */
   --sidebar-background: 0 0% 100%;
-  --sidebar-foreground: 215 40% 16%;
-  --sidebar-primary: 174 62% 47%;
+  --sidebar-foreground: 210 40% 16%;
+  --sidebar-primary: 210 52% 24%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 210 15% 94%;
-  --sidebar-accent-foreground: 215 40% 16%;
-  --sidebar-border: 210 20% 92%;
-  --sidebar-ring: 174 62% 47%;
+  --sidebar-accent: 220 14% 93%;
+  --sidebar-accent-foreground: 210 40% 16%;
+  --sidebar-border: 220 15% 92%;
+  --sidebar-ring: 210 52% 24%;
 
   /* Charts */
-  --chart-1: 174 62% 47%;
-  --chart-2: 210 100% 56%;
-  --chart-3: 188 80% 55%;
-  --chart-4: 160 70% 42%;
-  --chart-5: 215 50% 23%;
+  --chart-1: 210 52% 24%;
+  --chart-2: 155 38% 42%;
+  --chart-3: 215 20% 55%;
+  --chart-4: 152 55% 40%;
+  --chart-5: 38 92% 50%;
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Shadows - Subtle & Clean */
-  --shadow-sm: 0 1px 2px 0 hsl(215 30% 15% / 0.04);
-  --shadow: 0 1px 3px 0 hsl(215 30% 15% / 0.06), 0 1px 2px -1px hsl(215 30% 15% / 0.06);
-  --shadow-md: 0 4px 6px -1px hsl(215 30% 15% / 0.08), 0 2px 4px -2px hsl(215 30% 15% / 0.06);
-  --shadow-lg: 0 10px 15px -3px hsl(215 30% 15% / 0.08), 0 4px 6px -4px hsl(215 30% 15% / 0.04);
-  --shadow-xl: 0 20px 25px -5px hsl(215 30% 15% / 0.1), 0 8px 10px -6px hsl(215 30% 15% / 0.06);
+  /* Shadows - Warm & Soft */
+  --shadow-sm: 0 1px 2px 0 hsl(210 30% 15% / 0.03);
+  --shadow: 0 1px 3px 0 hsl(210 30% 15% / 0.05), 0 1px 2px -1px hsl(210 30% 15% / 0.04);
+  --shadow-md: 0 4px 8px -1px hsl(210 30% 15% / 0.06), 0 2px 4px -2px hsl(210 30% 15% / 0.04);
+  --shadow-lg: 0 10px 20px -4px hsl(210 30% 15% / 0.08), 0 4px 8px -4px hsl(210 30% 15% / 0.03);
+  --shadow-xl: 0 20px 30px -6px hsl(210 30% 15% / 0.1), 0 8px 12px -6px hsl(210 30% 15% / 0.04);
 
   --spacing: 0.25rem;
 }
 
-/* Dark Theme - Modern Minimal */
+/* Dark Theme - Premium Healthcare */
 .dark {
-  --background: 215 35% 9%;
-  --foreground: 210 20% 95%;
-  --card: 215 32% 12%;
-  --card-foreground: 210 20% 95%;
-  --popover: 215 32% 14%;
-  --popover-foreground: 210 20% 95%;
-  --primary: 174 65% 50%;
-  --primary-foreground: 215 35% 9%;
-  --secondary: 215 25% 18%;
-  --secondary-foreground: 210 20% 95%;
-  --muted: 215 25% 18%;
-  --muted-foreground: 210 15% 60%;
-  --accent: 210 100% 60%;
+  --background: 215 32% 8%;
+  --foreground: 215 15% 92%;
+  --card: 215 30% 11%;
+  --card-foreground: 215 15% 92%;
+  --popover: 215 30% 13%;
+  --popover-foreground: 215 15% 92%;
+  --primary: 210 48% 40%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 22% 16%;
+  --secondary-foreground: 215 15% 92%;
+  --muted: 215 22% 16%;
+  --muted-foreground: 215 12% 55%;
+  --accent: 155 35% 45%;
   --accent-foreground: 0 0% 100%;
-  --destructive: 0 70% 55%;
+  --destructive: 0 60% 50%;
   --destructive-foreground: 0 0% 100%;
-  --border: 215 25% 20%;
-  --input: 215 25% 20%;
-  --ring: 174 65% 50%;
+  --border: 215 22% 18%;
+  --input: 215 22% 18%;
+  --ring: 210 48% 40%;
 
-  --sidebar-background: 215 32% 12%;
-  --sidebar-foreground: 210 20% 95%;
-  --sidebar-border: 215 25% 18%;
+  --sidebar-background: 215 30% 11%;
+  --sidebar-foreground: 215 15% 92%;
+  --sidebar-border: 215 22% 16%;
 
-  --chart-1: 174 65% 55%;
-  --chart-2: 210 100% 65%;
-  --chart-3: 188 80% 60%;
-  --chart-4: 160 70% 50%;
-  --chart-5: 215 40% 50%;
+  --chart-1: 210 48% 50%;
+  --chart-2: 155 35% 50%;
+  --chart-3: 215 20% 55%;
+  --chart-4: 152 50% 48%;
+  --chart-5: 38 85% 55%;
 
   --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
   --shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.4), 0 1px 2px -1px hsl(0 0% 0% / 0.4);
@@ -167,14 +168,14 @@
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
   /* ClinicVoice specific colors */
-  --color-cv-teal: hsl(var(--cv-teal));
-  --color-cv-teal-light: hsl(var(--cv-teal-light));
-  --color-cv-teal-dark: hsl(var(--cv-teal-dark));
-  --color-cv-blue: hsl(var(--cv-blue));
-  --color-cv-blue-light: hsl(var(--cv-blue-light));
-  --color-cv-blue-dark: hsl(var(--cv-blue-dark));
-  --color-cv-cyan: hsl(var(--cv-cyan));
   --color-cv-navy: hsl(var(--cv-navy));
+  --color-cv-navy-light: hsl(var(--cv-navy-light));
+  --color-cv-navy-dark: hsl(var(--cv-navy-dark));
+  --color-cv-sage: hsl(var(--cv-sage));
+  --color-cv-sage-light: hsl(var(--cv-sage-light));
+  --color-cv-sage-dark: hsl(var(--cv-sage-dark));
+  --color-cv-slate: hsl(var(--cv-slate));
+  --color-cv-amber: hsl(var(--cv-amber));
   --color-cv-success: hsl(var(--cv-success));
   --color-cv-warning: hsl(var(--cv-warning));
   --color-cv-danger: hsl(var(--cv-danger));
@@ -201,8 +202,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--cv-teal) / 0.4); }
-  50% { box-shadow: 0 0 0 12px hsl(var(--cv-teal) / 0); }
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--cv-sage) / 0.4); }
+  50% { box-shadow: 0 0 0 12px hsl(var(--cv-sage) / 0); }
 }
 
 @keyframes float {
@@ -233,8 +234,8 @@
 
   /* Selection styling */
   ::selection {
-    background: hsl(var(--cv-teal) / 0.2);
-    color: hsl(var(--cv-teal-dark));
+    background: hsl(var(--cv-sage) / 0.2);
+    color: hsl(var(--cv-navy-dark));
   }
 }
 
@@ -248,17 +249,21 @@
     display: none;
   }
 
-  /* Modern gradients */
+  /* Premium gradients */
   .gradient-teal {
-    background: linear-gradient(135deg, hsl(var(--cv-teal)), hsl(var(--cv-teal-dark)));
+    background: linear-gradient(135deg, hsl(var(--cv-navy)), hsl(var(--cv-navy-light)));
   }
 
   .gradient-blue {
-    background: linear-gradient(135deg, hsl(var(--cv-blue)), hsl(var(--cv-blue-dark)));
+    background: linear-gradient(135deg, hsl(var(--cv-navy-light)), hsl(var(--cv-navy)));
   }
 
   .gradient-teal-blue {
-    background: linear-gradient(135deg, hsl(var(--cv-teal)), hsl(var(--cv-blue)));
+    background: linear-gradient(135deg, hsl(var(--cv-navy)), hsl(var(--cv-sage)));
+  }
+
+  .gradient-sage {
+    background: linear-gradient(135deg, hsl(var(--cv-sage)), hsl(var(--cv-sage-dark)));
   }
 
   .gradient-subtle {
@@ -267,14 +272,14 @@
 
   /* Text gradients */
   .text-gradient-teal {
-    background: linear-gradient(135deg, hsl(var(--cv-teal)), hsl(var(--cv-cyan)));
+    background: linear-gradient(135deg, hsl(var(--cv-navy)), hsl(var(--cv-sage)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-blue {
-    background: linear-gradient(135deg, hsl(var(--cv-blue)), hsl(var(--cv-teal)));
+    background: linear-gradient(135deg, hsl(var(--cv-sage)), hsl(var(--cv-navy)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -283,23 +288,23 @@
   /* Glass effect */
   .glass {
     background: hsl(var(--card) / 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
   .glass-teal {
-    background: hsl(var(--cv-teal) / 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: hsl(var(--cv-navy) / 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 
   /* Glow effects */
   .glow-teal {
-    box-shadow: 0 0 40px -10px hsl(var(--cv-teal) / 0.4);
+    box-shadow: 0 0 40px -10px hsl(var(--cv-navy) / 0.3);
   }
 
   .glow-blue {
-    box-shadow: 0 0 40px -10px hsl(var(--cv-blue) / 0.4);
+    box-shadow: 0 0 40px -10px hsl(var(--cv-sage) / 0.3);
   }
 
   /* Shimmer loading effect */

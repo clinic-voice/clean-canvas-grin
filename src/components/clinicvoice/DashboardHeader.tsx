@@ -11,7 +11,7 @@ interface DashboardHeaderProps {
 
 export function DashboardHeader({ title, subtitle }: DashboardHeaderProps) {
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between py-3 px-4 md:py-4 md:px-6 lg:px-8 bg-background/80 backdrop-blur-xl border-b border-border/60">
+    <header className="sticky top-0 z-30 flex items-center justify-between py-3 px-4 md:py-4 md:px-6 lg:px-8 bg-background/85 backdrop-blur-xl border-b border-border/50">
       <div className="flex items-center gap-3">
         {/* Mobile menu trigger */}
         <MobileSidebar />
@@ -31,12 +31,12 @@ export function DashboardHeader({ title, subtitle }: DashboardHeaderProps) {
           <Input
             type="search"
             placeholder="Search patients..."
-            className="w-[200px] lg:w-[260px] pl-10 bg-secondary/50 border-border/60 focus:bg-background h-9 rounded-lg"
+            className="w-[200px] lg:w-[260px] pl-10 bg-secondary/50 border-border/50 focus:bg-background h-9 rounded-xl"
           />
         </div>
 
         {/* Quick Add */}
-        <Button className="gradient-teal text-white border-0 shadow-md hover:opacity-90 gap-2 h-9 px-3 md:px-4">
+        <Button className="gradient-teal text-white border-0 shadow-sm hover:opacity-90 gap-2 h-9 px-3 md:px-4 rounded-xl">
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">New Appointment</span>
         </Button>
@@ -45,7 +45,7 @@ export function DashboardHeader({ title, subtitle }: DashboardHeaderProps) {
         <IncomingMessagesNotifier />
 
         {/* User Avatar */}
-        <div className="w-9 h-9 rounded-full gradient-teal flex items-center justify-center text-white font-semibold text-sm shadow-md">
+        <div className="w-9 h-9 rounded-full gradient-teal flex items-center justify-center text-white font-semibold text-sm">
           DR
         </div>
       </div>
