@@ -1,137 +1,61 @@
 
 
-# Message Template Editor Implementation Plan
+## Premium Healthcare Redesign -- Full Application
 
-## Overview
-Create a full-featured message template editor with variable support for patient communications. The editor will allow clinic staff to create, edit, and preview bilingual (Tamil/English) message templates with dynamic variables like patient name, appointment time, and doctor name.
+This plan covers a complete visual redesign of the entire ClinicVoice AI application with a polished, professional healthcare SaaS aesthetic. No functionality changes -- purely visual.
 
-## Features
+### Design Direction
+- **Color palette**: Shift from teal/blue to a refined healthcare palette -- deep navy primary, soft sage/mint accents, warm neutral backgrounds
+- **Typography**: Tighter letter-spacing, larger headings, more whitespace between sections
+- **Cards & surfaces**: Softer shadows, 1px borders with subtle tints, rounded-2xl corners
+- **Spacing**: More generous padding, better visual hierarchy with clear content zones
+- **Professional touches**: Refined status badges, polished avatars, clean data presentation
 
-### Core Functionality
-- **Create new templates** with name, category, and bilingual content
-- **Edit existing templates** with a user-friendly modal interface
-- **Variable insertion** via clickable chips for easy placeholder addition
-- **Live preview** showing how the message will look with sample data
-- **Category management** for organizing templates (Appointments, Billing, Follow-up, General)
+### Files to Update
 
-### Supported Variables
-| Variable | Description | Example Value |
-|----------|-------------|---------------|
-| `{patient_name}` | Patient's full name | Priya Lakshmi |
-| `{appointment_date}` | Appointment date | 15th January 2026 |
-| `{appointment_time}` | Appointment time | 10:30 AM |
-| `{doctor_name}` | Doctor's name | Dr. Ramesh Kumar |
-| `{clinic_name}` | Clinic name | ClinicVoice Healthcare |
-| `{amount}` | Payment amount | ₹1,500 |
-| `{phone}` | Clinic phone | +91 98765 43210 |
+**1. Theme & CSS (`src/index.css`)**
+- New color palette: navy primary (#1e3a5f), sage accent (#4a9e7e), warm backgrounds (#fafbfc light, #0f1724 dark)
+- Refined shadow system with warmer tones
+- Updated gradient utilities (professional navy-to-sage instead of teal-to-blue)
+- Improved selection colors and glass effects
 
----
+**2. Landing Page (`src/pages/LandingPage.tsx`)**
+- Cleaner hero with larger typography and more breathing room
+- Professional feature cards with consistent icon styling
+- Refined pricing section with better visual hierarchy
+- Polished navigation bar with premium feel
 
-## Technical Approach
+**3. Auth Page (`src/pages/Auth.tsx`)**
+- Left panel: refined branding with navy background, subtle geometric pattern
+- Right panel: cleaner form layout, refined input styling, better spacing
+- Professional trust indicators and social proof
 
-### New Component
-**`src/components/clinicvoice/TemplateEditor.tsx`**
+**4. Dashboard Layout Components**
+- `DashboardSidebar.tsx`: Refined nav items with smoother hover states, updated brand colors, polished section headers
+- `DashboardHeader.tsx`: Cleaner header with refined search, updated avatar and button styling
+- `DashboardLayout.tsx`: Updated background and spacing
 
-A modal-based editor component with:
-- Template name and category inputs
-- Dual textarea for Tamil and English content
-- Variable insertion toolbar with clickable chips
-- Live preview panel with sample data substitution
-- Form validation before saving
+**5. Dashboard Page (`src/pages/Dashboard.tsx`)**
+- Welcome section with refined gradient and typography
+- Stats cards with updated color accents matching new palette
+- Cleaner appointment list with better spacing
+- AI insights section with refined card styling
 
-### WhatsApp Page Updates
-**`src/pages/WhatsApp.tsx`**
+**6. Shared Components**
+- `StatsCard.tsx`: Updated icon color scheme (navy, sage, slate, amber)
+- `AppointmentRow.tsx`: Refined status badges and row styling
+- `VoiceAIWidget.tsx`: Updated pulse colors and card styling
+- `QuickActions.tsx`: Polished action buttons
+- `PatientDetailSheet.tsx`: Updated tab and content styling
 
-- Add state management for templates (create, edit, delete)
-- Connect "Create Template" and "Edit" buttons to the editor modal
-- Add delete confirmation dialog
-- Implement template persistence (local state initially, can extend to database)
+**7. Feature Pages**
+- `Appointments.tsx`: Refined filters, calendar, and appointment cards
+- `Patients.tsx`: Updated patient cards with cleaner layout
+- `Analytics.tsx`, `Billing.tsx`, `Medications.tsx`, `WhatsApp.tsx`, `VoiceAI.tsx`: Consistent styling updates
 
-### UI Components Used
-- `Dialog` - Modal container
-- `Input` - Template name field
-- `Textarea` - Message content fields
-- `Select` - Category dropdown
-- `Badge` - Variable chips
-- `Tabs` - Switch between Edit and Preview modes
-- `Button` - Actions and variable insertion
-
----
-
-## Component Structure
-
-```text
-TemplateEditor (Dialog Modal)
-├── DialogHeader
-│   └── Title: "Create Template" / "Edit Template"
-├── DialogContent
-│   ├── Template Details Section
-│   │   ├── Name Input
-│   │   └── Category Select
-│   ├── Variables Toolbar
-│   │   └── Clickable Badge chips for each variable
-│   ├── Tabs (Edit / Preview)
-│   │   ├── Edit Tab
-│   │   │   ├── Tamil Textarea
-│   │   │   └── English Textarea
-│   │   └── Preview Tab
-│   │       ├── Tamil Preview (with substituted values)
-│   │       └── English Preview (with substituted values)
-│   └── DialogFooter
-│       ├── Cancel Button
-│       └── Save Button
-```
-
----
-
-## User Flow
-
-1. **Create New Template**
-   - Click "Create Template" button
-   - Modal opens with empty fields
-   - Enter template name and select category
-   - Click variable chips to insert placeholders at cursor
-   - Write Tamil and English messages
-   - Switch to Preview tab to see sample output
-   - Click Save to add template
-
-2. **Edit Existing Template**
-   - Click "Edit" button on any template card
-   - Modal opens with pre-filled data
-   - Make changes and preview
-   - Save updates
-
-3. **Variable Insertion**
-   - Position cursor in Tamil or English textarea
-   - Click a variable chip (e.g., "Patient Name")
-   - Variable placeholder `{patient_name}` inserted at cursor position
-
----
-
-## Implementation Steps
-
-1. **Create TemplateEditor component**
-   - Build the modal structure with form fields
-   - Implement variable insertion logic with cursor tracking
-   - Add preview mode with sample data substitution
-   - Include form validation
-
-2. **Update WhatsApp page**
-   - Convert static templates array to React state
-   - Add modal trigger states (open/close, selected template)
-   - Wire up Create/Edit buttons to open the editor
-   - Handle save/update callbacks
-
-3. **Add delete functionality**
-   - Add delete option in template card menu
-   - Confirm deletion with alert dialog
-
----
-
-## Files to Create/Modify
-
-| File | Action | Description |
-|------|--------|-------------|
-| `src/components/clinicvoice/TemplateEditor.tsx` | Create | New template editor modal component |
-| `src/pages/WhatsApp.tsx` | Modify | Add state management and connect editor |
+### Technical Notes
+- All changes use CSS custom properties and Tailwind classes -- no structural/logic changes
+- Dark mode tokens updated in parallel
+- Maintains all responsive breakpoints and mobile behavior
+- Estimated ~12 files modified
 
