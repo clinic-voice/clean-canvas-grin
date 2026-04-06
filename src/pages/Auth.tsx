@@ -45,7 +45,6 @@ export default function Auth() {
     defaultValues: { email: "", password: "", confirmPassword: "", clinicName: "" },
   });
 
-  // Redirect if already logged in
   useEffect(() => {
     if (user) {
       navigate("/dashboard");
@@ -64,16 +63,9 @@ export default function Auth() {
       } else if (error.message.includes("Email not confirmed")) {
         message = "Please confirm your email address before logging in.";
       }
-      toast({
-        title: "Login failed",
-        description: message,
-        variant: "destructive",
-      });
+      toast({ title: "Login failed", description: message, variant: "destructive" });
     } else {
-      toast({
-        title: "Welcome back!",
-        description: "You have successfully logged in.",
-      });
+      toast({ title: "Welcome back!", description: "You have successfully logged in." });
       navigate("/dashboard");
     }
   };
@@ -90,36 +82,31 @@ export default function Auth() {
       } else if (error.message.includes("Password")) {
         message = error.message;
       }
-      toast({
-        title: "Signup failed",
-        description: message,
-        variant: "destructive",
-      });
+      toast({ title: "Signup failed", description: message, variant: "destructive" });
     } else {
-      toast({
-        title: "Account created!",
-        description: "Please check your email to confirm your account.",
-      });
+      toast({ title: "Account created!", description: "Please check your email to confirm your account." });
     }
   };
 
   return (
     <div className="min-h-screen bg-background flex">
-      {/* Left side - Branding - Professional */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0YzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-50"></div>
-        <div className="relative z-10 flex flex-col justify-center p-12 text-primary-foreground">
-          <div className="flex items-center gap-3 mb-10">
-            <div className="w-12 h-12 rounded-lg bg-primary-foreground/20 flex items-center justify-center">
+      {/* Left side - Premium Navy Branding */}
+      <div className="hidden lg:flex lg:w-1/2 gradient-teal relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34c0-2.21-1.79-4-4-4s-4 1.79-4 4 1.79 4 4 4 4-1.79 4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
+        <div className="relative z-10 flex flex-col justify-center p-12 lg:p-16 text-white">
+          <div className="flex items-center gap-3 mb-12">
+            <div className="w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
               <Phone className="w-6 h-6" />
             </div>
             <span className="text-2xl font-semibold tracking-tight">ClinicVoice AI</span>
           </div>
           
-          <h1 className="text-4xl font-bold mb-4 leading-tight">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-5 leading-[1.1] tracking-tight">
             Transform Your Clinic with AI-Powered Voice
           </h1>
-          <p className="text-lg text-primary-foreground/80 mb-10 leading-relaxed">
+          <p className="text-lg text-white/75 mb-12 leading-relaxed max-w-lg">
             Join 500+ clinics using Tamil-first voice AI to automate appointments, 
             reduce no-shows, and enhance patient care.
           </p>
@@ -131,20 +118,19 @@ export default function Auth() {
               "Native Tamil Language Support"
             ].map((text) => (
               <div key={text} className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                <div className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs">✓</span>
                 </div>
-                <span className="text-sm font-medium">{text}</span>
+                <span className="text-sm font-medium text-white/90">{text}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Right side - Auth Form - Professional */}
+      {/* Right side - Auth Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12 bg-background">
         <div className="w-full max-w-md">
-          {/* Back to home */}
           <button 
             onClick={() => navigate("/")}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors text-sm font-medium"
@@ -155,14 +141,14 @@ export default function Auth() {
 
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <Phone className="w-5 h-5 text-primary-foreground" />
+            <div className="w-10 h-10 rounded-xl gradient-teal flex items-center justify-center">
+              <Phone className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-semibold text-foreground">ClinicVoice AI</span>
           </div>
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+            <h2 className="text-2xl font-bold text-foreground mb-2 tracking-tight">
               {isLogin ? "Welcome back" : "Create your account"}
             </h2>
             <p className="text-muted-foreground">
@@ -178,13 +164,7 @@ export default function Auth() {
                 <Label htmlFor="email" className="text-foreground text-sm font-medium">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="clinic@example.com"
-                    className="pl-10 h-11 bg-background border-input focus:border-primary"
-                    {...loginForm.register("email")}
-                  />
+                  <Input id="email" type="email" placeholder="clinic@example.com" className="pl-10 h-11 bg-background border-input focus:border-primary rounded-xl" {...loginForm.register("email")} />
                 </div>
                 {loginForm.formState.errors.email && (
                   <p className="text-destructive text-sm">{loginForm.formState.errors.email.message}</p>
@@ -195,32 +175,15 @@ export default function Auth() {
                 <Label htmlFor="password" className="text-foreground text-sm font-medium">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="••••••••"
-                    className="pl-10 h-11 bg-background border-input focus:border-primary"
-                    {...loginForm.register("password")}
-                  />
+                  <Input id="password" type="password" placeholder="••••••••" className="pl-10 h-11 bg-background border-input focus:border-primary rounded-xl" {...loginForm.register("password")} />
                 </div>
                 {loginForm.formState.errors.password && (
                   <p className="text-destructive text-sm">{loginForm.formState.errors.password.message}</p>
                 )}
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full h-11 bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Logging in...
-                  </>
-                ) : (
-                  "Log in"
-                )}
+              <Button type="submit" className="w-full h-11 gradient-teal text-white border-0 hover:opacity-90 font-medium rounded-xl" disabled={isSubmitting}>
+                {isSubmitting ? (<><Loader2 className="w-4 h-4 mr-2 animate-spin" />Logging in...</>) : "Log in"}
               </Button>
             </form>
           ) : (
@@ -229,13 +192,7 @@ export default function Auth() {
                 <Label htmlFor="clinicName" className="text-foreground text-sm font-medium">Clinic Name</Label>
                 <div className="relative">
                   <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="clinicName"
-                    type="text"
-                    placeholder="Your Clinic Name"
-                    className="pl-10 h-11 bg-background border-input focus:border-primary"
-                    {...signupForm.register("clinicName")}
-                  />
+                  <Input id="clinicName" type="text" placeholder="Your Clinic Name" className="pl-10 h-11 bg-background border-input focus:border-primary rounded-xl" {...signupForm.register("clinicName")} />
                 </div>
                 {signupForm.formState.errors.clinicName && (
                   <p className="text-destructive text-sm">{signupForm.formState.errors.clinicName.message}</p>
@@ -246,13 +203,7 @@ export default function Auth() {
                 <Label htmlFor="signupEmail" className="text-foreground text-sm font-medium">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="signupEmail"
-                    type="email"
-                    placeholder="clinic@example.com"
-                    className="pl-10 h-11 bg-background border-input focus:border-primary"
-                    {...signupForm.register("email")}
-                  />
+                  <Input id="signupEmail" type="email" placeholder="clinic@example.com" className="pl-10 h-11 bg-background border-input focus:border-primary rounded-xl" {...signupForm.register("email")} />
                 </div>
                 {signupForm.formState.errors.email && (
                   <p className="text-destructive text-sm">{signupForm.formState.errors.email.message}</p>
@@ -263,13 +214,7 @@ export default function Auth() {
                 <Label htmlFor="signupPassword" className="text-foreground text-sm font-medium">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="signupPassword"
-                    type="password"
-                    placeholder="••••••••"
-                    className="pl-10 h-11 bg-background border-input focus:border-primary"
-                    {...signupForm.register("password")}
-                  />
+                  <Input id="signupPassword" type="password" placeholder="••••••••" className="pl-10 h-11 bg-background border-input focus:border-primary rounded-xl" {...signupForm.register("password")} />
                 </div>
                 {signupForm.formState.errors.password && (
                   <p className="text-destructive text-sm">{signupForm.formState.errors.password.message}</p>
@@ -280,32 +225,15 @@ export default function Auth() {
                 <Label htmlFor="confirmPassword" className="text-foreground text-sm font-medium">Confirm Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    placeholder="••••••••"
-                    className="pl-10 h-11 bg-background border-input focus:border-primary"
-                    {...signupForm.register("confirmPassword")}
-                  />
+                  <Input id="confirmPassword" type="password" placeholder="••••••••" className="pl-10 h-11 bg-background border-input focus:border-primary rounded-xl" {...signupForm.register("confirmPassword")} />
                 </div>
                 {signupForm.formState.errors.confirmPassword && (
                   <p className="text-destructive text-sm">{signupForm.formState.errors.confirmPassword.message}</p>
                 )}
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full h-11 bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Creating account...
-                  </>
-                ) : (
-                  "Create account"
-                )}
+              <Button type="submit" className="w-full h-11 gradient-teal text-white border-0 hover:opacity-90 font-medium rounded-xl" disabled={isSubmitting}>
+                {isSubmitting ? (<><Loader2 className="w-4 h-4 mr-2 animate-spin" />Creating account...</>) : "Create account"}
               </Button>
             </form>
           )}
@@ -315,12 +243,8 @@ export default function Auth() {
               {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
               <button
                 type="button"
-                onClick={() => {
-                  setIsLogin(!isLogin);
-                  loginForm.reset();
-                  signupForm.reset();
-                }}
-                className="text-primary hover:underline font-medium"
+                onClick={() => { setIsLogin(!isLogin); loginForm.reset(); signupForm.reset(); }}
+                className="text-accent hover:underline font-medium"
               >
                 {isLogin ? "Sign up" : "Log in"}
               </button>
